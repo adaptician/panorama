@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: panorama-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: panorama-api
+      network: panorama
+  template:
+    metadata:
+      labels:
+        app: panorama-api
+        network: panorama
+    spec:
+      containers:
+        - name: panorama-api
+          image: docker.io/panorama.api
+          imagePullPolicy: Never
+          env:
+            - name: ConnectionStrings__Default
+              value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true
+          ports:
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: panorama-api
+spec:
+  selector:
+    app: panorama-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    - name: https
+      port: 443
+      targetPort: 443
+      protocol: TCP

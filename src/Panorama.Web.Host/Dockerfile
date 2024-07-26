@@ -1,25 +1,39 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-WORKDIR /src
+WORKDIR /deployed
+# Copy application files over to container.
 COPY ["src/Panorama.Web.Host/Panorama.Web.Host.csproj", "src/Panorama.Web.Host/"]
 COPY ["src/Panorama.Web.Core/Panorama.Web.Core.csproj", "src/Panorama.Web.Core/"]
 COPY ["src/Panorama.Application/Panorama.Application.csproj", "src/Panorama.Application/"]
 COPY ["src/Panorama.Core/Panorama.Core.csproj", "src/Panorama.Core/"]
 COPY ["src/Panorama.EntityFrameworkCore/Panorama.EntityFrameworkCore.csproj", "src/Panorama.EntityFrameworkCore/"]
-WORKDIR "/src/src/Panorama.Web.Host"
+
+# Restore within the container.
+WORKDIR "/deployed/src/Panorama.Web.Host"
 RUN dotnet restore 
 
-WORKDIR /src
+# Copy restored files.
+WORKDIR /deployed
 COPY ["src/Panorama.Web.Host", "src/Panorama.Web.Host"]
 COPY ["src/Panorama.Web.Core", "src/Panorama.Web.Core"]
 COPY ["src/Panorama.Application", "src/Panorama.Application"]
 COPY ["src/Panorama.Core", "src/Panorama.Core"]
 COPY ["src/Panorama.EntityFrameworkCore", "src/Panorama.EntityFrameworkCore"]
-WORKDIR "/src/src/Panorama.Web.Host"
-RUN dotnet publish -c Release -o /publish --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
-EXPOSE 80
+WORKDIR "/deployed/src/Panorama.Web.Host"
+# Publish application.
+FROM build AS publish
+RUN dotnet publish -c Release -o /app/published --no-restore
+
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+
 WORKDIR /app
-COPY --from=build /publish .
+# Copy release files to working location.
+COPY --from=publish /app/published .
+
+# Expose service ports.
+EXPOSE 80
+EXPOSE 443
+
 ENTRYPOINT ["dotnet", "Panorama.Web.Host.dll"]

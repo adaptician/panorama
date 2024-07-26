@@ -74,6 +74,14 @@ kubectl apply -f .\kubernetes\networkpolicy.yaml
 kubectl apply -f .\kubernetes\mssqldb-manifest.yaml
 
 docker build -t panorama.migrator -f .\src\Panorama.Migrator\Dockerfile .
-kubectl apply -f .\kubernetes\migrator-deployment.yaml
+kubectl apply -f .\kubernetes\migrator-manifest.yaml
 
 kubectl scale deployment panorama-migrator --replicas=0
+
+
+docker build -t panorama.api -f .\src\Panorama.Web.Host\Dockerfile .
+kubectl apply -f .\kubernetes\api-manifest.yaml
+
+# USE PORT FORWARDING TO DIRECT THE API PORT HITTING THE CONTAINER TO THE API PORT INSIDE THE CONTAINER
+kubectl port-forward panorama-api-7977d4896-2cnpp  44311:44311
+                        ^ pod-id
