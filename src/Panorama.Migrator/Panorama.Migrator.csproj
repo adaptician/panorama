@@ -8,6 +8,7 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
   <ItemGroup>
     <None Update="appsettings.json;log4net.config">
@@ -20,5 +21,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Panorama.Core\Panorama.Core.csproj" />
     <ProjectReference Include="..\Panorama.EntityFrameworkCore\Panorama.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
   </ItemGroup>
 </Project>

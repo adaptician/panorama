@@ -47,7 +47,7 @@ namespace Panorama.Migrator
             if (!skipConnVerification)
             {
                 _log.Write("Continue to migration for this host database and all tenants..? (Y/N): ");
-                var command = Console.ReadLine();
+                var command = Console.ReadLine() ?? "Y";
                 if (!command.IsIn("Y", "y"))
                 {
                     _log.Write("Migration canceled.");

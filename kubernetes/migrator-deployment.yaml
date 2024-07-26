@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: panorama-migrator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: panorama-migrator
+      network: panorama
+  template:
+    metadata:
+      labels:
+        app: panorama-migrator
+        network: panorama
+    spec:
+      containers:
+      - name: panorama-migrator
+        image: panorama.migrator
+        imagePullPolicy: Never
+        env:
+        - name: ASPNETCORE_Docker_Enabled
+          value: "true"
+        - name: ConnectionStrings__Default
+          value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true
+      restartPolicy: Always
