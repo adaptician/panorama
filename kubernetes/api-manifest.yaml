@@ -21,13 +21,52 @@ spec:
           env:
             - name: ConnectionStrings__Default
               value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true
+            - name: App__ServerRootAddress
+              value: "http://localhost:44311/"
+            - name: App__ClientRootAddress
+              value: "http://localhost:4200/"
+            - name: App__CorsOrigins
+              value: "http://localhost:4200"
+            # - name: TZ
+            #   value: "America/Toronto"
+            - name: Kestrel__Endpoints__Http__Url
+              value: "http://+:44311"
           ports:
-            - name: http
-              containerPort: 80
-            - name: https
-              containerPort: 443
+            - name: api
+              containerPort: 44311
       restartPolicy: Always
 ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: panorama-app-ingress
+#   annotations:
+#     nginx.ingress.kubernetes.io/use-regex: "true"
+#     nginx.ingress.kubernetes.io/rewrite-target: /
+#     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+#     nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
+#     nginx.ingress.kubernetes.io/proxy-buffers-number: "8"
+#     nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#     - http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: panorama-app
+#                 port:
+#                   number: 4200
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: panorama-api
+#                 port:
+#                   number: 44311
+# ---
 apiVersion: v1
 kind: Service
 metadata:
@@ -35,12 +74,9 @@ metadata:
 spec:
   selector:
     app: panorama-api
+  type: LoadBalancer
   ports:
-    - name: http
-      port: 80
-      targetPort: 80
-      protocol: TCP
-    - name: https
-      port: 443
-      targetPort: 443
+    - name: api
+      port: 44311
+      targetPort: 44311
       protocol: TCP

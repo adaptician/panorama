@@ -34,6 +34,7 @@ COPY --from=publish /app/published .
 
 # Expose service ports.
 EXPOSE 80
-EXPOSE 443
+#EXPOSE 443
+EXPOSE 44311
 
 ENTRYPOINT ["dotnet", "Panorama.Web.Host.dll"]
