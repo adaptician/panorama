@@ -85,3 +85,7 @@ kubectl apply -f .\kubernetes\api-manifest.yaml
 # USE PORT FORWARDING TO DIRECT THE API PORT HITTING THE CONTAINER TO THE API PORT INSIDE THE CONTAINER
 kubectl port-forward panorama-api-7977d4896-2cnpp  44311:44311
                         ^ pod-id
+
+
+docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .
+kubectl apply -f .\kubernetes\app-manifest.yaml
