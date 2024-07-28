@@ -19,17 +19,12 @@ spec:
           image: docker.io/panorama.api
           imagePullPolicy: Never
           env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
             - name: ConnectionStrings__Default
-              value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true
-            - name: App__ServerRootAddress
-              value: "http://localhost:44311/"
-            - name: App__ClientRootAddress
-              value: "http://localhost:4200/"
-            - name: App__CorsOrigins
-              value: "http://localhost:4200"
+              value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true           
             - name: Kestrel__Endpoints__Http__Url
               value: "http://+:80" # THIS IS EXTREMELY IMPORTANT
-              # It seems the default in appsettings was not being picked up.
           ports:
             - name: api
               containerPort: 80 # pod port
