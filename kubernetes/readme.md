@@ -50,6 +50,47 @@ At this point you can build a migrator image, deploy to the Kubernetes cluster, 
 
 This can be useful when starting from scratch with a clean database, and you just want to run the migrator code as is.
 
+## Setup API
+
+The web API needs to be hosted in order to service requests.
+
+### Build the Host Docker image
+
+NOTE: make sure to be aware of the ports that are being exposed in the Dockerfile.
+Typically we expose both HTTP (80) and HTTPS (443) ports.
+
+`docker build -t panorama.api -f .\src\Panorama.Web.Host\Dockerfile .`
+
+### Create a deployment and service
+Both deployment and service specs are included in a single manifest file. Apply the manifest to create the resources.
+
+`kubectl apply -f .\kubernetes\api-manifest.yaml`
+
+#### Use port forwarding to hit a pod without a service
+This is useful for quick debugging, or if port mapping is being a pain.
+
+`kubectl port-forward <pod>  <port>:<pod-port>`
+
+This requires a terminal to keep the connection alive. Once closed, port forwarding will terminate.
+
+## Setup Client App
+
+The client app needs to be hosted to make the interface accessible via a browser.
+
+### Build the Angular Docker image
+
+NOTE: make sure to be aware of the ports that are being exposed in the Dockerfile.
+Typically we expose both HTTP (80) and HTTPS (443) ports.
+
+The app is using an NGINX load balancer to act as the web server.
+
+`docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .`
+
+### Create a deployment and service
+Both deployment and service specs are included in a single manifest file. Apply the manifest to create the resources.
+
+`kubectl apply -f .\kubernetes\app-manifest.yaml`
+
 ## Switch project context
 In order to switch contexts to a different project, `localhost` needs to be freed up. Any services that exist in the cluster are likely bound to localhost, and will block other applications from using it.
 
@@ -81,10 +122,6 @@ kubectl scale deployment panorama-migrator --replicas=0
 
 docker build -t panorama.api -f .\src\Panorama.Web.Host\Dockerfile .
 kubectl apply -f .\kubernetes\api-manifest.yaml
-
-# USE PORT FORWARDING TO DIRECT THE API PORT HITTING THE CONTAINER TO THE API PORT INSIDE THE CONTAINER
-kubectl port-forward panorama-api-7977d4896-2cnpp  44311:44311
-                        ^ pod-id
 
 
 docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .
