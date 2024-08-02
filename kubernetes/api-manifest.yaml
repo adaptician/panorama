@@ -24,7 +24,7 @@ spec:
             - name: ConnectionStrings__Default
               value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true           
             - name: Kestrel__Endpoints__Http__Url
-              value: "http://+:80" # THIS IS EXTREMELY IMPORTANT
+              value: "http://+:80" # THIS IS EXTREMELY IMPORTANT!!!!!
           ports:
             - name: api
               containerPort: 80 # pod port
@@ -37,9 +37,9 @@ metadata:
 spec:
   selector:
     app: panorama-api
-  type: LoadBalancer
   ports:
     - name: api
       port: 44311 # exposed service port
       targetPort: 80 # pod port
       protocol: TCP
+  type: LoadBalancer # REMOVE for use in PROD ENV

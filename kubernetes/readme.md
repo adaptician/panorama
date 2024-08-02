@@ -91,6 +91,22 @@ Both deployment and service specs are included in a single manifest file. Apply 
 
 `kubectl apply -f .\kubernetes\app-manifest.yaml`
 
+# Additional Services
+
+## Rabbit MQ Service Bus
+RabbitMQ is used to faciliate inter-service communication.
+
+It is hosted using a Stateful Set, which provides stable network identities, ensuring that the pods get predictable hostnames and persistent storage, which is essential for RabbitMQ clusters.
+
+While this example uses a single replica, you can increase the replicas count for horizontal scaling. Ensure you configure RabbitMQ clustering appropriately.
+
+`kubectl apply -f .\kubernetes\bus-manifest.yaml`
+
+AMQP API: http://localhost:5672/
+Management API: http://localhost:15672/
+
+The default username / password is guest / guest.
+
 ## Switch project context
 In order to switch contexts to a different project, `localhost` needs to be freed up. Any services that exist in the cluster are likely bound to localhost, and will block other applications from using it.
 
@@ -118,6 +134,8 @@ docker build -t panorama.migrator -f .\src\Panorama.Migrator\Dockerfile .
 kubectl apply -f .\kubernetes\migrator-manifest.yaml
 
 kubectl scale deployment panorama-migrator --replicas=0
+
+kubectl apply -f .\kubernetes\bus-manifest.yaml
 
 
 docker build -t panorama.api -f .\src\Panorama.Web.Host\Dockerfile .

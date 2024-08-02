@@ -37,16 +37,16 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 10Gi
+            storage: 5Gi
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: mssqldb
 spec:
-  type: LoadBalancer
   ports:
     - port: 1433
       targetPort: 1433
   selector:
     app: mssqldb
+  type: LoadBalancer # REMOVE for use in PROD ENV
