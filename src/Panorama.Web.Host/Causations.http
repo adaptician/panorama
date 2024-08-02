@@ -1,0 +1,11 @@
+@Functions.Causation.HostAddress = http://localhost:7071/api
+
+### Submit a cause
+
+POST {{Functions.Causation.HostAddress}}/submit
+accept: */*
+Content-Type: application/json
+
+{
+  "id": "789456123"
+}
