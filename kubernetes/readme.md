@@ -91,6 +91,16 @@ Both deployment and service specs are included in a single manifest file. Apply 
 
 `kubectl apply -f .\kubernetes\app-manifest.yaml`
 
+## Setup the Causation API
+
+The causation API is responsible for Causation sourcing and validation.
+
+## Build the Docker image
+`docker build -t causation.api -f .\src\Panorama.Causation\Dockerfile .`
+
+## Deploy the deployment and service
+`kubectl apply -f .\kubernetes\causation-manifest.yaml`
+
 # Additional Services
 
 ## Rabbit MQ Service Bus
@@ -151,5 +161,5 @@ kubectl apply -f .\kubernetes\azurite-manifest.yaml             ????
 
 
 
-docker build -t panorama.causation.funcs -f .\src\Panorama.Functions.Causation\Dockerfile .
-kubectl apply -f .\kubernetes\funcs-manifest.yaml
+docker build -t causation.api -f .\src\Panorama.Causation\Dockerfile .
+kubectl apply -f .\kubernetes\causation-manifest.yaml

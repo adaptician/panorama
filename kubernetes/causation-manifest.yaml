@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: causation-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: causation-api
+      network: panorama
+  template:
+    metadata:
+      labels:
+        app: causation-api
+        network: panorama
+    spec:
+      containers:
+        - name: causation-api
+          image: docker.io/causation.api
+          imagePullPolicy: Never
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: Kestrel__Endpoints__Http__Url
+              value: "http://+:80" # THIS IS EXTREMELY IMPORTANT!!!!!
+          ports:
+            - name: api
+              containerPort: 80 # pod port
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: causation-api
+spec:
+  selector:
+    app: causation-api
+  ports:
+    - name: api
+      port: 7474 # exposed service port
+      targetPort: 80 # pod port
+      protocol: TCP
+  type: LoadBalancer # REMOVE for use in PROD ENV
