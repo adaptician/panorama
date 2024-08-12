@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "Panorama.Functions.Causation": {
-      "commandName": "Project",
-      "commandLineArgs": "--port 7043",
-      "launchBrowser": false
-    }
-  }
-}
