@@ -117,6 +117,19 @@ Management API: http://localhost:15672/
 
 The default username / password is guest / guest.
 
+## MongoDB
+MongoDB is used to persist data using NOSQL.
+
+It is hosted using a Stateful Set, which provides stable network identities, ensuring that the pods get predictable hostnames and persistent storage, which is essential for RabbitMQ clusters.
+
+While this example uses a single replica, you can increase the replicas count for horizontal scaling. Ensure you configure MongoDb clustering appropriately.
+
+`kubectl apply -f .\kubernetes\mongodb-manifest.yaml`
+
+Connection URI: http://localhost:27017/
+
+The default username / password is admin / admin
+
 ## Switch project context
 In order to switch contexts to a different project, `localhost` needs to be freed up. Any services that exist in the cluster are likely bound to localhost, and will block other applications from using it.
 
@@ -163,3 +176,6 @@ kubectl apply -f .\kubernetes\azurite-manifest.yaml             ????
 
 docker build -t causation.api -f .\src\Panorama.Causation\Dockerfile .
 kubectl apply -f .\kubernetes\causation-manifest.yaml
+
+
+kubectl apply -f .\kubernetes\mongodb-manifest.yaml
