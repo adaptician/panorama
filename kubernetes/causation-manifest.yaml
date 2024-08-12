@@ -20,7 +20,7 @@ spec:
           imagePullPolicy: Never
           env:
             - name: ASPNETCORE_ENVIRONMENT
-              value: Development
+              value: Staging
             - name: Kestrel__Endpoints__Http__Url
               value: "http://+:80" # THIS IS EXTREMELY IMPORTANT!!!!!
           ports:

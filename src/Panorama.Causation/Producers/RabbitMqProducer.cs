@@ -1,17 +1,29 @@
 ﻿using System.Text;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Panorama.Causation.Options;
 using RabbitMQ.Client;
 
 namespace Panorama.Causation.Producers;
 
 public class RabbitMqProducer : IRabbitMqProducer
 {
+    private readonly RabbitMqOptions _rabbitMqOptions;
+    
+    public RabbitMqProducer(ILogger<RabbitMqProducer> logger,
+        IOptions<RabbitMqOptions> rabbitMqOptions)
+    {
+        _rabbitMqOptions = rabbitMqOptions.Value;
+    }
+    
     public void SendProductMessage<T>(T message)
     {
         //Here we specify the Rabbit MQ Server. we use rabbitmq docker image and use it
         var factory = new ConnectionFactory
         {
-            HostName = "10.106.87.164" // service cluster IP
+            HostName = _rabbitMqOptions.HostName,
+            UserName = _rabbitMqOptions.UserName,
+            Password = _rabbitMqOptions.Password
         };
         //Create the RabbitMQ connection using connection factory details as i mentioned above
         var connection = factory.CreateConnection();
