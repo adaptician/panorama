@@ -20,7 +20,7 @@ spec:
           imagePullPolicy: Never
           env:
             - name: ASPNETCORE_ENVIRONMENT
-              value: Development
+              value: Staging
             - name: ConnectionStrings__Default
               value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true           
             - name: Kestrel__Endpoints__Http__Url
@@ -39,7 +39,7 @@ spec:
     app: panorama-api
   ports:
     - name: api
-      port: 44311 # exposed service port
+      port: 44312 # exposed service port
       targetPort: 80 # pod port
       protocol: TCP
   type: LoadBalancer # REMOVE for use in PROD ENV
