@@ -30,5 +30,5 @@ spec:
     app: panorama-app
   type: LoadBalancer
   ports:
-    - port: 4200 # exposed service port
+    - port: 4201 # exposed service port
       targetPort: 80 # pod port
