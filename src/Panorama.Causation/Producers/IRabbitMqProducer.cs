@@ -2,5 +2,5 @@
 
 public interface IRabbitMqProducer
 {
-    public void SendProductMessage < T > (T message);
+    public void SendProductMessage<T>(T message);
 }

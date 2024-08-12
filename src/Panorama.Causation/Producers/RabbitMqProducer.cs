@@ -6,6 +6,8 @@ using RabbitMQ.Client;
 
 namespace Panorama.Causation.Producers;
 
+// TODO: prepare this for causation
+
 public class RabbitMqProducer : IRabbitMqProducer
 {
     private readonly RabbitMqOptions _rabbitMqOptions;
