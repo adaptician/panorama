@@ -135,8 +135,6 @@ kubectl apply -f .\kubernetes\migrator-manifest.yaml
 
 kubectl scale deployment panorama-migrator --replicas=0
 
-kubectl apply -f .\kubernetes\bus-manifest.yaml
-
 
 docker build -t panorama.api -f .\src\Panorama.Web.Host\Dockerfile .
 kubectl apply -f .\kubernetes\api-manifest.yaml
@@ -144,3 +142,14 @@ kubectl apply -f .\kubernetes\api-manifest.yaml
 
 docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .
 kubectl apply -f .\kubernetes\app-manifest.yaml
+
+
+kubectl apply -f .\kubernetes\bus-manifest.yaml
+
+
+kubectl apply -f .\kubernetes\azurite-manifest.yaml             ????
+
+
+
+docker build -t panorama.causation.funcs -f .\src\Panorama.Functions.Causation\Dockerfile .
+kubectl apply -f .\kubernetes\funcs-manifest.yaml

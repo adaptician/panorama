@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-WORKDIR /deployed
 # Copy application files over to container.
+WORKDIR /deployed
 COPY ["src/Panorama.Web.Host/Panorama.Web.Host.csproj", "src/Panorama.Web.Host/"]
 COPY ["src/Panorama.Web.Core/Panorama.Web.Core.csproj", "src/Panorama.Web.Core/"]
 COPY ["src/Panorama.Application/Panorama.Application.csproj", "src/Panorama.Application/"]
@@ -20,8 +20,8 @@ COPY ["src/Panorama.Application", "src/Panorama.Application"]
 COPY ["src/Panorama.Core", "src/Panorama.Core"]
 COPY ["src/Panorama.EntityFrameworkCore", "src/Panorama.EntityFrameworkCore"]
 
-WORKDIR "/deployed/src/Panorama.Web.Host"
 # Publish application.
+WORKDIR "/deployed/src/Panorama.Web.Host"
 FROM build AS publish
 RUN dotnet publish -c Release -o /app/published --no-restore
 

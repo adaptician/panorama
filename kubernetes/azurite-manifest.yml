@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azurite
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: azurite
+      network: panorama
+  template:
+    metadata:
+      labels:
+        app: azurite
+      network: panorama
+    spec:
+      containers:
+      - name: azurite
+        image: mcr.microsoft.com/azure-storage/azurite
+        ports:
+        - containerPort: 10000
+          name: blob
+        - containerPort: 10001
+          name: queue
+        - containerPort: 10002
+          name: table
+        volumeMounts:
+          - name: azurite-data
+            mountPath: /mnt/data/azurite
+      volumes:
+        - name: azurite-data
+          persistentVolumeClaim:
+            claimName: azurite-pvc
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azurite-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: azurite-pv
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: azurite
+spec:
+  selector:
+    app: azurite
+  ports:
+    - protocol: TCP
+      port: 10000
+      targetPort: 10000
