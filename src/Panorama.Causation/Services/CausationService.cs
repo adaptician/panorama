@@ -1,7 +1,7 @@
 ﻿namespace Panorama.Causation.Services;
 
-public class ProductService: IProductService {
-    public ProductService() {
+public class CausationService: ICausationService {
+    public CausationService() {
     }
     
     private List<Product> _dummy = new ()

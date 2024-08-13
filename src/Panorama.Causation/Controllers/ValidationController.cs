@@ -9,30 +9,30 @@ namespace Panorama.Causation.Controllers;
 public class ValidationController : ControllerBase
 {
     private readonly ILogger<ValidationController> _logger;
-    private readonly IProductService _productService;
+    private readonly ICausationService _causationService;
     private readonly IRabbitMqProducer _rabbitMqProducer;
 
     public ValidationController(ILogger<ValidationController> logger, 
-        IProductService productService,
+        ICausationService causationService,
         IRabbitMqProducer rabbitMqProducer)
     {
         _logger = logger;
-        _productService = productService;
+        _causationService = causationService;
         _rabbitMqProducer = rabbitMqProducer;
     }
 
     [HttpGet("productlist")]
     public IEnumerable < Product > ProductList() {
-        var productList = _productService.GetProductList();
+        var productList = _causationService.GetProductList();
         return productList;
     }
     [HttpGet("getproductbyid")]
     public Product GetProductById(int Id) {
-        return _productService.GetProductById(Id);
+        return _causationService.GetProductById(Id);
     }
     [HttpPost("addproduct")]
     public Product AddProduct(Product product) {
-        var productData = _productService.AddProduct(product);
+        var productData = _causationService.AddProduct(product);
         //send the inserted product data to the queue and consumer will listening this data from queue
         _rabbitMqProducer.SendProductMessage(productData);
         return productData;

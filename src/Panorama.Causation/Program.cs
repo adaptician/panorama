@@ -14,7 +14,7 @@ builder.Services.AddOptions<RabbitMqOptions>()
 
 // Add services to the container.
 
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICausationService, CausationService>();
 builder.Services.AddScoped<IRabbitMqProducer, RabbitMqProducer>();
 
 builder.Services.AddControllers();
