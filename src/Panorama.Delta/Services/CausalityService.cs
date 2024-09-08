@@ -1,5 +1,6 @@
-﻿using Panorama.Delta.Shared.Requests;
-using Panorama.Delta.Shared.Services;
+﻿using Panorama.Delta.Shared.Causality;
+using Panorama.Delta.Shared.Causality.Requests;
+using Panorama.Delta.Shared.Causality.Responses;
 
 namespace Panorama.Causation.Services;
 
@@ -8,7 +9,7 @@ namespace Panorama.Causation.Services;
 /// </summary>
 public class CausalityService : ICausalityService
 {
-    public Task Get(IFilterCausalityRequest request)
+    public Task<IPaginatedCausalityResponse> Get(IFilterCausalityRequest request)
     {
         throw new NotImplementedException("TODO: implement GET paginated and filtered causality (3)");
         // MongoDb resource + entity + repository
@@ -16,13 +17,13 @@ public class CausalityService : ICausalityService
         // Permission? via ABP - now or later? A true test would be with the relay
     }
 
-    public Task Get(long id)
+    public Task<ICausality> Get(long id)
     {
         throw new NotImplementedException("TODO: implement GET one causality. (1)");
         // API test only
     }
 
-    public Task Validate(IValidateCausalityRequest request)
+    public Task<ICausalityValidationResponse> Validate(IValidateCausalityRequest request)
     {
         throw new NotImplementedException("TODO: implement VALIDATE causality. (3)");
         // BASIC FIRST!!!
@@ -30,7 +31,7 @@ public class CausalityService : ICausalityService
         // Think about how it will be triggered, and how to scoop extended logic.
     }
 
-    public Task Create(ICreateCausalityRequest request)
+    public Task<long> Create(ICreateCausalityRequest request)
     {
         throw new NotImplementedException("TODO: implement CREATE Causality. (2)");
         // into MongoDb
@@ -38,7 +39,7 @@ public class CausalityService : ICausalityService
         // Think about the payload - what needs to be persisted and in what format.
     }
 
-    public Task Update(IUpdateCausalityRequest request)
+    public Task<long> Update(IUpdateCausalityRequest request)
     {
         throw new NotImplementedException("TODO: implement UPDATE Causality. (2)");
         // from and into MongoDb

@@ -1,7 +1,7 @@
-﻿using Panorama.Delta.Shared.Requests;
-using Panorama.Delta.Shared.Responses;
+﻿using Panorama.Delta.Shared.Causation.Requests;
+using Panorama.Delta.Shared.Causation.Responses;
 
-namespace Panorama.Delta.Shared.Services;
+namespace Panorama.Delta.Shared.Causation;
 
 /// <summary>
 /// A Causation Service is a receiving service.

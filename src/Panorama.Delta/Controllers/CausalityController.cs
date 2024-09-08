@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Panorama.Delta.Shared.Controllers;
+using Panorama.Delta.Shared.Causality;
 
 namespace Panorama.Causation.Controllers;
 

@@ -1,9 +1,12 @@
-﻿using Panorama.Delta.Shared.Requests;
-using Panorama.Delta.Shared.Responses;
-using Panorama.Delta.Shared.Services;
+﻿using Panorama.Delta.Shared.Causation;
+using Panorama.Delta.Shared.Causation.Requests;
+using Panorama.Delta.Shared.Causation.Responses;
 
 namespace Panorama.Causation.Services;
 
+/// <summary>
+/// TODO: Causation service (5)
+/// </summary>
 public class CausationService : ICausationService
 {
     public Task<ICausedResponse> Submit(ICausedRequest request)

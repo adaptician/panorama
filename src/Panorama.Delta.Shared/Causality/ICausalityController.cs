@@ -1,4 +1,4 @@
-﻿namespace Panorama.Delta.Shared.Controllers;
+﻿namespace Panorama.Delta.Shared.Causality;
 
 /// <summary>
 /// The Causality Controller is responsible for exposing ICausalityService functionality for consumption.

@@ -1,0 +1,6 @@
+@Panorama.Teatro_HostAddress = http://localhost:5248
+
+GET {{Panorama.Teatro_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
