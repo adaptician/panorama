@@ -2,23 +2,24 @@
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Panorama.Causation.Options;
+using Panorama.Delta.Shared.Producers;
 using RabbitMQ.Client;
 
 namespace Panorama.Causation.Producers;
 
 // TODO: prepare this for causation
 
-public class RabbitMqProducer : IRabbitMqProducer
+public class CauseProducer : ICauseProducer
 {
     private readonly RabbitMqOptions _rabbitMqOptions;
     
-    public RabbitMqProducer(ILogger<RabbitMqProducer> logger,
+    public CauseProducer(ILogger<CauseProducer> logger,
         IOptions<RabbitMqOptions> rabbitMqOptions)
     {
         _rabbitMqOptions = rabbitMqOptions.Value;
     }
     
-    public void SendProductMessage<T>(T message)
+    public void SendMessage<T>(T message)
     {
         //Here we specify the Rabbit MQ Server. we use rabbitmq docker image and use it
         var factory = new ConnectionFactory

@@ -1,6 +1,7 @@
 using Panorama.Causation.Options;
 using Panorama.Causation.Producers;
 using Panorama.Causation.Services;
+using Panorama.Delta.Shared.Producers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +15,8 @@ builder.Services.AddOptions<RabbitMqOptions>()
 
 // Add services to the container.
 
-builder.Services.AddScoped<ICausationService, CausationService>();
-builder.Services.AddScoped<IRabbitMqProducer, RabbitMqProducer>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICauseProducer, CauseProducer>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

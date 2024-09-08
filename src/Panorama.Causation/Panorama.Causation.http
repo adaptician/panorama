@@ -1,6 +1,0 @@
-@Panorama.Causation_HostAddress = http://localhost:5199
-
-GET {{Panorama.Causation_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Panorama.Causation.Producers;
 using Panorama.Causation.Services;
+using Panorama.Delta.Shared.Producers;
 
 namespace Panorama.Causation.Controllers;
 
@@ -9,32 +10,32 @@ namespace Panorama.Causation.Controllers;
 public class ValidationController : ControllerBase
 {
     private readonly ILogger<ValidationController> _logger;
-    private readonly ICausationService _causationService;
-    private readonly IRabbitMqProducer _rabbitMqProducer;
+    private readonly IProductService _productService;
+    private readonly ICauseProducer _causeProducer;
 
     public ValidationController(ILogger<ValidationController> logger, 
-        ICausationService causationService,
-        IRabbitMqProducer rabbitMqProducer)
+        IProductService productService,
+        ICauseProducer causeProducer)
     {
         _logger = logger;
-        _causationService = causationService;
-        _rabbitMqProducer = rabbitMqProducer;
+        _productService = productService;
+        _causeProducer = causeProducer;
     }
 
     [HttpGet("productlist")]
     public IEnumerable < Product > ProductList() {
-        var productList = _causationService.GetProductList();
+        var productList = _productService.GetProductList();
         return productList;
     }
     [HttpGet("getproductbyid")]
     public Product GetProductById(int Id) {
-        return _causationService.GetProductById(Id);
+        return _productService.GetProductById(Id);
     }
     [HttpPost("addproduct")]
     public Product AddProduct(Product product) {
-        var productData = _causationService.AddProduct(product);
+        var productData = _productService.AddProduct(product);
         //send the inserted product data to the queue and consumer will listening this data from queue
-        _rabbitMqProducer.SendProductMessage(productData);
+        _causeProducer.SendMessage(productData);
         return productData;
     }
     

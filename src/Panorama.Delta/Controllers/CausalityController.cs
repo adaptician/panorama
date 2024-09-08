@@ -2,11 +2,11 @@
 
 namespace Panorama.Causation.Controllers;
 
-public class CausationController : ControllerBase
+public class CausalityController : ControllerBase
 {
-    private readonly ILogger<CausationController> _logger;
+    private readonly ILogger<CausalityController> _logger;
 
-    public CausationController(ILogger<CausationController> logger)
+    public CausalityController(ILogger<CausalityController> logger)
     {
         _logger = logger;
     }

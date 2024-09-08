@@ -1,6 +1,6 @@
 ﻿namespace Panorama.Causation.Services;
 
-public interface ICausationService {
+public interface IProductService {
     public IEnumerable < Product > GetProductList();
     public Product GetProductById(int id);
     public Product AddProduct(Product product);
