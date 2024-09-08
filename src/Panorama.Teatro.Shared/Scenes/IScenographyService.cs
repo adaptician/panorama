@@ -11,6 +11,12 @@ public interface IScenographyService
     Task<IPaginatedScenographyResponse> Get(IFilterScenographyRequest request);
 
     Task<IScenography> Get(long id);
+
+    Task Simulate(long id);
+
+    Task Join(long id);
+
+    Task Leave(long id);
     
     Task<long> Create(ICreateScenographyRequest request);
 
