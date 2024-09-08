@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Panorama.Delta.Shared.Controllers;
 
 namespace Panorama.Causation.Controllers;
 
-public class CausalityController : ControllerBase
+public class CausalityController : ControllerBase, ICausalityController
 {
     private readonly ILogger<CausalityController> _logger;
 
