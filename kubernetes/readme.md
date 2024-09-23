@@ -159,10 +159,12 @@ kubectl apply -f .\kubernetes\migrator-manifest.yaml
 kubectl scale deployment panorama-migrator --replicas=0
 
 
+PANORAMA API (http://localhost:44312/)
 docker build -t panorama.api -f .\src\Panorama.Web.Host\Dockerfile .
 kubectl apply -f .\kubernetes\api-manifest.yaml
 
 
+PANORAMA APP (http://localhost:4201/)
 docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .
 kubectl apply -f .\kubernetes\app-manifest.yaml
 

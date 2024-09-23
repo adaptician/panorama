@@ -1,0 +1,28 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.8 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.8">
+  <diagram name="Page-1" id="PSvizAib5za7cgvW6aUx">
+    <mxGraphModel dx="1260" dy="745" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cBVGtFT42uuwKuVqSY77-1" value="PRISM" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cBVGtFT42uuwKuVqSY77-2" value="Perspectives" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="110" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cBVGtFT42uuwKuVqSY77-3" value="TEATRO" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="80" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cBVGtFT42uuwKuVqSY77-4" value="Scenography" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="110" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cBVGtFT42uuwKuVqSY77-5" value="PANORAMA" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="400" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cBVGtFT42uuwKuVqSY77-6" value="Platform" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="430" width="120" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
