@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using Teatro.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 string sqlConnectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<TeatroDbContext>(options =>
     options.UseNpgsql(sqlConnectionString));
+
+string nosqlConnectionString = builder.Configuration.GetConnectionString("MongoDb");
+builder.Services.AddSingleton<IMongoClient>(provider => new MongoClient(nosqlConnectionString));
 
 // Add services to the container.
 builder.Services.AddAuthorization();
