@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teatro.EntityFrameworkCore"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teatro.Core", "src\Scenography\Teatro.Core\Teatro.Core.csproj", "{F144BE6F-5B2D-45B4-92AB-F82FC53AE2F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teatro.Shared", "src\Scenography\Teatro.Shared\Teatro.Shared.csproj", "{4EB43E3C-9A09-43C7-85EA-537CA1FADEE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{F144BE6F-5B2D-45B4-92AB-F82FC53AE2F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F144BE6F-5B2D-45B4-92AB-F82FC53AE2F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F144BE6F-5B2D-45B4-92AB-F82FC53AE2F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EB43E3C-9A09-43C7-85EA-537CA1FADEE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EB43E3C-9A09-43C7-85EA-537CA1FADEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EB43E3C-9A09-43C7-85EA-537CA1FADEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EB43E3C-9A09-43C7-85EA-537CA1FADEE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +123,7 @@ Global
 		{60425E78-22B1-4E5A-8D86-5FDCA6B5733C} = {9E9875FE-4FE3-4D74-8A83-AEA8519F7089}
 		{14D814E9-4B98-4F3C-978A-740D074FEBB4} = {9E9875FE-4FE3-4D74-8A83-AEA8519F7089}
 		{F144BE6F-5B2D-45B4-92AB-F82FC53AE2F7} = {9E9875FE-4FE3-4D74-8A83-AEA8519F7089}
+		{4EB43E3C-9A09-43C7-85EA-537CA1FADEE9} = {9E9875FE-4FE3-4D74-8A83-AEA8519F7089}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A55C749-0BFF-4EFD-8499-12A2CB3B5B07}

@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Teatro.Shared\Teatro.Shared.csproj" />
+    </ItemGroup>
+
 </Project>
