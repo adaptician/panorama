@@ -1,4 +1,4 @@
-﻿namespace Panorama.Teatro.Shared.Scenes;
+﻿namespace Teatro.Shared.Scenes.Requests;
 
 public interface IFilterScenographyRequest
 {

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teatro-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teatro-api
+      network: panorama
+  template:
+    metadata:
+      labels:
+        app: teatro-api
+        network: panorama
+    spec:
+      containers:
+        - name: teatro-api
+          image: docker.io/teatro.api
+          imagePullPolicy: Never
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Staging
+            - name: Kestrel__Endpoints__Http__Url
+              value: "http://+:80" # THIS IS EXTREMELY IMPORTANT!!!!!
+          ports:
+            - name: api
+              containerPort: 80 # pod port
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teatro-api
+spec:
+  selector:
+    app: teatro-api
+  ports:
+    - name: api
+      port: 8484 # exposed service port
+      targetPort: 80 # pod port
+      protocol: TCP
+  type: LoadBalancer # REMOVE for use in PROD ENV

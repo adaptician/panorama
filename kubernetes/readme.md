@@ -172,6 +172,9 @@ kubectl apply -f .\kubernetes\app-manifest.yaml
 TEATRO
 kubectl apply -f .\kubernetes\postgresdb-manifest.yaml
 
+docker build -t teatro.api -f .\src\Teatro.Api\Dockerfile .
+kubectl apply -f .\kubernetes\teatro-manifest.yaml
+
 
 kubectl apply -f .\kubernetes\bus-manifest.yaml
 
@@ -180,7 +183,7 @@ kubectl apply -f .\kubernetes\azurite-manifest.yaml             ????
 
 
 
-docker build -t causation.api -f .\src\Panorama.Causation\Dockerfile .
+docker build -t causation.api -f .\src\Panorama.Delta\Dockerfile .
 kubectl apply -f .\kubernetes\causation-manifest.yaml
 
 

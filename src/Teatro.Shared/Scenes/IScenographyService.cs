@@ -1,6 +1,7 @@
-﻿using Panorama.Teatro.Shared.Scenes.Responses;
+﻿using Teatro.Shared.Scenes.Requests;
+using Teatro.Shared.Scenes.Responses;
 
-namespace Panorama.Teatro.Shared.Scenes;
+namespace Teatro.Shared.Scenes;
 
 /// <summary>
 /// A Scenography service is a CRUD service.

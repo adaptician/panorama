@@ -33,9 +33,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Delta.Shared", "sr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scenography", "Scenography", "{819F5925-ED4E-4735-8CD1-3E854881BC55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Teatro.Api", "src\Panorama.Teatro.Api\Panorama.Teatro.Api.csproj", "{2B9093BD-F0F2-4F01-9BD5-9DB7C2F97C6F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teatro.Api", "src\Teatro.Api\Teatro.Api.csproj", "{2B9093BD-F0F2-4F01-9BD5-9DB7C2F97C6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Teatro.Shared", "src\Panorama.Teatro.Shared\Panorama.Teatro.Shared.csproj", "{E678FFA4-C9C9-4E1A-BCA9-182445896CB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teatro.Shared", "src\Teatro.Shared\Teatro.Shared.csproj", "{E678FFA4-C9C9-4E1A-BCA9-182445896CB4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teatro.Core", "src\Teatro.Core\Teatro.Core.csproj", "{0EE4ED4F-9FB1-43CC-B1BF-9BA479D3AED5}"
 EndProject

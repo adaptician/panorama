@@ -1,4 +1,4 @@
-﻿namespace Panorama.Teatro.Shared.Scenes.Responses;
+﻿namespace Teatro.Shared.Scenes.Responses;
 
 public interface IPaginatedScenographyResponse
 {

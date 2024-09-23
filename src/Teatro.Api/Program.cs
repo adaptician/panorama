@@ -3,6 +3,9 @@ using Teatro.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configRoot = (IConfigurationRoot) builder.Configuration;
+builder.Services.AddSingleton(configRoot);
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -16,7 +19,7 @@ builder.Services.AddDbContext<TeatroDbContext>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
