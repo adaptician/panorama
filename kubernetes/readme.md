@@ -184,7 +184,7 @@ docker build -t teatro.api -f .\src\Scenography\Teatro.Application\Dockerfile .
 kubectl apply -f .\kubernetes\teatro-manifest.yaml
 
 
-
+kubectl apply -f .\kubernetes\ingress-manifest.yaml
 
 
 kubectl apply -f .\kubernetes\bus-manifest.yaml

@@ -42,4 +42,5 @@ spec:
       port: 44312 # exposed service port
       targetPort: 80 # pod port
       protocol: TCP
-  type: LoadBalancer # REMOVE for use in PROD ENV
+  # type: LoadBalancer # REMOVE for use in PROD ENV
+  type: NodePort # ADD for use in PROD ENV

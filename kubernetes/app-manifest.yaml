@@ -28,7 +28,8 @@ metadata:
 spec:
   selector:
     app: panorama-app
-  type: LoadBalancer
   ports:
     - port: 4201 # exposed service port
       targetPort: 80 # pod port
+  # type: LoadBalancer # REMOVE for use in PROD ENV
+  type: NodePort # ADD for use in PROD ENV

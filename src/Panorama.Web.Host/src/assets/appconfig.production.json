@@ -1,6 +1,6 @@
 {
-  "remoteServiceBaseUrl": "http://localhost:44312",
-  "appBaseUrl": "http://localhost:4201",
+  "remoteServiceBaseUrl": "http://panorama.local",
+  "appBaseUrl": "http://panorama.local",
   "localeMappings": [
     {
       "from": "pt-BR",
