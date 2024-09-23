@@ -172,7 +172,7 @@ kubectl apply -f .\kubernetes\app-manifest.yaml
 TEATRO (http://localhost:8484/)
 kubectl apply -f .\kubernetes\postgresdb-manifest.yaml
 
-docker build -t teatro.api -f .\src\Teatro.Api\Dockerfile .
+docker build -t teatro.api -f .\src\Scenography\Teatro.Application\Dockerfile .
 kubectl apply -f .\kubernetes\teatro-manifest.yaml
 
 
