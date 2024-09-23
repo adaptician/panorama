@@ -8,6 +8,9 @@ ARG BUILD_CONFIGURATION=Release
 
 WORKDIR /src
 COPY ["src/Scenography/Teatro.Application/Teatro.Application.csproj", "src/Scenography/Teatro.Application/"]
+COPY ["src/Scenography/Teatro.Core/Teatro.Core.csproj", "src/Scenography/Teatro.Core/"]
+COPY ["src/Scenography/Teatro.EntityFrameworkCore/Teatro.EntityFrameworkCore.csproj", "src/Scenography/Teatro.EntityFrameworkCore/"]
+COPY ["src/Scenography/Teatro.Shared/Teatro.Shared.csproj", "src/Scenography/Teatro.Shared/"]
 
 # Restore Nuget packages.
 RUN dotnet restore "src/Scenography/Teatro.Application/Teatro.Application.csproj"
