@@ -26,7 +26,7 @@ spec:
             - name: POSTGRES_USER
               value: sa
             - name: POSTGRES_PASSWORD
-              value: VtQFhZ*mrnjtNPFFyp83aQUmjxW
+              value: RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm
           volumeMounts:
             - name: postgresdb-data
               mountPath: /var/lib/postgresql/data # Default install path for Postgres on Linux.
