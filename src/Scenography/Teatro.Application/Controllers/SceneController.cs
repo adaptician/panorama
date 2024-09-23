@@ -74,4 +74,39 @@ public class SceneController(
         var mapped = mapper.Map<ViewSceneDto>(persisted.Entity);
         return CreatedAtAction(nameof(Create), new { id = record.Id }, mapped);
     }
+    
+    // PUT: api/scenes/1
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(long id, [FromBody] UpdateSceneDto input)
+    {
+        var existingRecord = await context.Scenes.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+        if (existingRecord == null)
+        {
+            return NotFound();
+        }
+        
+        var updatedRecord = mapper.Map(input, existingRecord);
+        context.Scenes.Update(updatedRecord);
+        
+        await context.SaveChangesAsync();
+        logger.LogInformation($"{nameof(Scene)} Id: {id} updated.");
+        return NoContent();
+    }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(long id)
+    {
+        var existingRecord = await context.Scenes.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+        if (existingRecord == null)
+        {
+            return NotFound();
+        }
+
+        existingRecord.IsDeleted = true;
+        context.Update(existingRecord);
+        
+        await context.SaveChangesAsync();
+        logger.LogInformation($"{nameof(Scene)} Id: {id} deleted.");
+        return NoContent();
+    }
 }

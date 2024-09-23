@@ -2,7 +2,7 @@
 
 namespace Teatro.Shared.Scenes.Dtos;
 
-public class CreateSceneDto
+public class UpdateSceneDto
 {
     [Required(AllowEmptyStrings = false)]
     [MaxLength(SceneConstants.MaxNameLength)]
@@ -10,7 +10,4 @@ public class CreateSceneDto
     
     [MaxLength(SceneConstants.MaxDescriptionLength)]
     public string Description { get; set; }
-    
-    [MaxLength(SceneConstants.MaxInitialSceneDataLength)]
-    public string InitialSceneData { get; set; }
 }
