@@ -22,6 +22,12 @@
         <mxCell id="cBVGtFT42uuwKuVqSY77-6" value="Platform" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="440" y="430" width="120" height="40" as="geometry" />
         </mxCell>
+        <mxCell id="cBVGtFT42uuwKuVqSY77-7" value="DOMINO" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="250" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cBVGtFT42uuwKuVqSY77-8" value="Causality" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="280" width="120" height="40" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

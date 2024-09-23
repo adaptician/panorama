@@ -33,9 +33,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Delta.Shared", "sr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scenography", "Scenography", "{819F5925-ED4E-4735-8CD1-3E854881BC55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Teatro", "src\Panorama.Teatro\Panorama.Teatro.csproj", "{2B9093BD-F0F2-4F01-9BD5-9DB7C2F97C6F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Teatro.Api", "src\Panorama.Teatro.Api\Panorama.Teatro.Api.csproj", "{2B9093BD-F0F2-4F01-9BD5-9DB7C2F97C6F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Teatro.Shared", "src\Panorama.Teatro.Shared\Panorama.Teatro.Shared.csproj", "{E678FFA4-C9C9-4E1A-BCA9-182445896CB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teatro.Core", "src\Teatro.Core\Teatro.Core.csproj", "{0EE4ED4F-9FB1-43CC-B1BF-9BA479D3AED5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teatro.EntityFrameworkCore", "src\Teatro.EntityFrameworkCore\Teatro.EntityFrameworkCore.csproj", "{7719C461-DAF8-4C98-9F24-61CFBFCF289A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +95,14 @@ Global
 		{E678FFA4-C9C9-4E1A-BCA9-182445896CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E678FFA4-C9C9-4E1A-BCA9-182445896CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E678FFA4-C9C9-4E1A-BCA9-182445896CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EE4ED4F-9FB1-43CC-B1BF-9BA479D3AED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EE4ED4F-9FB1-43CC-B1BF-9BA479D3AED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EE4ED4F-9FB1-43CC-B1BF-9BA479D3AED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EE4ED4F-9FB1-43CC-B1BF-9BA479D3AED5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7719C461-DAF8-4C98-9F24-61CFBFCF289A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7719C461-DAF8-4C98-9F24-61CFBFCF289A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7719C461-DAF8-4C98-9F24-61CFBFCF289A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7719C461-DAF8-4C98-9F24-61CFBFCF289A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,6 +122,8 @@ Global
 		{819F5925-ED4E-4735-8CD1-3E854881BC55} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
 		{2B9093BD-F0F2-4F01-9BD5-9DB7C2F97C6F} = {819F5925-ED4E-4735-8CD1-3E854881BC55}
 		{E678FFA4-C9C9-4E1A-BCA9-182445896CB4} = {819F5925-ED4E-4735-8CD1-3E854881BC55}
+		{0EE4ED4F-9FB1-43CC-B1BF-9BA479D3AED5} = {819F5925-ED4E-4735-8CD1-3E854881BC55}
+		{7719C461-DAF8-4C98-9F24-61CFBFCF289A} = {819F5925-ED4E-4735-8CD1-3E854881BC55}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A55C749-0BFF-4EFD-8499-12A2CB3B5B07}

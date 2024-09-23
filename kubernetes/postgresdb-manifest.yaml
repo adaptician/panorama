@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgresdb
+spec:
+  serviceName: "postgresdb"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresdb
+      network: panorama
+  template:
+    metadata:
+      labels:
+        app: postgresdb
+        network: panorama
+    spec:
+      containers:
+        - name: postgresdb
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: Thespis
+            - name: POSTGRES_USER
+              value: sa
+            - name: POSTGRES_PASSWORD
+              value: VtQFhZ*mrnjtNPFFyp83aQUmjxW
+          volumeMounts:
+            - name: postgresdb-data
+              mountPath: /var/lib/postgresql/data # Default install path for Postgres on Linux.
+              # This is used to create a sync between db files and the persisted volume.
+  volumeClaimTemplates:
+    - metadata:
+        name: postgresdb-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresdb
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: postgresdb
+  type: LoadBalancer # REMOVE for use in PROD ENV

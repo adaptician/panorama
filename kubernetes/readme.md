@@ -169,6 +169,10 @@ docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .
 kubectl apply -f .\kubernetes\app-manifest.yaml
 
 
+TEATRO
+kubectl apply -f .\kubernetes\postgresdb-manifest.yaml
+
+
 kubectl apply -f .\kubernetes\bus-manifest.yaml
 
 
