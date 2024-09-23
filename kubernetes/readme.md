@@ -169,7 +169,7 @@ docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .
 kubectl apply -f .\kubernetes\app-manifest.yaml
 
 
-TEATRO
+TEATRO (http://localhost:8484/)
 kubectl apply -f .\kubernetes\postgresdb-manifest.yaml
 
 docker build -t teatro.api -f .\src\Teatro.Api\Dockerfile .
@@ -182,7 +182,7 @@ kubectl apply -f .\kubernetes\bus-manifest.yaml
 kubectl apply -f .\kubernetes\azurite-manifest.yaml             ????
 
 
-
+DOMINO (http://localhost:7474)
 docker build -t causation.api -f .\src\Panorama.Delta\Dockerfile .
 kubectl apply -f .\kubernetes\causation-manifest.yaml
 
