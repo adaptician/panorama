@@ -7,4 +7,9 @@ namespace Teatro.Core.Scenography;
 public class Scenography : FullyAuditedEntity<long>
 {
     public Guid DocumentId { get; set; } = Guid.NewGuid();
+
+    public Scenography()
+    {
+        CreationTime = DateTime.UtcNow;
+    }
 }

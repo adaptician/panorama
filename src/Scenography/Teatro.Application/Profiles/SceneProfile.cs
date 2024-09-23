@@ -11,6 +11,9 @@ public class SceneProfile : Profile
         #region Scene
 
         CreateMap<Scene, ViewSceneDto>();
+        
+        CreateMap<CreateSceneDto, Scene>()
+            .ForMember(dest => dest.CreationTime, opt => opt.MapFrom(src => DateTime.UtcNow));
 
         #endregion
     }
