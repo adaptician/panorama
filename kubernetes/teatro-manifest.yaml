@@ -21,6 +21,10 @@ spec:
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Staging
+            - name: ConnectionStrings__Default
+              value: Host=postgresdb;Database=Thespis;Username=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm
+            - name: ConnectionStrings__MongoDb
+              value: mongodb://admin:admin@mongodb:27017/ 
             - name: Kestrel__Endpoints__Http__Url
               value: "http://+:80" # THIS IS EXTREMELY IMPORTANT!!!!!
           ports:

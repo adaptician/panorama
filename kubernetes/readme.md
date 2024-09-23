@@ -126,9 +126,11 @@ While this example uses a single replica, you can increase the replicas count fo
 
 `kubectl apply -f .\kubernetes\mongodb-manifest.yaml`
 
-Connection URI: http://localhost:27017/
+Connection string: `mongodb://admin:admin@localhost:27017/`
 
 The default username / password is admin / admin
+
+All collections will be automatically provisioned by the driver Nuget package.
 
 ## Switch project context
 In order to switch contexts to a different project, `localhost` needs to be freed up. Any services that exist in the cluster are likely bound to localhost, and will block other applications from using it.
@@ -151,6 +153,9 @@ kubectl config set-context --current --namespace=panorama
 
 kubectl apply -f .\kubernetes\networkpolicy.yaml
 
+
+PANORAMA API (http://localhost:44312/)
+
 kubectl apply -f .\kubernetes\mssqldb-manifest.yaml
 
 docker build -t panorama.migrator -f .\src\Panorama.Migrator\Dockerfile .
@@ -158,22 +163,28 @@ kubectl apply -f .\kubernetes\migrator-manifest.yaml
 
 kubectl scale deployment panorama-migrator --replicas=0
 
-
-PANORAMA API (http://localhost:44312/)
 docker build -t panorama.api -f .\src\Panorama.Web.Host\Dockerfile .
 kubectl apply -f .\kubernetes\api-manifest.yaml
 
 
+
 PANORAMA APP (http://localhost:4201/)
+
 docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .
 kubectl apply -f .\kubernetes\app-manifest.yaml
 
 
-TEATRO (http://localhost:8484/)
+
+TEATRO API (http://localhost:8484/)
+
+kubectl apply -f .\kubernetes\mongodb-manifest.yaml
 kubectl apply -f .\kubernetes\postgresdb-manifest.yaml
 
 docker build -t teatro.api -f .\src\Scenography\Teatro.Application\Dockerfile .
 kubectl apply -f .\kubernetes\teatro-manifest.yaml
+
+
+
 
 
 kubectl apply -f .\kubernetes\bus-manifest.yaml
