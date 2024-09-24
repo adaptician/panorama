@@ -21,6 +21,8 @@ spec:
         env:
         - name: ASPNETCORE_Docker_Enabled
           value: "true"
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Staging
         - name: ConnectionStrings__Default
           value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true
       restartPolicy: Always
