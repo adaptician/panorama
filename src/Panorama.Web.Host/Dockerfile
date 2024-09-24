@@ -1,9 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /deployed
 
-# Expose service ports.
-EXPOSE 80 443
-
 # Copy application files over to container.
 COPY ["src/Panorama.Web.Host/Panorama.Web.Host.csproj", "src/Panorama.Web.Host/"]
 COPY ["src/Panorama.Web.Core/Panorama.Web.Core.csproj", "src/Panorama.Web.Core/"]
@@ -34,5 +31,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 # Copy release files to working location.
 COPY --from=publish /app/published .
+
+# Expose service ports.
+EXPOSE 80 443
 
 ENTRYPOINT ["dotnet", "Panorama.Web.Host.dll"]

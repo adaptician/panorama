@@ -161,24 +161,72 @@ Add a rule to route the DNS to localhost:
 ## For Local Development
 Make use of `mkcert` to manage certificates locally.
 
-`mcert -install`
+`mkcert -install`
 
-Creates 2 PEM files, and can add a password later using OpenSSL:
-~~`mkcert panorama.local *.panorama.local`~~
+Generate certificate as PEM files:
+`mkcert panorama.local *.panorama.local`
 
-No password option, but straight to PFX:
+Create a secret in the cluster that stores the TLS certificate:
+`kubectl create secret tls tls-secret --cert=.\kubernetes\certs\panorama.local.pem --key=.\kubernetes\certs\panorama.local-key.pem`
+
+Refer to the [documentation](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/endpoints?view=aspnetcore-8.0) when setting up the certificate resolution to Kestrel:
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Http": {
+        "Url": "http://localhost:5000"
+      },
+      "HttpsInlineCertFile": {
+        "Url": "https://localhost:5001",
+        "Certificate": {
+          "Path": "<path to .pfx file>",
+          "Password": "$CREDENTIAL_PLACEHOLDER$"
+        }
+      },
+      "HttpsInlineCertAndKeyFile": {
+        "Url": "https://localhost:5002",
+        "Certificate": {
+          "Path": "<path to .pem/.crt file>",
+          "KeyPath": "<path to .key file>",
+          "Password": "$CREDENTIAL_PLACEHOLDER$"
+        }
+      },
+      "HttpsInlineCertStore": {
+        "Url": "https://localhost:5003",
+        "Certificate": {
+          "Subject": "<subject; required>",
+          "Store": "<certificate store; required>",
+          "Location": "<location; defaults to CurrentUser>",
+          "AllowInvalid": "<true or false; defaults to false>"
+        }
+      },
+      "HttpsDefaultCert": {
+        "Url": "https://localhost:5004"
+      }
+    },
+    "Certificates": {
+      "Default": {
+        "Path": "<path to .pfx file>",
+        "Password": "$CREDENTIAL_PLACEHOLDER$"
+      }
+    }
+  }
+}
+```
+
+It is also possible to generate a PFX file:
 `mkcert -pkcs12 panorama.local *.panorama.local`
 
-This will 
-
-Move the certificates, or change the paths used below:
-~~`kubectl create secret tls tls-secret --cert=.\kubernetes\certs\panorama.local.pem --key=.\kubernetes\certs\panorama.local-key.pem`~~
-
-EXCEPT THAT THE CONTAINER IS CONFIGURED TOWARDS PFX, and you can store that:
+You can store the PFX as a generic secret, but this didn't seem to work:
 `kubectl create secret generic tls-secret --from-file=panorama.local.pfx`
 
-If you get stuck with 2 PEM files, you can convert them to PFX:
+If you get stuck with 2 PEM files, and you need to convert them to PFX:
 `openssl pkcs12 -export -out app.local.pfx -inkey app.local-key.pem -in app.local.pem -password pass:yourpassword`
+
+Verify certificate contents:
+`openssl x509 -in app.local.pem -text -noout`
 
 ## Switch project context
 In order to switch contexts to a different project, `localhost` needs to be freed up. Any services that exist in the cluster are likely bound to localhost, and will block other applications from using it.
@@ -194,6 +242,9 @@ If you are in a different namespace (eg. you switched and forgot to clear the se
 
 #### Declare the target namespace in the command
 `kubectl delete svc --all --namespace=panorama` OR `kubectl delete svc --all -n=panorama`
+
+# Bash into Pod to Debug
+`kubectl exec --stdin --tty <pod_name> -- /bin/bash`
 
 # Quickfire section
 

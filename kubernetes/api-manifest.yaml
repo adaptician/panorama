@@ -26,10 +26,14 @@ spec:
               value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true           
             - name: Kestrel__Endpoints__Http__Url
               value: "http://+:80" # THIS IS EXTREMELY IMPORTANT!!!!!
-            - name: ASPNETCORE_Kestrel__Certificates__Default__Path
-              value: "/https/panorama.local.pfx"  # Path to certificate inside container
-            - name: ASPNETCORE_Kestrel__Certificates__Default__Password
-              value: "!9zHYVmoME-sT6B-7XtwqNRE6aF"  # Cert password
+            - name: Kestrel__HttpsInlineCertAndKeyFile__Url
+              value: "https://+:443" # THIS IS EXTREMELY IMPORTANT!!!!!
+            - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__Path
+              value: "/https/tls.cert"  # Path to .PEM certificate inside container
+            - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__KeyPath
+              value: "/https/tls.key"  # Path to key.PEM certificate inside container
+            - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__Password
+              value: ""  # Cert password
           volumeMounts:
             - name: https-cert
               mountPath: /https  # Mount volume for the cert
