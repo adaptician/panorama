@@ -84,6 +84,9 @@ Typically we expose both HTTP (80) and HTTPS (443) ports.
 
 The app is using an NGINX load balancer to act as the web server.
 
+Note: nginx is being used simply to serve the files (static file server), rather than a load balancer.
+Traffic is managed by the Ingress.
+
 `docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .`
 
 ### Create a deployment and service
@@ -131,6 +134,51 @@ Connection string: `mongodb://admin:admin@localhost:27017/`
 The default username / password is admin / admin
 
 All collections will be automatically provisioned by the driver Nuget package.
+
+# Resolve a DNS
+Update the following environment files with the DNS:
+
+ABP Host API:
+`src/Panorama.Web.Host/appsettings.<ENV>.json`
+Angular Client APP (always production file):
+`src/Panorama.Web.Host/src/assets/appconfig.production.json`
+
+## For Local Development
+For Windows, go and update your host file:
+
+Add a rule to route the DNS to localhost:
+`127.0.0.1 panorama.local`
+
+### DNS per Ingress
+```
+127.0.0.1     panorama.local
+127.0.0.1     serve.panorama.local
+127.0.0.1     scenography.panorama.local
+```
+
+# Secure the Application via HTTPS
+
+## For Local Development
+Make use of `mkcert` to manage certificates locally.
+
+`mcert -install`
+
+Creates 2 PEM files, and can add a password later using OpenSSL:
+~~`mkcert panorama.local *.panorama.local`~~
+
+No password option, but straight to PFX:
+`mkcert -pkcs12 panorama.local *.panorama.local`
+
+This will 
+
+Move the certificates, or change the paths used below:
+~~`kubectl create secret tls tls-secret --cert=.\kubernetes\certs\panorama.local.pem --key=.\kubernetes\certs\panorama.local-key.pem`~~
+
+EXCEPT THAT THE CONTAINER IS CONFIGURED TOWARDS PFX, and you can store that:
+`kubectl create secret generic tls-secret --from-file=panorama.local.pfx`
+
+If you get stuck with 2 PEM files, you can convert them to PFX:
+`openssl pkcs12 -export -out app.local.pfx -inkey app.local-key.pem -in app.local.pem -password pass:yourpassword`
 
 ## Switch project context
 In order to switch contexts to a different project, `localhost` needs to be freed up. Any services that exist in the cluster are likely bound to localhost, and will block other applications from using it.

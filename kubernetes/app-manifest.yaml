@@ -19,7 +19,8 @@ spec:
           image: docker.io/panorama.app
           imagePullPolicy: Never
           ports:
-            - containerPort: 80 # pod port
+            - name: http
+              containerPort: 80 # pod port - NGINX serves on port 80
 ---
 apiVersion: v1
 kind: Service
@@ -31,5 +32,6 @@ spec:
   ports:
     - port: 4201 # exposed service port
       targetPort: 80 # pod port
+      protocol: TCP
   # type: LoadBalancer # REMOVE for use in PROD ENV
-  type: NodePort # ADD for use in PROD ENV
+  type: ClusterIP # ADD for use in PROD ENV

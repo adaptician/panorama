@@ -28,8 +28,10 @@ spec:
             - name: Kestrel__Endpoints__Http__Url
               value: "http://+:80" # THIS IS EXTREMELY IMPORTANT!!!!!
           ports:
-            - name: api
+            - name: http
               containerPort: 80 # pod port
+            - name: https
+              containerPort: 443
       restartPolicy: Always
 ---
 apiVersion: v1

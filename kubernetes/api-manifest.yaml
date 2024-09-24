@@ -14,6 +14,7 @@ spec:
         app: panorama-api
         network: panorama
     spec:
+      restartPolicy: Always
       containers:
         - name: panorama-api
           image: docker.io/panorama.api
@@ -25,10 +26,22 @@ spec:
               value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true           
             - name: Kestrel__Endpoints__Http__Url
               value: "http://+:80" # THIS IS EXTREMELY IMPORTANT!!!!!
+            - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+              value: "/https/panorama.local.pfx"  # Path to certificate inside container
+            - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+              value: "!9zHYVmoME-sT6B-7XtwqNRE6aF"  # Cert password
+          volumeMounts:
+            - name: https-cert
+              mountPath: /https  # Mount volume for the cert
           ports:
-            - name: api
+            - name: http
               containerPort: 80 # pod port
-      restartPolicy: Always
+            - name: https
+              containerPort: 443 # pod port
+      volumes:
+        - name: https-cert
+          secret:
+            secretName: tls-secret  # Kubernetes secret storing the certificate      
 ---
 apiVersion: v1
 kind: Service
@@ -38,9 +51,13 @@ spec:
   selector:
     app: panorama-api
   ports:
-    - name: api
-      port: 44312 # exposed service port
-      targetPort: 80 # pod port
+    - name: http
       protocol: TCP
+      port: 80 # exposed service port
+      targetPort: 80 # pod port
+    - name: https
+      protocol: TCP
+      port: 443 # exposed service port
+      targetPort: 443 # pod port  
   # type: LoadBalancer # REMOVE for use in PROD ENV
-  type: NodePort # ADD for use in PROD ENV
+  type: ClusterIP # ADD for use in PROD ENV

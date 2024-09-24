@@ -24,7 +24,7 @@ COPY --from=build /app/wwwroot/dist /usr/share/nginx/html
 COPY src/Panorama.Web.Host/nginx.conf /etc/nginx/nginx.conf
 COPY src/Panorama.Web.Host/fast-nginx-default.conf /etc/nginx/fast-nginx-default.conf
 
-# Expose port 80
+# Expose service ports.
 EXPOSE 80
 
 # Start Nginx server
