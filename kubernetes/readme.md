@@ -162,7 +162,7 @@ Add a rule to route the DNS to localhost:
 # Secure the Application via HTTPS
 
 ## For Local Development
-Make use of `mkcert` to manage certificates locally.
+Make use of [mkcert](https://github.com/FiloSottile/mkcert) to manage certificates locally.
 
 `mkcert -install`
 
