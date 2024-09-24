@@ -4,7 +4,7 @@ metadata:
   name: panorama-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "true" # This is very important!
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true" # Resolves 443 to 80
 spec:
   ingressClassName: nginx
   rules:
@@ -41,4 +41,4 @@ spec:
   tls:
     - hosts:
         - "*.panorama.local"
-      secretName: tls-secret  # Secret with your certificate
+      secretName: tls-secret  # Kubernetes secret storing the certificate

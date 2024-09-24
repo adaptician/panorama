@@ -25,9 +25,9 @@ spec:
             - name: ConnectionStrings__Default
               value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true           
             - name: Kestrel__Endpoints__Http__Url
-              value: "http://+:80" # THIS IS EXTREMELY IMPORTANT!!!!!
+              value: "http://+:80"
             - name: Kestrel__HttpsInlineCertAndKeyFile__Url
-              value: "https://+:443" # THIS IS EXTREMELY IMPORTANT!!!!!
+              value: "https://+:443"
             - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__Path
               value: "/https/tls.cert"  # Path to .PEM certificate inside container
             - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__KeyPath
@@ -62,6 +62,5 @@ spec:
     - name: https
       protocol: TCP
       port: 443 # exposed service port
-      targetPort: 443 # pod port  
-  # type: LoadBalancer # REMOVE for use in PROD ENV
-  type: ClusterIP # ADD for use in PROD ENV
+      targetPort: 443 # pod port 
+  type: ClusterIP

@@ -33,5 +33,4 @@ spec:
     - port: 80 # exposed service port
       targetPort: 80 # pod port
       protocol: TCP
-  # type: LoadBalancer # REMOVE for use in PROD ENV
-  type: ClusterIP # ADD for use in PROD ENV
+  type: ClusterIP
