@@ -252,6 +252,8 @@ kubectl config set-context --current --namespace=panorama
 
 kubectl apply -f .\kubernetes\networkpolicy.yaml
 
+kubectl create secret tls tls-secret --cert=.\kubernetes\certs\panorama.local.pem --key=.\kubernetes\certs\panorama.local-key.pem
+
 
 PANORAMA API (http://localhost:44312/)
 
