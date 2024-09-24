@@ -1,7 +1,12 @@
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER $APP_UID
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /deployed
+
+ARG BUILD_CONFIGURATION=Release
 
 # Copy application files over to container.
+WORKDIR /deployed
 COPY ["src/Panorama.Web.Host/Panorama.Web.Host.csproj", "src/Panorama.Web.Host/"]
 COPY ["src/Panorama.Web.Core/Panorama.Web.Core.csproj", "src/Panorama.Web.Core/"]
 COPY ["src/Panorama.Application/Panorama.Application.csproj", "src/Panorama.Application/"]
@@ -20,16 +25,20 @@ COPY ["src/Panorama.Application", "src/Panorama.Application"]
 COPY ["src/Panorama.Core", "src/Panorama.Core"]
 COPY ["src/Panorama.EntityFrameworkCore", "src/Panorama.EntityFrameworkCore"]
 
+# Build the application.
+WORKDIR "/deployed/src/Panorama.Web.Host"
+RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
+
 # Publish application.
 WORKDIR "/deployed/src/Panorama.Web.Host"
 FROM build AS publish
-RUN dotnet publish -c Release -o /app/published --no-restore
+RUN dotnet publish -c $BUILD_CONFIGURATION -o /app/published /p:UseAppHost=false --no-restore
 
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+FROM base AS final
 
-WORKDIR /app
 # Copy release files to working location.
+WORKDIR /app
 COPY --from=publish /app/published .
 
 # Expose service ports.
