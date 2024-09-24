@@ -27,7 +27,7 @@ spec:
             service:
               name: panorama-app
               port:
-                number: 4201
+                number: 80
     - host: "scenography.panorama.local"
       http:
         paths:

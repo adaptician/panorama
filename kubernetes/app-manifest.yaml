@@ -30,7 +30,7 @@ spec:
   selector:
     app: panorama-app
   ports:
-    - port: 4201 # exposed service port
+    - port: 80 # exposed service port
       targetPort: 80 # pod port
       protocol: TCP
   # type: LoadBalancer # REMOVE for use in PROD ENV
