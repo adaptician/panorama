@@ -143,6 +143,9 @@ ABP Host API:
 Angular Client APP (always production file):
 `src/Panorama.Web.Host/src/assets/appconfig.production.json`
 
+## Apply an Ingress Controller
+`kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud/deploy.yaml`
+
 ## For Local Development
 For Windows, go and update your host file:
 
