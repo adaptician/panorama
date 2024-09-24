@@ -4,7 +4,6 @@ metadata:
   name: panorama-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    # nginx.ingress.kubernetes.io/ssl-redirect: "true" # Resolves 443 to 80
 spec:
   ingressClassName: nginx
   rules:
@@ -37,7 +36,7 @@ spec:
             service:
               name: teatro-api
               port:
-                number: 8484
+                number: 80
   tls:
     - hosts:
         - "*.panorama.local"

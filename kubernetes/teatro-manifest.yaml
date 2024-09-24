@@ -14,6 +14,7 @@ spec:
         app: teatro-api
         network: panorama
     spec:
+      restartPolicy: Always
       containers:
         - name: teatro-api
           image: docker.io/teatro.api
@@ -26,13 +27,27 @@ spec:
             - name: ConnectionStrings__MongoDb
               value: mongodb://admin:admin@mongodb:27017/ 
             - name: Kestrel__Endpoints__Http__Url
-              value: "http://+:80" # THIS IS EXTREMELY IMPORTANT!!!!!
+              value: "http://+:80"
+            - name: Kestrel__HttpsInlineCertAndKeyFile__Url
+              value: "https://+:443"
+            - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__Path
+              value: "/https/tls.cert"  # Path to .PEM certificate inside container
+            - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__KeyPath
+              value: "/https/tls.key"  # Path to key.PEM certificate inside container
+            - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__Password
+              value: ""  # Cert password
+          volumeMounts:
+            - name: https-cert
+              mountPath: /https  # Mount volume for the cert
           ports:
             - name: http
               containerPort: 80 # pod port
             - name: https
               containerPort: 443
-      restartPolicy: Always
+      volumes:
+        - name: https-cert
+          secret:
+            secretName: tls-secret  # Kubernetes secret storing the certificate 
 ---
 apiVersion: v1
 kind: Service
@@ -42,9 +57,12 @@ spec:
   selector:
     app: teatro-api
   ports:
-    - name: api
-      port: 8484 # exposed service port
-      targetPort: 80 # pod port
+    - name: http
       protocol: TCP
-  # type: LoadBalancer # REMOVE for use in PROD ENV
-  type: NodePort # ADD for use in PROD ENV
+      port: 80 # exposed service port
+      targetPort: 80 # pod port
+    - name: https
+      protocol: TCP
+      port: 443 # exposed service port
+      targetPort: 443 # pod port 
+  type: ClusterIP
