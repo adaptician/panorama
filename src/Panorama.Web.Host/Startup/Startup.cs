@@ -17,7 +17,6 @@ using Panorama.Identity;
 using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.IO;
 
 namespace Panorama.Web.Host.Startup
 {
