@@ -117,5 +117,10 @@
     <text name="ResetPasswordStepOneInfo">1. Enter your administrator password</text>
     <text name="ResetPasswordStepTwoInfo">2. Copy this random password so you can send it to the user</text>
     <text name="UsersActivation">Users activation</text>
+    
+    <text name="SimulationsFeature">Simulations</text>
+    <text name="SimulationsFeatureDescription">Interactive simulations</text>
+    <text name="Permission_Simulations">Simulations</text>
+    <text name="MenuItem_Simulations">Simulations</text>
   </texts>
 </localizationDictionary>

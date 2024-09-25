@@ -13,6 +13,9 @@ namespace Panorama
         public override void PreInitialize()
         {
             Configuration.Authorization.Providers.Add<PanoramaAuthorizationProvider>();
+            
+            // Register custom services.
+            PreInitializeCustom();
         }
 
         public override void Initialize()
@@ -25,6 +28,12 @@ namespace Panorama
                 // Scan the assembly for classes which inherit from AutoMapper.Profile
                 cfg => cfg.AddMaps(thisAssembly)
             );
+        }
+
+        private void PreInitializeCustom()
+        {
+            Configuration.Authorization.Providers.Remove<PanoramaAuthorizationProvider>();
+            Configuration.Authorization.Providers.Add<ExtendedPanoramaAuthorizationProvider>();
         }
     }
 }

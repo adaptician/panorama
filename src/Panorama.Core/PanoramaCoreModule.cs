@@ -8,6 +8,7 @@ using Abp.Zero.Configuration;
 using Panorama.Authorization.Roles;
 using Panorama.Authorization.Users;
 using Panorama.Configuration;
+using Panorama.Features;
 using Panorama.Localization;
 using Panorama.MultiTenancy;
 using Panorama.Timing;
@@ -40,6 +41,9 @@ namespace Panorama
             
             Configuration.Settings.SettingEncryptionConfiguration.DefaultPassPhrase = PanoramaConsts.DefaultPassPhrase;
             SimpleStringCipher.DefaultPassPhrase = PanoramaConsts.DefaultPassPhrase;
+            
+            // Register custom services.
+            PreInitializeCustom();
         }
 
         public override void Initialize()
@@ -50,6 +54,11 @@ namespace Panorama
         public override void PostInitialize()
         {
             IocManager.Resolve<AppTimes>().StartupTime = Clock.Now;
+        }
+
+        private void PreInitializeCustom()
+        {
+            Configuration.Features.Providers.Add<PanoramaFeatureProvider>();
         }
     }
 }

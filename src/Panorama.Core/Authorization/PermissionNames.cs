@@ -8,5 +8,11 @@
         public const string Pages_Users_Activation = "Pages.Users.Activation";
 
         public const string Pages_Roles = "Pages.Roles";
+
+        #region Extended
+
+        public const string Pages_Tenant_Simulations = "Pages.Tenant.Simulations";
+
+        #endregion
     }
 }
