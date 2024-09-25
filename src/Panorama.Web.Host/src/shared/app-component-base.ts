@@ -11,6 +11,7 @@ import {
 } from 'abp-ng2-module';
 
 import { AppSessionService } from '@shared/session/app-session.service';
+import {AutoMapper} from "@shared/service-proxies/common/AutoMapper";
 
 export abstract class AppComponentBase {
 
@@ -26,6 +27,8 @@ export abstract class AppComponentBase {
     appSession: AppSessionService;
     elementRef: ElementRef;
 
+    protected mapper: AutoMapper;
+
     constructor(injector: Injector) {
         this.localization = injector.get(LocalizationService);
         this.permission = injector.get(PermissionCheckerService);
@@ -36,6 +39,8 @@ export abstract class AppComponentBase {
         this.multiTenancy = injector.get(AbpMultiTenancyService);
         this.appSession = injector.get(AppSessionService);
         this.elementRef = injector.get(ElementRef);
+        
+        this.mapper = new AutoMapper();
     }
 
     l(key: string, ...args: any[]): string {
