@@ -285,7 +285,7 @@ PANORAMA APP (http://localhost:4201/)
 
 
 COMBINED PANORAMA
-docker build -t panorama.api -f .\src\Panorama.Web.Host\Combined.Dockerfile .
+docker build -t panorama.combined -f .\src\Panorama.Web.Host\Combined.Dockerfile .
 
 kubectl apply -f .\kubernetes\combined-panorama-manifest.yaml
 kubectl apply -f .\kubernetes\combined-ingress-manifest.yaml

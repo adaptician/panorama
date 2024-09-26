@@ -17,16 +17,17 @@ spec:
               name: panorama-combined
               port:
                 number: 80
-    - host: "scenography.panorama.local"
-      http:
-        paths:
-        - pathType: Prefix
-          path: "/"
-          backend:
-            service:
-              name: teatro-api
-              port:
-                number: 80
+    # Debug to interact with service directly.
+    # - host: "scenography.panorama.local"
+    #   http:
+    #     paths:
+    #     - pathType: Prefix
+    #       path: "/"
+    #       backend:
+    #         service:
+    #           name: teatro-api
+    #           port:
+    #             number: 80
   tls:
     - hosts:
         - "*.panorama.local"

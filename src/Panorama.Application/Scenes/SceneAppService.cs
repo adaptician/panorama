@@ -9,13 +9,11 @@ using Teatro.Shared.Scenes.Dtos;
 
 namespace Panorama.Scenes;
 
-// TODO: feature?
 [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations)]
 public class SceneAppService(
     IScenographyProxy scenographyProxy
     ) : PanoramaAppServiceBase, ISceneAppService
 {
-    // TODO: permission
     public async Task<PagedResultDto<ViewSceneDto>> GetAll(PagedSceneResultRequestDto request,
         CancellationToken cancellationToken)
     {

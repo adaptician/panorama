@@ -36,6 +36,9 @@ COPY ["src/Panorama.Application/Panorama.Application.csproj", "src/Panorama.Appl
 COPY ["src/Panorama.Core/Panorama.Core.csproj", "src/Panorama.Core/"]
 COPY ["src/Panorama.EntityFrameworkCore/Panorama.EntityFrameworkCore.csproj", "src/Panorama.EntityFrameworkCore/"]
 
+# Copy shared projects.
+COPY ["src/Scenography/Teatro.Shared/Teatro.Shared.csproj", "src/Scenography/Teatro.Shared/"]
+
 # Restore within the container.
 WORKDIR "/deployed/src/Panorama.Web.Host"
 RUN dotnet restore 
@@ -47,6 +50,9 @@ COPY ["src/Panorama.Web.Core", "src/Panorama.Web.Core"]
 COPY ["src/Panorama.Application", "src/Panorama.Application"]
 COPY ["src/Panorama.Core", "src/Panorama.Core"]
 COPY ["src/Panorama.EntityFrameworkCore", "src/Panorama.EntityFrameworkCore"]
+
+# Copy shared projects.
+COPY ["src/Scenography/Teatro.Shared", "src/Scenography/Teatro.Shared"]
 
 # Build the application.
 WORKDIR "/deployed/src/Panorama.Web.Host"
