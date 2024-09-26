@@ -65,16 +65,22 @@ public class SceneController(
     {
         if (input == null)
         {
-            return BadRequest();
+            return BadRequest("Input is invalid.");
         }
 
         var record = mapper.Map<Scene>(input);
+
+        if (string.IsNullOrEmpty(input.InitialSceneData))
+        {
+            return BadRequest("Initial scene data is required for creation.");
+        }
         
         var scenography = new Scenography();
         var document = new ScenographyDocument(scenography.DocumentId, input.InitialSceneData);
         await scenographyDocumentManager.CreateAsync(document);
 
-        record.Scenography = scenography;    
+        record.Scenography = scenography;
+           
         var persisted = await context.Scenes.AddAsync(record);
         await context.SaveChangesAsync();
         logger.LogInformation($"{nameof(Scene)} created.");

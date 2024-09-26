@@ -6,20 +6,25 @@ import {FormsModule} from "@angular/forms";
 import {NgxPaginationModule} from "@node_modules/ngx-pagination";
 import {SharedModule} from "@shared/shared.module";
 import {ScenographyServiceProxyModule} from "@shared/service-proxies/scenography/scenography.service-proxy.module";
+import { CreateSimulationDialogComponent } from './create-simulation-dialog/create-simulation-dialog.component';
+import {TabsModule} from "ngx-bootstrap/tabs";
 
 
 
 @NgModule({
   declarations: [
-    SimulationsComponent
+    SimulationsComponent,
+    CreateSimulationDialogComponent
   ],
   imports: [
     CommonModule,
     SimulationsRoutingModule,
     FormsModule,
     NgxPaginationModule,
+    TabsModule,
     SharedModule,
     ScenographyServiceProxyModule,
+    TabsModule,
   ]
 })
 export class SimulationsModule { }

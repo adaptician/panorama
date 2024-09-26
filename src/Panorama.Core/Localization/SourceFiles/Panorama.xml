@@ -123,5 +123,6 @@
     <text name="Permission_Simulations">Simulations</text>
     <text name="MenuItem_Simulations">Simulations</text>
     <text name="Simulations">Simulations</text>
+    <text name="CreateNewSimulation">Create new simulation</text>
   </texts>
 </localizationDictionary>

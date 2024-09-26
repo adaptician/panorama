@@ -6,6 +6,10 @@ import {PagedListingComponentBase} from "@shared/paged-listing-component-base";
 import {SceneServiceProxy} from "@shared/service-proxies/scenography/scenography.service-proxies";
 import {finalize} from "rxjs/operators";
 import {PagedResultDto} from "@shared/service-proxies/common/dtos/PagedResultDto";
+import {
+    CreateSimulationDialogComponent
+} from "@app/simulations/create-simulation-dialog/create-simulation-dialog.component";
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -22,6 +26,7 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSceneDto
     constructor(
         injector: Injector,
         private _sceneService: SceneServiceProxy,
+        private _modalService: BsModalService
     ) {
         super(injector);
     }
@@ -67,36 +72,36 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSceneDto
     }
 
     createScene(): void {
-        // this.showCreateOrEditRoleDialog();
+        this.showCreateOrEditSimulationDialog();
     }
 
     editScene(scene: ViewSceneDto): void {
         // this.showCreateOrEditRoleDialog(role.id);
     }
 
-    showCreateOrEditSceneDialog(id?: number): void {
-        // let createOrEditRoleDialog: BsModalRef;
-        // if (!id) {
-        //     createOrEditRoleDialog = this._modalService.show(
-        //         CreateRoleDialogComponent,
-        //         {
-        //             class: 'modal-lg',
-        //         }
-        //     );
-        // } else {
-        //     createOrEditRoleDialog = this._modalService.show(
-        //         EditRoleDialogComponent,
-        //         {
-        //             class: 'modal-lg',
-        //             initialState: {
-        //                 id: id,
-        //             },
-        //         }
-        //     );
-        // }
-        //
-        // createOrEditRoleDialog.content.onSave.subscribe(() => {
-        //     this.refresh();
-        // });
+    showCreateOrEditSimulationDialog(id?: number): void {
+        let createOrEditSimulationDialog: BsModalRef;
+        if (!id) {
+            createOrEditSimulationDialog = this._modalService.show(
+                CreateSimulationDialogComponent,
+                {
+                    class: 'modal-lg',
+                }
+            );
+        } else {
+            // createOrEditSceneDialog = this._modalService.show(
+            //     EditSceneDialogComponent,
+            //     {
+            //         class: 'modal-lg',
+            //         initialState: {
+            //             id: id,
+            //         },
+            //     }
+            // );
+        }
+
+        createOrEditSimulationDialog.content.onSave.subscribe(() => {
+            this.refresh();
+        });
     }
 }

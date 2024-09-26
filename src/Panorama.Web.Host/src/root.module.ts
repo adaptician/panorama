@@ -19,6 +19,7 @@ import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
 import { RootComponent } from './root.component';
 import { AppInitializer } from './app-initializer';
 import {SCENOGRAPHY_API_BASE_URL} from "@shared/service-proxies/scenography/scenography.service-proxies";
+import {ScenographyServiceProxyModule} from "@shared/service-proxies/scenography/scenography.service-proxy.module";
 
 export function getCurrentLanguage(): string {
   if (abp.localization.currentLanguage.name) {
@@ -40,6 +41,7 @@ export function getCurrentLanguage(): string {
     CollapseModule.forRoot(),
     TabsModule.forRoot(),
     ServiceProxyModule,
+    ScenographyServiceProxyModule,
     RootRoutingModule,
   ],
   declarations: [RootComponent],

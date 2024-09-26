@@ -27,6 +27,17 @@ export abstract class AppComponentBase {
     appSession: AppSessionService;
     elementRef: ElementRef;
 
+    lastBusy: Date = new Date();
+    busy: {
+        loading: boolean,
+        saving: boolean,
+    } = <any>{};
+
+    protected setBusy(key: string, isBusy: boolean) {
+        this.lastBusy = new Date();
+        this.busy[key] = isBusy;
+    }
+    
     protected mapper: AutoMapper;
 
     constructor(injector: Injector) {
