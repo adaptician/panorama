@@ -1,5 +1,5 @@
 {
-  "remoteServiceBaseUrl": "https://serve.panorama.local",
+  "remoteServiceBaseUrl": "https://panorama.local",
   "appBaseUrl": "https://panorama.local",
   "remoteScenographyServiceBaseUrl": "https://scenography.panorama.local",
   "localeMappings": [

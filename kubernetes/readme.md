@@ -258,6 +258,12 @@ kubectl apply -f .\kubernetes\networkpolicy.yaml
 kubectl create secret tls tls-secret --cert=.\kubernetes\certs\panorama.local.pem --key=.\kubernetes\certs\panorama.local-key.pem
 
 
+SEPARATE API AND APP INGRESS
+
+~~kubectl apply -f .\kubernetes\ingress-manifest.yaml~~
+
+
+
 PANORAMA API (http://localhost:44312/)
 
 kubectl apply -f .\kubernetes\mssqldb-manifest.yaml
@@ -267,16 +273,22 @@ kubectl apply -f .\kubernetes\migrator-manifest.yaml
 
 kubectl scale deployment panorama-migrator --replicas=0
 
-docker build -t panorama.api -f .\src\Panorama.Web.Host\Dockerfile .
-kubectl apply -f .\kubernetes\api-manifest.yaml
+~~docker build -t panorama.api -f .\src\Panorama.Web.Host\Dockerfile .~~
+~~kubectl apply -f .\kubernetes\api-manifest.yaml~~
 
 
 
 PANORAMA APP (http://localhost:4201/)
 
-docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .
-kubectl apply -f .\kubernetes\app-manifest.yaml
+~~docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .~~
+~~kubectl apply -f .\kubernetes\app-manifest.yaml~~
 
+
+COMBINED PANORAMA
+docker build -t panorama.api -f .\src\Panorama.Web.Host\Combined.Dockerfile .
+
+kubectl apply -f .\kubernetes\combined-panorama-manifest.yaml
+kubectl apply -f .\kubernetes\combined-ingress-manifest.yaml
 
 
 TEATRO API (http://localhost:8484/)
@@ -288,7 +300,7 @@ docker build -t teatro.api -f .\src\Scenography\Teatro.Application\Dockerfile .
 kubectl apply -f .\kubernetes\teatro-manifest.yaml
 
 
-kubectl apply -f .\kubernetes\ingress-manifest.yaml
+
 
 
 kubectl apply -f .\kubernetes\bus-manifest.yaml
@@ -303,3 +315,7 @@ kubectl apply -f .\kubernetes\causation-manifest.yaml
 
 
 kubectl apply -f .\kubernetes\mongodb-manifest.yaml
+
+
+
+
