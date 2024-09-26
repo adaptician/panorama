@@ -5,6 +5,7 @@ using Teatro.Core.Scenes;
 using Teatro.Core.Scenography;
 using Teatro.EntityFrameworkCore;
 using Teatro.Shared.Scenes.Dtos;
+using Teatro.Shared.Bases.Dtos;
 
 namespace Teatro.Application.Controllers;
 
@@ -21,16 +22,23 @@ public class SceneController(
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] int itemCount, [FromQuery] int skipCount)
     {
-        var records = await context.Scenes
+        var query = context.Scenes
             .Where(x => !x.IsDeleted)
-            .OrderByDescending(x => x.CreationTime)
+            .OrderByDescending(x => x.CreationTime);
+
+        var totalCount = await query.CountAsync();
+        var records = await query
             .Skip(skipCount)
             .Take(itemCount)
             .ToListAsync();
-        var mapped = mapper.Map<List<ViewSceneDto>>(records);
         
         logger.LogInformation($"{nameof(Scene)}s retrieved. Skipped {skipCount} and Took {itemCount}");
-        return Ok(mapped);
+        
+        return Ok(new PagedResultDto<ViewSceneDto>
+        {
+            Items = mapper.Map<List<ViewSceneDto>>(records),
+            TotalCount = totalCount
+        });
     }
     
     // GET: api/scenes/1
