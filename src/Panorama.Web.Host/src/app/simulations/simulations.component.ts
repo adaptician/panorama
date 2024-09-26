@@ -53,23 +53,23 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSceneDto
     }
 
     delete(scene: ViewSceneDto): void {
-        // abp.message.confirm(
-        //     this.l('RoleDeleteWarningMessage', role.displayName),
-        //     undefined,
-        //     (result: boolean) => {
-        //         if (result) {
-        //             this._rolesService
-        //                 .delete(role.id)
-        //                 .pipe(
-        //                     finalize(() => {
-        //                         abp.notify.success(this.l('SuccessfullyDeleted'));
-        //                         this.refresh();
-        //                     })
-        //                 )
-        //                 .subscribe(() => {});
-        //         }
-        //     }
-        // );
+        abp.message.confirm(
+            this.l('SimulationDeleteWarningMessage', scene.name),
+            undefined,
+            (result: boolean) => {
+                if (result) {
+                    this._sceneService
+                        .delete(scene.id)
+                        .pipe(
+                            finalize(() => {
+                                abp.notify.success(this.l('SuccessfullyDeleted'));
+                                this.refresh();
+                            })
+                        )
+                        .subscribe(() => {});
+                }
+            }
+        );
     }
 
     createScene(): void {

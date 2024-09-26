@@ -124,5 +124,7 @@
     <text name="MenuItem_Simulations">Simulations</text>
     <text name="Simulations">Simulations</text>
     <text name="CreateNewSimulation">Create new simulation</text>
+    <text name="EditSimulation">Edit simulation</text>
+    <text name="SimulationDeleteWarningMessage">Simulation {0} will be deleted.</text>
   </texts>
 </localizationDictionary>
