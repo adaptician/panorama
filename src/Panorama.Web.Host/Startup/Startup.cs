@@ -17,6 +17,8 @@ using Panorama.Identity;
 using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Panorama.Options;
+using Panorama.Scenes;
 
 namespace Panorama.Web.Host.Startup
 {
@@ -45,7 +47,10 @@ namespace Panorama.Web.Host.Startup
 
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
-
+            
+            services.Configure<ScenographyProxyOptions>(_appConfiguration.GetSection(ScenographyProxyOptions.SettingName));
+            services.AddHttpClient<IScenographyProxy, ScenographyProxy>();
+            
             services.AddSignalR();
 
             // Configure CORS for angular2 UI

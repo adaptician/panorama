@@ -3,7 +3,6 @@ import {appModuleAnimation} from "@shared/animations/routerTransition";
 import {ViewSceneDto} from "@shared/service-proxies/scenography/dtos/ViewSceneDto";
 import {FilterablePagedRequestDto} from "@shared/service-proxies/common/dtos/FilterablePagedRequestDto";
 import {PagedListingComponentBase} from "@shared/paged-listing-component-base";
-import {SceneServiceProxy} from "@shared/service-proxies/scenography/scenography.service-proxies";
 import {finalize} from "rxjs/operators";
 import {PagedResultDto} from "@shared/service-proxies/common/dtos/PagedResultDto";
 import {
@@ -11,6 +10,7 @@ import {
 } from "@app/simulations/create-simulation/create-simulation-dialog.component";
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import {EditSimulationDialogComponent} from "@app/simulations/edit-simulation/edit-simulation-dialog.component";
+import {SceneServiceProxy, ViewSceneDtoPagedResultDto} from "@shared/service-proxies/service-proxies";
 
 
 @Component({
@@ -46,7 +46,7 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSceneDto
                     finishedCallback();
                 })
             )
-            .subscribe((result: PagedResultDto<ViewSceneDto>) => {
+            .subscribe((result: ViewSceneDtoPagedResultDto) => {
                 this.scenes = result.items;
                 this.showPaging(result, pageNumber);
             });

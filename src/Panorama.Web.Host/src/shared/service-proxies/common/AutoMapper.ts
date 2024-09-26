@@ -1,5 +1,8 @@
 import {Constructor} from "./types";
 
+/*
+* In order for the mapper to work, DTO's must be given default values where mapping is required for blank constructions.
+* */
 export class AutoMapper {
 
     public map<TDestination>(source: any, destination: Constructor<TDestination>, arrayItemType?: Constructor<any>): TDestination {

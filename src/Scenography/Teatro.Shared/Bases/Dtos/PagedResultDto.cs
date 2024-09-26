@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Teatro.Shared.Bases.Dtos;
+﻿namespace Teatro.Shared.Bases.Dtos;
 
 [Serializable]
 public class PagedResultDto<T>

@@ -13,5 +13,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Panorama.Core\Panorama.Core.csproj" />
+    <ProjectReference Include="..\Scenography\Teatro.Shared\Teatro.Shared.csproj" />
   </ItemGroup>
 </Project>

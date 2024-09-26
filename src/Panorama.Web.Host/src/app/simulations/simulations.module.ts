@@ -5,7 +5,6 @@ import {SimulationsRoutingModule} from "@app/simulations/simulations-routing.mod
 import {FormsModule} from "@angular/forms";
 import {NgxPaginationModule} from "@node_modules/ngx-pagination";
 import {SharedModule} from "@shared/shared.module";
-import {ScenographyServiceProxyModule} from "@shared/service-proxies/scenography/scenography.service-proxy.module";
 import { CreateSimulationDialogComponent } from './create-simulation/create-simulation-dialog.component';
 import {TabsModule} from "ngx-bootstrap/tabs";
 import { EditSimulationDialogComponent } from './edit-simulation/edit-simulation-dialog.component';
@@ -25,7 +24,6 @@ import { EditSimulationDialogComponent } from './edit-simulation/edit-simulation
     NgxPaginationModule,
     TabsModule,
     SharedModule,
-    ScenographyServiceProxyModule,
     TabsModule,
   ]
 })

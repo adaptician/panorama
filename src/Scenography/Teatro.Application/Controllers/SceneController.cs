@@ -18,7 +18,7 @@ public class SceneController(
     ScenographyDocumentManager scenographyDocumentManager)
     : ControllerBase
 {
-    // GET: api/scenes
+    // GET: api/scene
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] int maxResultCount, [FromQuery] int skipCount)
     {
@@ -41,7 +41,7 @@ public class SceneController(
         });
     }
     
-    // GET: api/scenes/Id=1
+    // GET: api/scene/Id=1
     [HttpGet("Id={id}")]
     public async Task<IActionResult> GetById(long id)
     {
@@ -59,7 +59,7 @@ public class SceneController(
         return Ok(mapped);
     }
     
-    // POST: api/scenes
+    // POST: api/scene
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateSceneDto input)
     {
@@ -89,7 +89,7 @@ public class SceneController(
         return CreatedAtAction(nameof(Create), new { id = record.Id }, mapped);
     }
     
-    // PUT: api/scenes
+    // PUT: api/scene
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] UpdateSceneDto input)
     {

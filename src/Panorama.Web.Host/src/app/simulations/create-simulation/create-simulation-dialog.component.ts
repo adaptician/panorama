@@ -1,9 +1,8 @@
-import {Component, EventEmitter, Injector, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Injector, Output} from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import {AppComponentBase} from "@shared/app-component-base";
-import {SceneServiceProxy} from "@shared/service-proxies/scenography/scenography.service-proxies";
-import {CreateSceneDto} from "@shared/service-proxies/scenography/dtos/CreateSceneDto";
 import {finalize} from "rxjs/operators";
+import {CreateSceneDto, SceneServiceProxy} from "@shared/service-proxies/service-proxies";
 
 @Component({
     selector: 'sim-create-simulation-dialog',

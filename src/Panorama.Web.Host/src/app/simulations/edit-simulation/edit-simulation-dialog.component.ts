@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Injector, Output} from '@angular/core';
 import {AppComponentBase} from "@shared/app-component-base";
-import {SceneServiceProxy} from "@shared/service-proxies/scenography/scenography.service-proxies";
 import {BsModalRef} from "ngx-bootstrap/modal";
-import {UpdateSceneDto} from "@shared/service-proxies/scenography/dtos/UpdateSceneDto";
 import {finalize} from "rxjs/operators";
+import {SceneServiceProxy, UpdateSceneDto} from "@shared/service-proxies/service-proxies";
 
 @Component({
   selector: 'sim-edit-simulation-dialog',
@@ -37,14 +36,14 @@ export class EditSimulationDialogComponent extends AppComponentBase {
   }
   
   getScene(id: number): void {
-    this.setBusy('load', true);
+    this.setBusy('loading', true);
 
     this._sceneService
-        .get(id)
-        .pipe(finalize(() => this.setBusy('load', false)))
+        .getById(id)
+        .pipe(finalize(() => this.setBusy('loading', false)))
         .subscribe(
             (result) => {
-              this.scene = this.mapper.map(result, UpdateSceneDto);
+              this.scene = result;
             }
         );
   }
