@@ -122,5 +122,6 @@
     <text name="SimulationsFeatureDescription">Interactive simulations</text>
     <text name="Permission_Simulations">Simulations</text>
     <text name="MenuItem_Simulations">Simulations</text>
+    <text name="Simulations">Simulations</text>
   </texts>
 </localizationDictionary>
