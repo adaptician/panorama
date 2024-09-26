@@ -5,6 +5,7 @@ import {SimulationsRoutingModule} from "@app/simulations/simulations-routing.mod
 import {FormsModule} from "@angular/forms";
 import {NgxPaginationModule} from "@node_modules/ngx-pagination";
 import {SharedModule} from "@shared/shared.module";
+import {ScenographyServiceProxyModule} from "@shared/service-proxies/scenography/scenography.service-proxy.module";
 
 
 
@@ -18,6 +19,7 @@ import {SharedModule} from "@shared/shared.module";
     FormsModule,
     NgxPaginationModule,
     SharedModule,
+    ScenographyServiceProxyModule,
   ]
 })
 export class SimulationsModule { }

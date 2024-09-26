@@ -3,6 +3,9 @@ import {appModuleAnimation} from "@shared/animations/routerTransition";
 import {ViewSceneDto} from "@shared/service-proxies/scenography/dtos/ViewSceneDto";
 import {FilterablePagedRequestDto} from "@shared/service-proxies/common/dtos/FilterablePagedRequestDto";
 import {PagedListingComponentBase} from "@shared/paged-listing-component-base";
+import {SceneServiceProxy} from "@shared/service-proxies/scenography/scenography.service-proxies";
+import {finalize} from "rxjs/operators";
+import {PagedResultDto} from "@shared/service-proxies/common/dtos/PagedResultDto";
 
 
 @Component({
@@ -18,6 +21,7 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSceneDto
 
     constructor(
         injector: Injector,
+        private _sceneService: SceneServiceProxy,
     ) {
         super(injector);
     }
@@ -29,17 +33,17 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSceneDto
     ): void {
         request.keyword = this.keyword;
 
-        // this._rolesService
-        //     .getAll(request.keyword, request.skipCount, request.maxResultCount)
-        //     .pipe(
-        //         finalize(() => {
-        //             finishedCallback();
-        //         })
-        //     )
-        //     .subscribe((result: RoleDtoPagedResultDto) => {
-        //         this.roles = result.items;
-        //         this.showPaging(result, pageNumber);
-        //     });
+        this._sceneService
+            .getAll(request.keyword, request.skipCount, request.maxResultCount)
+            .pipe(
+                finalize(() => {
+                    finishedCallback();
+                })
+            )
+            .subscribe((result: PagedResultDto<ViewSceneDto>) => {
+                this.scenes = result.items;
+                this.showPaging(result, pageNumber);
+            });
     }
 
     delete(scene: ViewSceneDto): void {

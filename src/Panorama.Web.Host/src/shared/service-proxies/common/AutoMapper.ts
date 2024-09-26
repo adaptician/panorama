@@ -2,28 +2,37 @@ import {Constructor} from "./types";
 
 export class AutoMapper {
 
-    public map<TDestination>(source: any, destination: Constructor<TDestination>): TDestination {
+    public map<TDestination>(source: any, destination: Constructor<TDestination>, arrayItemType?: Constructor<any>): TDestination {
         source = typeof source === 'object' ? source : {};
 
-        return this._map(source, destination);
+        return this._map(source, destination, arrayItemType);
     }
 
-    public mapFromJson<TDestination>(jsonString: string, destination: Constructor<TDestination>): TDestination {
+    public mapFromJson<TDestination>(jsonString: string, destination: Constructor<TDestination>, arrayItemType?: Constructor<any>): TDestination {
         const jsonObj = JSON.parse(jsonString);
 
-        return this._map(jsonObj, destination);
+        return this._map(jsonObj, destination, arrayItemType);
     }
     
-    private _map<TDestination>(source: any, destination: Constructor<TDestination>): TDestination {
+    private _map<TDestination>(source: any, destination: Constructor<TDestination>, arrayItemType?: Constructor<any>): TDestination {
         let instance = new destination();
         
         // Loop through the keys of the instance and only assign if the param has the same key.
         for (const key in instance) {
             if (source.hasOwnProperty(key)) {
-                (instance as any)[key] = source[key]; // Cast to any to assign dynamic properties.
+
+                const metadataType = Reflect.getMetadata("design:type", destination.prototype, key);
+
+                if (metadataType === Array && arrayItemType) {
+                    (instance as any)[key] = source[key].map((item: any) => this._map(item, arrayItemType));
+                } else {
+                    (instance as any)[key] = source[key]; // Direct assignment for non-array properties
+                }
             }
         }
 
         return instance;
     }
 }
+
+

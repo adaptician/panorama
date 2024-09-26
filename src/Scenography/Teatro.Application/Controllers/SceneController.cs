@@ -20,7 +20,7 @@ public class SceneController(
 {
     // GET: api/scenes
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] int itemCount, [FromQuery] int skipCount)
+    public async Task<IActionResult> Get([FromQuery] int maxResultCount, [FromQuery] int skipCount)
     {
         var query = context.Scenes
             .Where(x => !x.IsDeleted)
@@ -29,10 +29,10 @@ public class SceneController(
         var totalCount = await query.CountAsync();
         var records = await query
             .Skip(skipCount)
-            .Take(itemCount)
+            .Take(maxResultCount)
             .ToListAsync();
         
-        logger.LogInformation($"{nameof(Scene)}s retrieved. Skipped {skipCount} and Took {itemCount}");
+        logger.LogInformation($"{nameof(Scene)}s retrieved. Skipped {skipCount} and Took {maxResultCount}");
         
         return Ok(new PagedResultDto<ViewSceneDto>
         {
