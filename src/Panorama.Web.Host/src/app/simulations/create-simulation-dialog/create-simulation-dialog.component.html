@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <!-- DESCRIPTION -->
-                <div class="form-group row required">
+                <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="description">
                         {{ "Description" | localize }}
                     </label>
@@ -46,7 +46,6 @@
                                 class="form-control"
                                 name="description"
                                 id="description"
-                                required
                                 minlength="2"
                                 maxlength="200"
                                 [(ngModel)]="scene.description"
