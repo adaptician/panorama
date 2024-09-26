@@ -1,6 +1,7 @@
 {
   "remoteServiceBaseUrl": "https://serve.panorama.local",
   "appBaseUrl": "https://panorama.local",
+  "remoteScenographyServiceBaseUrl": "https://scenography.panorama.local",
   "localeMappings": [
     {
       "from": "pt-BR",

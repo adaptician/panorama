@@ -167,6 +167,9 @@ export class AppInitializer {
         AppConsts.remoteServiceBaseUrl = response.remoteServiceBaseUrl;
         AppConsts.localeMappings = response.localeMappings;
 
+        // Custom constants.
+        AppConsts.remoteScenographyServiceBaseUrl = response.remoteScenographyServiceBaseUrl;
+
         // Find tenant from subdomain
         var tenancyName = this.resolveTenancyName(response.appBaseUrl);
 

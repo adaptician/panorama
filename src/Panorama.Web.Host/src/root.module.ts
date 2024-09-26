@@ -18,6 +18,7 @@ import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
 
 import { RootComponent } from './root.component';
 import { AppInitializer } from './app-initializer';
+import {SCENOGRAPHY_API_BASE_URL} from "@shared/service-proxies/scenography/scenography.service-proxies";
 
 export function getCurrentLanguage(): string {
   if (abp.localization.currentLanguage.name) {
@@ -51,6 +52,7 @@ export function getCurrentLanguage(): string {
       multi: true,
     },
     { provide: API_BASE_URL, useFactory: () => AppConsts.remoteServiceBaseUrl },
+    { provide: SCENOGRAPHY_API_BASE_URL, useFactory: () => AppConsts.remoteScenographyServiceBaseUrl },
     {
       provide: LOCALE_ID,
       useFactory: getCurrentLanguage,

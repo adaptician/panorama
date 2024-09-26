@@ -31,7 +31,7 @@ builder.Services.Configure<MongoDbSettings>(
 // Register document managers.
 builder.Services.AddScoped<ScenographyDocumentManager>();
 
-
+builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 
 
@@ -51,8 +51,23 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 
 app.UseHttpsRedirection();
 
-builder.Services.AddAuthorization();
+
+// Configure CORS for angular2 UI.
+string CorsOriginStringArray = builder.Configuration.GetSection("CorsOrigins").Value ?? string.Empty;
+app.UseCors(builder => builder
+    .WithOrigins(
+        CorsOriginStringArray
+            .Split(",", StringSplitOptions.RemoveEmptyEntries)
+            .Select(o => o.TrimEnd(['/']))
+            .ToArray()
+        )
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+);
+
 
 app.MapControllers();
+
 
 app.Run();
