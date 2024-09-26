@@ -41,8 +41,8 @@ public class SceneController(
         });
     }
     
-    // GET: api/scenes/1
-    [HttpGet("{id}")]
+    // GET: api/scenes/Id=1
+    [HttpGet("Id={id}")]
     public async Task<IActionResult> GetById(long id)
     {
         var record = await context.Scenes.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
@@ -89,11 +89,16 @@ public class SceneController(
         return CreatedAtAction(nameof(Create), new { id = record.Id }, mapped);
     }
     
-    // PUT: api/scenes/1
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update(long id, [FromBody] UpdateSceneDto input)
+    // PUT: api/scenes
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] UpdateSceneDto input)
     {
-        var existingRecord = await context.Scenes.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+        if (input == null || input.Id <= 0)
+        {
+            return BadRequest("Input is invalid.");
+        }
+        
+        var existingRecord = await context.Scenes.FirstOrDefaultAsync(x => x.Id == input.Id && !x.IsDeleted);
         if (existingRecord == null)
         {
             return NotFound();
@@ -103,11 +108,11 @@ public class SceneController(
         context.Scenes.Update(updatedRecord);
         
         await context.SaveChangesAsync();
-        logger.LogInformation($"{nameof(Scene)} Id: {id} updated.");
+        logger.LogInformation($"{nameof(Scene)} Id: {input.Id} updated.");
         return NoContent();
     }
     
-    [HttpDelete("{id}")]
+    [HttpDelete("Id={id}")]
     public async Task<IActionResult> Delete(long id)
     {
         var existingRecord = await context.Scenes.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);

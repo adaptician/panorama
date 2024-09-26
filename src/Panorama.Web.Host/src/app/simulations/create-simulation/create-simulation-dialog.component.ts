@@ -10,7 +10,7 @@ import {finalize} from "rxjs/operators";
     templateUrl: './create-simulation-dialog.component.html',
     styleUrl: './create-simulation-dialog.component.less'
 })
-export class CreateSimulationDialogComponent extends AppComponentBase implements OnInit {
+export class CreateSimulationDialogComponent extends AppComponentBase {
     
     scene: CreateSceneDto = new CreateSceneDto();
     
@@ -22,10 +22,6 @@ export class CreateSimulationDialogComponent extends AppComponentBase implements
         public bsModalRef: BsModalRef
     ) {
         super(injector);
-    }
-
-    ngOnInit(): void {
-        
     }
 
     save(): void {

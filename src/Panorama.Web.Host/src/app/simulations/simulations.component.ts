@@ -8,8 +8,9 @@ import {finalize} from "rxjs/operators";
 import {PagedResultDto} from "@shared/service-proxies/common/dtos/PagedResultDto";
 import {
     CreateSimulationDialogComponent
-} from "@app/simulations/create-simulation-dialog/create-simulation-dialog.component";
+} from "@app/simulations/create-simulation/create-simulation-dialog.component";
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import {EditSimulationDialogComponent} from "@app/simulations/edit-simulation/edit-simulation-dialog.component";
 
 
 @Component({
@@ -76,7 +77,7 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSceneDto
     }
 
     editScene(scene: ViewSceneDto): void {
-        // this.showCreateOrEditRoleDialog(role.id);
+        this.showCreateOrEditSimulationDialog(scene.id);
     }
 
     showCreateOrEditSimulationDialog(id?: number): void {
@@ -89,15 +90,15 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSceneDto
                 }
             );
         } else {
-            // createOrEditSceneDialog = this._modalService.show(
-            //     EditSceneDialogComponent,
-            //     {
-            //         class: 'modal-lg',
-            //         initialState: {
-            //             id: id,
-            //         },
-            //     }
-            // );
+            createOrEditSimulationDialog = this._modalService.show(
+                EditSimulationDialogComponent,
+                {
+                    class: 'modal-lg',
+                    initialState: {
+                        sceneId: id,
+                    },
+                }
+            );
         }
 
         createOrEditSimulationDialog.content.onSave.subscribe(() => {

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Teatro.Shared.Bases.Dtos;
 
 namespace Teatro.Shared.Scenes.Dtos;
 
-public class UpdateSceneDto
+public class UpdateSceneDto : EntityDto<long>
 {
     [Required(AllowEmptyStrings = false)]
     [MaxLength(SceneConstants.MaxNameLength)]
