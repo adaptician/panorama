@@ -1,4 +1,5 @@
-﻿using Abp.Localization;
+﻿using Abp.Dependency;
+using Abp.Localization;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Runtime.Security;
@@ -8,6 +9,7 @@ using Abp.Zero.Configuration;
 using Panorama.Authorization.Roles;
 using Panorama.Authorization.Users;
 using Panorama.Configuration;
+using Panorama.Events;
 using Panorama.Features;
 using Panorama.Localization;
 using Panorama.MultiTenancy;

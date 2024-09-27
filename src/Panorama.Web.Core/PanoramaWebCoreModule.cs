@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using Abp.AspNetCore;
 using Abp.AspNetCore.Configuration;
 using Abp.AspNetCore.SignalR;
+using Abp.Configuration.Startup;
+using Abp.Dependency;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Zero.Configuration;
@@ -13,6 +15,8 @@ using Panorama.Authentication.JwtBearer;
 using Panorama.Configuration;
 using Panorama.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Panorama.Events;
+using Panorama.SignalR;
 
 namespace Panorama
 {
@@ -48,6 +52,9 @@ namespace Panorama
                  );
 
             ConfigureTokenAuth();
+            
+            // Custom services.
+            ReplaceServicesWithCustomImplementations();
         }
 
         private void ConfigureTokenAuth()
@@ -71,6 +78,11 @@ namespace Panorama
         {
             IocManager.Resolve<ApplicationPartManager>()
                 .AddApplicationPartsIfNotAddedBefore(typeof(PanoramaWebCoreModule).Assembly);
+        }
+        
+        private void ReplaceServicesWithCustomImplementations()
+        {
+            Configuration.ReplaceService<IAppEventCommunicator, SignalRAppCommunicator>(DependencyLifeStyle.Transient);
         }
     }
 }
