@@ -16,6 +16,17 @@ using Teatro.Shared.Scenes.Dtos;
 
 namespace Panorama.Scenes;
 
+// TODO: Fix this
+// This is an antipattern. Awaiting HTTP sync to a microservice is an antipattern because if something goes down,
+// the system is rendered into an error state.
+// Even for fetching queries.
+// This is the challenge and cost of microservices, is that by design the architecture must be decoupled.
+// By design the consumers must listen for updates, but not await them.
+
+// When the service bus in place, this needs to be replaced by MediatR, to request data.
+// And the response needs to be sent via SignalR.
+// The only problem is if SignalR fails? Well, reload will trigger the next request.
+// This can continue until messages are consumed, it makes no difference.
 public class ScenographyProxy : IScenographyProxy
 {
     private readonly HttpClient _httpClient;
