@@ -19,6 +19,15 @@ namespace Panorama.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
+            #region Tenants
+
+            modelBuilder.Entity<Tenant>(b =>
+            {
+                b.HasIndex(e => new { e.CorrelationId }).IsUnique();
+            });
+
+            #endregion
+            
             #region Users
 
             modelBuilder.Entity<User>(b =>
