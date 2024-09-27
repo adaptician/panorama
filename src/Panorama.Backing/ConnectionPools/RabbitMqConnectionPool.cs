@@ -8,6 +8,7 @@ public class RabbitMqConnectionPool : IRabbitMqConnectionPool, IDisposable
 {
     private readonly ConnectionFactory _factory;
     private IConnection? _connection;
+    private IModel? _channel;
     
     public RabbitMqConnectionPool(IOptions<EventBusOptions> eventBusOptions)
     {
@@ -29,12 +30,24 @@ public class RabbitMqConnectionPool : IRabbitMqConnectionPool, IDisposable
         {
             _connection = _factory.CreateConnection();
         }
+        
         return _connection;
+    }
+
+    public IModel GetChannel()
+    {
+        var connection = GetConnection();
+        if (_channel == null || !_channel.IsOpen)
+        {
+            _channel = connection.CreateModel();
+        }
+
+        return _channel;
     }
 
     public void Dispose()
     {
+        _channel?.Close();
         _connection?.Close();
-        _connection?.Dispose();
     }
 }

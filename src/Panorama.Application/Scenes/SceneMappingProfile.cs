@@ -20,5 +20,7 @@ public class SceneMappingProfile : Profile
         
         CreateMap<UpdateSceneDto, UpdateSceneCommanded>();
         CreateMap<UpdateSceneCommanded, UpdateSceneCommandedEto>();
+        
+        CreateMap<DeleteSceneCommanded, DeleteSceneCommandedEto>();
     }
 }
