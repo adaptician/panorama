@@ -19,6 +19,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Panorama.Backing.Options;
 using Panorama.Backing.Provisions;
+using Panorama.Common.Enums;
+using Panorama.Common.Extensions;
 using Panorama.Options;
 using Panorama.Scenes;
 
@@ -49,21 +51,37 @@ namespace Panorama.Web.Host.Startup
 
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
-            
+
+            #region Add Scenography proxy // TODO: remove this
+
             services.Configure<ScenographyProxyOptions>(_appConfiguration.GetSection(ScenographyProxyOptions.SettingName));
             services.AddHttpClient<IScenographyProxy, ScenographyProxy>();
-            
-            // Add MediatR.
+
+            #endregion
+
+            #region Add MediatR
+
             services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssemblyContaining<PanoramaApplicationModule>());
+
+            #endregion
+
+            #region Add Event Bus
+
+            var eventBusSection = _appConfiguration.GetSection(EventBusOptions.SettingName);
+            services.Configure<EventBusOptions>(eventBusSection);
             
-            services.AddOptions<RabbitMqOptions>()
-                .Configure<IConfiguration>((settings, configuration) => 
-                    configuration.GetSection(RabbitMqOptions.SettingName).Bind(settings));
+            EventBusOptions eventBusOptions = new EventBusOptions();
+            eventBusSection.Bind(eventBusOptions);
             // A service that will provision the queues, topics and subscriptions for the service bus.
             // This is mainly to ensure that if the function app is deployed separately to the main processors/senders
             // that the minimal dependency of the resource existing is satisfied.
-            services.AddHostedService<RabbitMqProvisioner>();
+            if (eventBusOptions.BusType.Equals(EventBusTypeEnum.RabbitMq.GetCode()))
+            {
+                services.AddHostedService<RabbitMqProvisioner>();
+            }
+
+            #endregion
             
             services.AddSignalR();
 

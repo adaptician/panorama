@@ -14,17 +14,20 @@ public class RabbitMqProvisioner : IHostedService
     private readonly ILogger<RabbitMqProvisioner> _logger;
     private readonly IModel _channel;
 
-    public RabbitMqProvisioner(IOptions<RabbitMqOptions> rabbitMqOptions,
+    public RabbitMqProvisioner(IOptions<EventBusOptions> eventBusOptions,
         ILogger<RabbitMqProvisioner> logger)
     {
         _logger = logger;
-        var options = rabbitMqOptions.Value;
+        var options = eventBusOptions.Value;
+
+        var rabbitMqOptions = options.RabbitMq ?? throw new Exception("Unable to provision RabbitMQ - " +
+                                                                             "configurations are missing.");
 
         var factory = new ConnectionFactory
         {
-            HostName = options.HostName,
-            UserName = options.UserName,
-            Password = options.Password
+            HostName = rabbitMqOptions.HostName,
+            UserName = rabbitMqOptions.UserName,
+            Password = rabbitMqOptions.Password
         };
         
         var connection = factory.CreateConnection();
