@@ -1,4 +1,4 @@
-﻿namespace Panorama.Communication.Shared.Causation
+﻿namespace Panorama.Backing.Shared.Causation
 {
     public interface ICause
     {

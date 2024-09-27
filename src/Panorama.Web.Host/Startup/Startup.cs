@@ -51,6 +51,10 @@ namespace Panorama.Web.Host.Startup
             services.Configure<ScenographyProxyOptions>(_appConfiguration.GetSection(ScenographyProxyOptions.SettingName));
             services.AddHttpClient<IScenographyProxy, ScenographyProxy>();
             
+            // Add MediatR.
+            services.AddMediatR(cfg =>
+                cfg.RegisterServicesFromAssemblyContaining<PanoramaApplicationModule>());
+            
             services.AddSignalR();
 
             // Configure CORS for angular2 UI
