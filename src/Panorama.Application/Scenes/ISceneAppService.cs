@@ -10,6 +10,9 @@ namespace Panorama.Scenes;
 
 public interface ISceneAppService : IApplicationService
 {
+    Task RequestGetAll(PagedSceneResultRequestDto request, CancellationToken cancellationToken);
+    
+    // TODO: remove
     Task<PagedResultDto<ViewSceneDto>> GetAll(PagedSceneResultRequestDto request, CancellationToken cancellationToken);
 
     Task<ViewSceneDto> GetById(long id, CancellationToken cancellationToken);

@@ -1,8 +1,9 @@
-﻿using System.Net.Http;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Abp.Authorization;
+using MediatR;
 using Panorama.Authorization;
+using Panorama.Backing.Shared.Scenes.Requests;
 using Panorama.Scenes.Dto;
 using Teatro.Shared.Bases.Dtos;
 using Teatro.Shared.Scenes.Dtos;
@@ -11,12 +12,24 @@ namespace Panorama.Scenes;
 
 [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations)]
 public class SceneAppService(
-    IScenographyProxy scenographyProxy
+    IScenographyProxy scenographyProxy, // TODO: remove
+    IMediator mediatr
     ) : PanoramaAppServiceBase, ISceneAppService
 {
+    public async Task RequestGetAll(PagedSceneResultRequestDto request, CancellationToken cancellationToken)
+    {
+        var mediateRequest = ObjectMapper.Map<ScenesRequested>(request);
+        await mediatr.Send(mediateRequest, cancellationToken);
+    }
+    
+    // TODO: remove
     public async Task<PagedResultDto<ViewSceneDto>> GetAll(PagedSceneResultRequestDto request,
         CancellationToken cancellationToken)
     {
+        // TODO: just testing, clean up.
+        var mediateRequest = ObjectMapper.Map<ScenesRequested>(request);
+        await mediatr.Send(mediateRequest, cancellationToken);
+        
         return await scenographyProxy.GetAllAsync(request, cancellationToken);
     }
 

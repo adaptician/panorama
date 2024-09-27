@@ -17,7 +17,9 @@ using Panorama.Identity;
 using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Panorama.Backing.ConnectionPools;
 using Panorama.Backing.Options;
+using Panorama.Backing.Producers;
 using Panorama.Backing.Provisioners;
 using Panorama.Common.Enums;
 using Panorama.Common.Extensions;
@@ -73,11 +75,12 @@ namespace Panorama.Web.Host.Startup
             
             EventBusOptions eventBusOptions = new EventBusOptions();
             eventBusSection.Bind(eventBusOptions);
-            // A service that will provision the queues, topics and subscriptions for the service bus.
-            // This is mainly to ensure that if the function app is deployed separately to the main processors/senders
-            // that the minimal dependency of the resource existing is satisfied.
+            
             if (eventBusOptions.BusType.Equals(EventBusTypeEnum.RabbitMq.GetCode()))
             {
+                services.AddSingleton<IRabbitMqConnectionPool, RabbitMqConnectionPool>();
+                services.AddSingleton<ScenesProducer>();
+                
                 services.AddHostedService<RabbitMqProvisioner>();
             }
 

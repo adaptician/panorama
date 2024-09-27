@@ -1,15 +1,13 @@
-﻿using Panorama.Backing.Shared.Common;
+﻿using Panorama.Backing.Shared.Messages;
 
 namespace Panorama.Backing.Shared.Scenes.Requests.Eto
 {
-    public class ScenesRequestedEto : ICorrelateUser
+    public class ScenesRequestedEto : BrokerMessage
     {
-        public string Filter { get; set; }
+        public string Keyword { get; set; }
         
         public int MaxResultCount { get; set; }
         
         public int SkipCount { get; set; }
-        
-        public string UserCorrelationId { get; set; }
     }
 }

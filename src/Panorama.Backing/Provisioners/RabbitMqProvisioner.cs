@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Panorama.Backing.Brokers;
-using Panorama.Backing.Options;
+using Panorama.Backing.ConnectionPools;
 using RabbitMQ.Client;
 
 namespace Panorama.Backing.Provisioners;
@@ -12,23 +11,12 @@ public class RabbitMqProvisioner : IHostedService
     private readonly ILogger<RabbitMqProvisioner> _logger;
     private readonly IModel _channel;
 
-    public RabbitMqProvisioner(IOptions<EventBusOptions> eventBusOptions,
+    public RabbitMqProvisioner(IRabbitMqConnectionPool connectionPool,
         ILogger<RabbitMqProvisioner> logger)
     {
         _logger = logger;
-        var options = eventBusOptions.Value;
 
-        var rabbitMqOptions = options.RabbitMq ?? throw new Exception("Unable to provision RabbitMQ - " +
-                                                                             "configurations are missing.");
-
-        var factory = new ConnectionFactory
-        {
-            HostName = rabbitMqOptions.HostName,
-            UserName = rabbitMqOptions.UserName,
-            Password = rabbitMqOptions.Password
-        };
-        
-        var connection = factory.CreateConnection();
+        var connection = connectionPool.GetConnection();
         _channel = connection.CreateModel();
     }
 

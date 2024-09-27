@@ -1,4 +1,5 @@
 ﻿using Panorama.Backing.Common;
+using Panorama.Backing.Shared.RoutingKeys;
 
 namespace Panorama.Backing.Brokers;
 
@@ -9,36 +10,27 @@ public abstract class QueueBindings : ReflectToList<QueueBinding>
         public static QueueBinding ScenesGetAll = new (
             Queues.QueueNames.ScenesGetAll, 
             Exchanges.ExchangeNames.ScenesExchange, 
-            RouteKeys.GetAll);
+            RoutingKeys.GetAll);
         
         public static QueueBinding ScenesGet = new (
             Queues.QueueNames.ScenesGet, 
             Exchanges.ExchangeNames.ScenesExchange, 
-            RouteKeys.Get);
+            RoutingKeys.Get);
         
         public static QueueBinding SceneCreate = new (
             Queues.QueueNames.SceneCreate, 
             Exchanges.ExchangeNames.ScenesExchange, 
-            RouteKeys.Create);
+            RoutingKeys.Create);
         
         public static QueueBinding SceneUpdate = new (
             Queues.QueueNames.SceneUpdate, 
             Exchanges.ExchangeNames.ScenesExchange, 
-            RouteKeys.Update);
+            RoutingKeys.Update);
         
         public static QueueBinding SceneDelete = new (
             Queues.QueueNames.SceneDelete, 
             Exchanges.ExchangeNames.ScenesExchange, 
-            RouteKeys.Delete);
-    }
-    
-    public static class RouteKeys
-    {
-        public const string GetAll = "getall";
-        public const string Get = "get";
-        public const string Create = "create";
-        public const string Update = "update";
-        public const string Delete = "delete";
+            RoutingKeys.Delete);
     }
     
     public static List<QueueBinding> GetAll()

@@ -9,6 +9,9 @@ namespace Panorama.Common.Mediations
         [Code("ACCEPTED")]
         Accepted = 20,
         
+        [Code("PUBLISHED")]
+        Published = 40,
+        
         
         [Code("IGNORED")]
         Ignored = 70,
