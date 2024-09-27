@@ -65,7 +65,15 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 this.l('MenuItem_Simulations'),
                 '/app/simulations',
                 'fas fa-gamepad',
-                'Pages.Tenant.Simulations'
+                'Pages.Tenant.Simulations',
+                [
+                    new MenuItem(
+                        this.l('MenuItem_Scenes'),
+                        '/app/simulations/scenes',
+                        'fas fa-gamepad',
+                        'Pages.Tenant.Simulations' // TODO:T update permissions
+                    )
+                ]
             ),
             new MenuItem(this.l('MultiLevelMenu'), '', 'fas fa-circle', '', [
                 new MenuItem('ASP.NET Boilerplate', '', 'fas fa-dot-circle', '', [

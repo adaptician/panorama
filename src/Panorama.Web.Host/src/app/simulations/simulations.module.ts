@@ -8,6 +8,7 @@ import {SharedModule} from "@shared/shared.module";
 import { CreateSimulationDialogComponent } from './create-simulation/create-simulation-dialog.component';
 import {TabsModule} from "ngx-bootstrap/tabs";
 import { EditSimulationDialogComponent } from './edit-simulation/edit-simulation-dialog.component';
+import { ScenesComponent } from './scenes/scenes.component';
 
 
 
@@ -15,7 +16,8 @@ import { EditSimulationDialogComponent } from './edit-simulation/edit-simulation
   declarations: [
     SimulationsComponent,
     CreateSimulationDialogComponent,
-    EditSimulationDialogComponent
+    EditSimulationDialogComponent,
+    ScenesComponent
   ],
   imports: [
     CommonModule,
