@@ -1,6 +1,5 @@
-﻿namespace Panorama.Causation.Options;
+﻿namespace Panorama.Backing.Options;
 
-[Obsolete("This is replaced by Panorama.Backing RabbitMqOptions - remove this. This project should know nothing about RabbitMQ.")]
 public class RabbitMqOptions
 {
     public const string SettingName = "RabbitMq";

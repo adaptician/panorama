@@ -10,6 +10,6 @@ namespace Panorama.Backing.Shared.Scenes.Requests.Eto
         
         public int SkipCount { get; set; }
         
-        public string UserId { get; set; }
+        public string UserCorrelationId { get; set; }
     }
 }

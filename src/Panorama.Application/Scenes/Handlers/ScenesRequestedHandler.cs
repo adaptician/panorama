@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Abp.Runtime.Session;
 using MediatR;
 using Panorama.Backing.Shared.Scenes.Requests;
+using Panorama.Backing.Shared.Scenes.Requests.Eto;
 using Panorama.Common.Extensions;
 using Panorama.Common.Mediations;
 
@@ -25,7 +25,9 @@ public class ScenesRequestedHandler : PanoramaAppServiceBase, IRequestHandler<Sc
         }
 
         var userId = AbpSession.GetUserId();
+        var user = await UserManager.GetUserByIdAsync(userId);
 
-        throw new NotImplementedException("TODO:T complete.");
+        var requestEto = ObjectMapper.Map<ScenesRequestedEto>(request);
+        requestEto.UserCorrelationId = user.CorrelationId;
     }
 }

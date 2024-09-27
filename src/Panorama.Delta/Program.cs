@@ -9,6 +9,7 @@ var configRoot = (IConfigurationRoot) builder.Configuration;
 builder.Services.AddSingleton(configRoot);
 
 // Bind environment options.
+// TODO: remove this
 builder.Services.AddOptions<RabbitMqOptions>()
     .Configure<IConfiguration>((settings, configuration) => 
         configuration.GetSection(RabbitMqOptions.SettingName).Bind(settings));

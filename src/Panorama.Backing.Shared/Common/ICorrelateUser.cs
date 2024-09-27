@@ -2,6 +2,6 @@
 {
     public interface ICorrelateUser
     {
-        string UserId { get; set; }
+        string UserCorrelationId { get; set; }
     }
 }
