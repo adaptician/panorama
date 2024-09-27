@@ -6,11 +6,11 @@ using Panorama.Common.Handlers;
 
 namespace Panorama.Scenes.Handlers;
 
-public class ScenesRequestedHandler : CrudHandler<ScenesRequested, ScenesRequestedEto>
+public class UpdateSceneCommandedHandler : CrudHandler<UpdateSceneCommanded, UpdateSceneCommandedEto>
 {
-    protected override string RoutingKey => RoutingKeys.GetAll;
+    protected override string RoutingKey => RoutingKeys.Update;
     
-    public ScenesRequestedHandler(ScenesProducer producer) : base(producer)
+    public UpdateSceneCommandedHandler(ScenesProducer producer) : base(producer)
     {
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Panorama.Backing.Shared.Scenes.Requests;
 
 namespace Teatro.Shared.Scenes.Dtos;
 
-public class CreateSceneDto
+// TODO: remove project reference to Teatro shared from Panorama.
+public class CreateSceneDto : ICreateScene
 {
     [Required(AllowEmptyStrings = false)]
     [MaxLength(SceneConstants.MaxNameLength)]

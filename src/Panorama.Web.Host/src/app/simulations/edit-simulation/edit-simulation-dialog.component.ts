@@ -43,7 +43,8 @@ export class EditSimulationDialogComponent extends AppComponentBase {
         .pipe(finalize(() => this.setBusy('loading', false)))
         .subscribe(
             (result) => {
-              this.scene = result;
+              // this.scene = result;
+                // TODO: mind blown
             }
         );
   }

@@ -32,8 +32,16 @@ public abstract class Producer
         Logger.LogTrace($"{nameof(Producer)} is about to send a message to Exchange: {ExchangeName} " +
                         $"with Routing Key: {routingKey}");
         
-        using var connection = _connectionPool.GetConnection();
-        using var channel = connection.CreateModel();
+        // var factory = new ConnectionFactory
+        // {
+        //     HostName = "localhost",
+        //     UserName = "guest",
+        //     Password = "guest"
+        // };
+        //
+        // using var connection = factory.CreateConnection();
+        var connection = _connectionPool.GetConnection();
+        var channel = connection.CreateModel();
         
         var json = JsonConvert.SerializeObject(message);
         var body = Encoding.UTF8.GetBytes(json);

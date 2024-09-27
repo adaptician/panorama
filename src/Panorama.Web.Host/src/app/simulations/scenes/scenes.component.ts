@@ -1,6 +1,6 @@
 import {Component, Injector} from '@angular/core';
 import {ViewSceneDto} from "@shared/service-proxies/scenography/dtos/ViewSceneDto";
-import {SceneServiceProxy, ViewSceneDtoPagedResultDto} from "@shared/service-proxies/service-proxies";
+import {SceneServiceProxy} from "@shared/service-proxies/service-proxies";
 import {FilterablePagedRequestDto} from "@shared/service-proxies/common/dtos/FilterablePagedRequestDto";
 import {CreateSimulationDialogComponent} from "@app/simulations/create-simulation/create-simulation-dialog.component";
 import {EditSimulationDialogComponent} from "@app/simulations/edit-simulation/edit-simulation-dialog.component";
@@ -41,9 +41,10 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> {
                     finishedCallback();
                 })
             )
-            .subscribe((result: ViewSceneDtoPagedResultDto) => {
-                this.scenes = result.items;
-                this.showPaging(result, pageNumber);
+            .subscribe((result) => {
+                // TODO: subscribe to event - I think this one might be on init.
+                // this.scenes = result.items;
+                // this.showPaging(result, pageNumber);
             });
     }
 
@@ -62,6 +63,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> {
                             })
                         )
                         .subscribe(() => {
+                            // TODO: subscribe to event - I think this one might be on init.
                         });
                 }
             }
@@ -98,7 +100,8 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> {
         }
 
         createOrEditSimulationDialog.content.onSave.subscribe(() => {
-            this.refresh();
+            // TODO: remove this?
+            // this.refresh(); // refresh definitely not needed.
         });
     }
 }

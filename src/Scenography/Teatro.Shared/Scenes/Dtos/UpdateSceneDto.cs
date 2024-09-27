@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Panorama.Backing.Shared.Scenes.Requests;
 using Teatro.Shared.Bases.Dtos;
 
 namespace Teatro.Shared.Scenes.Dtos;
 
-public class UpdateSceneDto : EntityDto<long>
+public class UpdateSceneDto : EntityDto<long>, IUpdateScene
 {
     [Required(AllowEmptyStrings = false)]
     [MaxLength(SceneConstants.MaxNameLength)]

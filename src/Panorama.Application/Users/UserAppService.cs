@@ -62,6 +62,8 @@ namespace Panorama.Users
             user.TenantId = AbpSession.TenantId;
             user.IsEmailConfirmed = true;
 
+            user.CorrelationId = Guid.NewGuid().ToString();
+
             await _userManager.InitializeOptionsAsync(AbpSession.TenantId);
 
             CheckErrors(await _userManager.CreateAsync(user, input.Password));

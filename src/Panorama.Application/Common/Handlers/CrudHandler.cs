@@ -1,0 +1,43 @@
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Abp.Runtime.Session;
+using MediatR;
+using Panorama.Backing.Producers;
+using Panorama.Backing.Shared.Messages;
+using Panorama.Common.Extensions;
+using Panorama.Common.Mediations;
+
+namespace Panorama.Common.Handlers;
+
+public abstract class CrudHandler<TRequest, TRequestEto>(ScenesProducer producer) 
+    : PanoramaAppServiceBase, IRequestHandler<TRequest>
+where TRequest : IRequest
+where TRequestEto : IBrokerMessage
+{
+    protected abstract string RoutingKey { get; }
+    
+    public async Task Handle(TRequest request, CancellationToken cancellationToken)
+    {
+        Logger.Trace($"A request to retrieve Scenes was received. " +
+                     $"Request {MediationActionEnum.Received.GetCode()}");
+        
+        if (request == null)
+        {
+            Logger.Warn($"A request to retrieve Scenes was received as invalid." +
+                        $"Request {MediationActionEnum.Ignored.GetCode()}");
+
+            return; // Go no further.
+        }
+
+        var userId = AbpSession.GetUserId();
+        var user = await UserManager.GetUserByIdAsync(userId);
+
+        var requestEto = ObjectMapper.Map<TRequestEto>(request);
+        requestEto.UserId = user.CorrelationId;
+        
+        producer.PublishMessage(requestEto, RoutingKey);
+        
+        Logger.Trace($"A request to retrieve Scenes was published. " +
+                     $"Request {MediationActionEnum.Published.GetCode()}");
+    }
+}

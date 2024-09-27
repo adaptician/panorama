@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Panorama.Backing.Shared\Panorama.Backing.Shared.csproj" />
+    </ItemGroup>
+
 </Project>
