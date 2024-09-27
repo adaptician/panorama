@@ -14,5 +14,19 @@ namespace Panorama.EntityFrameworkCore
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            #region Users
+
+            modelBuilder.Entity<User>(b =>
+            {
+                b.HasIndex(e => new { e.CorrelationId }).IsUnique();
+            });
+
+            #endregion
+        }
     }
 }

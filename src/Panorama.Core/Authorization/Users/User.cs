@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Abp.Authorization.Users;
 using Abp.Extensions;
 
@@ -8,6 +9,13 @@ namespace Panorama.Authorization.Users
     public class User : AbpUser<User>
     {
         public const string DefaultPassword = "123qwe";
+
+        #region Custom Properties.
+        
+        [MaxLength(UserConstants.MaxCorrelationIdLength)]
+        public string CorrelationId { get; set; }
+
+        #endregion
 
         public static string CreateRandomPassword()
         {
@@ -23,7 +31,10 @@ namespace Panorama.Authorization.Users
                 Name = AdminUserName,
                 Surname = AdminUserName,
                 EmailAddress = emailAddress,
-                Roles = new List<UserRole>()
+                Roles = new List<UserRole>(),
+                
+                // Custom assignments.
+                CorrelationId = Guid.NewGuid().ToString()
             };
 
             user.SetNormalizedNames();
