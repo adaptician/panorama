@@ -2,7 +2,7 @@
 
 namespace Panorama.Backing.Common;
 
-public class ReflectToList<TItem>
+public abstract class ReflectToList<TItem>
 {
     protected static List<TItem> GetAll(Type[] staticTypes)
     {

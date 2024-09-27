@@ -18,7 +18,7 @@ using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Panorama.Backing.Options;
-using Panorama.Backing.Provisions;
+using Panorama.Backing.Provisioners;
 using Panorama.Common.Enums;
 using Panorama.Common.Extensions;
 using Panorama.Options;

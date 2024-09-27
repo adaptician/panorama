@@ -6,18 +6,18 @@ namespace Panorama.Backing.Brokers;
 
 public abstract class Exchanges : ReflectToDictionary<string, string>
 {
-    public static class ExchangeNames
-    {
-        public const string ScenesExchange = "scenes";
-    }
-    
-    public static class DefinedExchanges
+    private static class DefinedExchanges
     {
         public static (string, string) ScenesExchange = 
             (ExchangeNames.ScenesExchange, EventBusExchangeTypeEnum.Direct.GetCode());
     }
     
-    public static Dictionary<string, string> GetAllExchanges()
+    public static class ExchangeNames
+    {
+        public const string ScenesExchange = "scenes";
+    }
+    
+    public static Dictionary<string, string> GetAll()
     {
         return GetAll([typeof(DefinedExchanges)]);
     }
