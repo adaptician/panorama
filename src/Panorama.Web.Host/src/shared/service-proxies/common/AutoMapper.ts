@@ -24,13 +24,14 @@ export class AutoMapper {
         for (const key in instance) {
             if (source.hasOwnProperty(key)) {
 
-                const metadataType = Reflect.getMetadata("design:type", destination.prototype, key);
+                // This worked, but then package gave issues out of the blue. Weird.
+                // const metadataType = Reflect.getMetadata("design:type", destination.prototype, key);
 
-                if (metadataType === Array && arrayItemType) {
-                    (instance as any)[key] = source[key].map((item: any) => this._map(item, arrayItemType));
-                } else {
-                    (instance as any)[key] = source[key]; // Direct assignment for non-array properties
-                }
+                // if (metadataType === Array && arrayItemType) {
+                //     (instance as any)[key] = source[key].map((item: any) => this._map(item, arrayItemType));
+                // } else {
+                //     (instance as any)[key] = source[key]; // Direct assignment for non-array properties
+                // }
             }
         }
 

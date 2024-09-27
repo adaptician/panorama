@@ -1,9 +1,9 @@
-import {Constructor} from "@shared/service-proxies/common/types";
-import 'reflect-metadata';
+// import 'reflect-metadata';
+import {Constructor} from "../types";
 
 export class PagedResultDto<TEntityDto> {
 
-    @Reflect.metadata("design:type", Array)
+    // @Reflect.metadata("design:type", Array)
     items: TEntityDto[] | undefined = [];
     
     totalCount: number = 0;
