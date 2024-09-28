@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Abp.AspNetCore.SignalR.Hubs;
 using Abp.Dependency;
 using Abp.RealTime;
 using Microsoft.AspNetCore.SignalR;
@@ -14,12 +13,12 @@ namespace Panorama.SignalR
 {
     public class SignalRAppCommunicator : IAppEventCommunicator, ITransientDependency
     {
-        private readonly IHubContext<AbpCommonHub> _appHub;
+        private readonly IHubContext<AppHub> _appHub;
         
         protected ILogger Logger;
     
         public SignalRAppCommunicator(
-            IHubContext<AbpCommonHub> appHub)
+            IHubContext<AppHub> appHub)
         {
             _appHub = appHub;
             Logger = NullLogger.Instance;

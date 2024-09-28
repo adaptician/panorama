@@ -1,4 +1,4 @@
-import { Injector, ElementRef } from '@angular/core';
+import {Injector, ElementRef, OnDestroy, Component} from '@angular/core';
 import { AppConsts } from '@shared/AppConsts';
 import {
     LocalizationService,
@@ -13,7 +13,15 @@ import {
 import { AppSessionService } from '@shared/session/app-session.service';
 import {AutoMapper} from "@shared/service-proxies/common/AutoMapper";
 
-export abstract class AppComponentBase {
+interface AbpEventSubscription {
+    eventName: string;
+    callback: (...args: any[]) => void;
+}
+
+@Component({
+    template: '',
+})
+export abstract class AppComponentBase implements OnDestroy {
 
     localizationSourceName = AppConsts.localization.defaultLocalizationSourceName;
 
@@ -25,7 +33,10 @@ export abstract class AppComponentBase {
     message: MessageService;
     multiTenancy: AbpMultiTenancyService;
     appSession: AppSessionService;
-    elementRef: ElementRef;
+    // Commented out because it breaks signalR services that inherit from base - nothing visibly breaks.
+    // elementRef: ElementRef;
+
+    eventSubscriptions: AbpEventSubscription[] = [];
 
     lastBusy: Date = new Date();
     busy: {
@@ -49,9 +60,13 @@ export abstract class AppComponentBase {
         this.message = injector.get(MessageService);
         this.multiTenancy = injector.get(AbpMultiTenancyService);
         this.appSession = injector.get(AppSessionService);
-        this.elementRef = injector.get(ElementRef);
+        // this.elementRef = injector.get(ElementRef);
         
         this.mapper = new AutoMapper();
+    }
+
+    ngOnDestroy(): void {
+        this.unSubscribeAllEvents();
     }
 
     l(key: string, ...args: any[]): string {
@@ -71,5 +86,18 @@ export abstract class AppComponentBase {
 
     isGranted(permissionName: string): boolean {
         return this.permission.isGranted(permissionName);
+    }
+
+    protected subscribeToEvent(eventName: string, callback: (...args: any[]) => void): void {
+        abp.event.on(eventName, callback);
+        this.eventSubscriptions.push({
+            eventName,
+            callback,
+        });
+    }
+
+    private unSubscribeAllEvents() {
+        this.eventSubscriptions.forEach((s) => abp.event.off(s.eventName, s.callback));
+        this.eventSubscriptions = [];
     }
 }

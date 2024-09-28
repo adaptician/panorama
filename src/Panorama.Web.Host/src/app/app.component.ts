@@ -2,6 +2,7 @@ import { Component, Injector, OnInit, Renderer2 } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 import { LayoutStoreService } from '@shared/layout/layout-store.service';
+import {AppSignalrService} from "@app/hubs/app-signalr.service";
 
 @Component({
   templateUrl: './app.component.html'
@@ -12,7 +13,8 @@ export class AppComponent extends AppComponentBase implements OnInit {
   constructor(
     injector: Injector,
     private renderer: Renderer2,
-    private _layoutStore: LayoutStoreService
+    private _layoutStore: LayoutStoreService,
+    private _appSignalrService: AppSignalrService,
   ) {
     super(injector);
   }
@@ -20,7 +22,9 @@ export class AppComponent extends AppComponentBase implements OnInit {
   ngOnInit(): void {
     this.renderer.addClass(document.body, 'sidebar-mini');
 
-    SignalRAspNetCoreHelper.initSignalR();
+    SignalRAspNetCoreHelper.initSignalR(() => {
+      this._appSignalrService.init();
+    });
 
     abp.event.on('abp.notifications.received', (userNotification) => {
       abp.notifications.showUiNotifyForUserNotification(userNotification);

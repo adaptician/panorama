@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, NgZone, OnInit} from '@angular/core';
 import {ViewSceneDto} from "@shared/service-proxies/scenography/dtos/ViewSceneDto";
 import {SceneServiceProxy} from "@shared/service-proxies/service-proxies";
 import {FilterablePagedRequestDto} from "@shared/service-proxies/common/dtos/FilterablePagedRequestDto";
@@ -8,6 +8,8 @@ import {PagedListingComponentBase} from "@shared/paged-listing-component-base";
 import {finalize} from "rxjs/operators";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {appModuleAnimation} from "@shared/animations/routerTransition";
+import {AppEvents} from "@shared/AppEvents";
+import {ScenesReceivedEventData} from "@shared/service-proxies/scenography/events/ScenesReceivedEventData";
 
 @Component({
     selector: 'sim-scenes',
@@ -15,16 +17,21 @@ import {appModuleAnimation} from "@shared/animations/routerTransition";
     styleUrl: './scenes.component.less',
     animations: [appModuleAnimation()]
 })
-export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> {
+export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> implements OnInit {
     scenes: ViewSceneDto[] = [];
     keyword = '';
 
     constructor(
         injector: Injector,
         private _sceneService: SceneServiceProxy,
-        private _modalService: BsModalService
+        private _modalService: BsModalService,
+        private _zone: NgZone
     ) {
         super(injector);
+    }
+
+    ngOnInit(): void {
+        this.subscribeToEvents();
     }
 
     list(
@@ -33,6 +40,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> {
         finishedCallback: Function
     ): void {
         request.keyword = this.keyword;
+        this.setBusy('saving', true)
 
         this._sceneService
             .getAll(request.keyword, request.skipCount, request.maxResultCount)
@@ -103,5 +111,34 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> {
             // TODO: remove this?
             // this.refresh(); // refresh definitely not needed.
         });
+    }
+
+    private subscribeToEvents(): void {
+
+        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Connected, () => {
+            this._zone.run(() => {
+                this.notify.info(this.l('IAmListeningForEvents'));
+            });
+        });
+
+        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scenes_Received_Trigger,
+            (json) => {
+
+                const data = new ScenesReceivedEventData();
+                Object.assign(data, JSON.parse(json));
+
+                this._zone.run(() => {
+                    this.handleScenesReceived(data);
+                });
+            });
+
+    }
+
+    private handleScenesReceived(data: ScenesReceivedEventData): void {
+        console.log(`DATA ${JSON.stringify(data)}`);
+        const x = "let the madness begin";
+
+        this.scenes = data.Data.items;
+        this.setBusy('saving', false)
     }
 }

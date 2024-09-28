@@ -128,5 +128,7 @@
     <text name="SimulationDeleteWarningMessage">Simulation {0} will be deleted.</text>
     
     <text name="UserNotFound">User not found.</text>
+    
+    <text name="IAmListeningForEvents">I am listening for events</text>
   </texts>
 </localizationDictionary>

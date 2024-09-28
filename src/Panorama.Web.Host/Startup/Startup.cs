@@ -31,6 +31,7 @@ using Panorama.Common.Extensions;
 using Panorama.Options;
 using Panorama.Scenes;
 using Panorama.Scenes.Handlers;
+using Panorama.SignalR;
 
 namespace Panorama.Web.Host.Startup
 {
@@ -152,6 +153,9 @@ app.Use(async (context, next) =>                {                    await next(
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<AbpCommonHub>("/signalr");
+                
+                endpoints.MapHub<AppHub>("/signalr-app-events");
+                
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=Home}/{action=Index}/{id?}");
             });

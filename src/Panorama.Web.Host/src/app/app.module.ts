@@ -38,6 +38,7 @@ import { SidebarComponent } from './layout/sidebar.component';
 import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
+import {AppSignalrService} from "@app/hubs/app-signalr.service";
 
 @NgModule({
     declarations: [
@@ -84,6 +85,10 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
         SharedModule,
         NgxPaginationModule,
     ],
-    providers: []
+    providers: [
+        //#region Custom Providers
+        AppSignalrService,
+        //#endregion Custom Providers
+    ]
 })
 export class AppModule {}
