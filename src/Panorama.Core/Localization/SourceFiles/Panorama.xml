@@ -126,5 +126,7 @@
     <text name="CreateNewSimulation">Create new simulation</text>
     <text name="EditSimulation">Edit simulation</text>
     <text name="SimulationDeleteWarningMessage">Simulation {0} will be deleted.</text>
+    
+    <text name="UserNotFound">User not found.</text>
   </texts>
 </localizationDictionary>

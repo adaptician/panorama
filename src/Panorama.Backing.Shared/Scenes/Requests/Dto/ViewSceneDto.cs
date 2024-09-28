@@ -1,6 +1,6 @@
 ﻿namespace Panorama.Backing.Shared.Scenes.Requests.Dto
 {
-    public class ViewScene : IViewScene
+    public class ViewSceneDto : IViewScene
     {
         public long Id { get; set; }
         public string Name { get; set; }

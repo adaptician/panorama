@@ -1,10 +1,10 @@
 ﻿using Abp.Application.Services.Dto;
-using Panorama.Backing.Shared.Scenes.Requests;
+using Panorama.Backing.Shared.Scenes.Requests.Dto;
 using Panorama.Events.Base;
 
-namespace Panorama.Scenes.Events;
+namespace Panorama.Scenes.Events.ScenesReceived;
 
 public class ScenesReceivedEventData : AppEventData
 {
-    public PagedResultDto<IViewScene> Data { get; set; }
+    public PagedResultDto<ViewSceneDto> Data { get; set; }
 }

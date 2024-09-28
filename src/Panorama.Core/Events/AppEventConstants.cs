@@ -1,6 +1,6 @@
 ﻿namespace Panorama.Events;
 
-public static class EventConstants
+public static class AppEventConstants
 {
-    public const string NotifyOfScenesResult = "notifyOfScenesResult";
+    public const string NotifyOfScenesReceived = "notifyOfScenesReceived";
 }

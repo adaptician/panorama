@@ -2,6 +2,7 @@
 using Panorama.Backing.Shared.Scenes.Requests.Eto;
 using Panorama.Backing.Shared.Scenes.Requests.Mediations;
 using Panorama.Scenes.Dto;
+using Panorama.Scenes.Events.ScenesReceived;
 using Teatro.Shared.Scenes.Dtos;
 
 namespace Panorama.Scenes;
@@ -14,6 +15,7 @@ public class SceneMappingProfile : Profile
         CreateMap<PagedSceneResultRequestDto, ScenesRequested>();
         
         CreateMap<ScenesOperation, ScenesOperationEto>();
+        
         
         
         

@@ -1,7 +1,7 @@
 ﻿using Panorama.Events;
 using Panorama.Events.Base;
 
-namespace Panorama.Scenes.Events;
+namespace Panorama.Scenes.Events.ScenesReceived;
 
 public class ScenesReceivedCarrier : EventCarrier<ScenesReceivedEvent, ScenesReceivedEventData>
 {
