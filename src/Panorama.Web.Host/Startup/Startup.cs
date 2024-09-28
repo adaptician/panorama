@@ -18,13 +18,19 @@ using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Panorama.Backing.ConnectionPools;
+using Panorama.Backing.Consumers;
 using Panorama.Backing.Options;
 using Panorama.Backing.Producers;
 using Panorama.Backing.Provisioners;
+using Panorama.Backing.Shared.Consumers;
+using Panorama.Backing.Shared.Messages;
+using Panorama.Backing.Shared.Scenes.Requests.Eto;
+using Panorama.Backing.Workers;
 using Panorama.Common.Enums;
 using Panorama.Common.Extensions;
 using Panorama.Options;
 using Panorama.Scenes;
+using Panorama.Scenes.Handlers;
 
 namespace Panorama.Web.Host.Startup
 {
@@ -81,6 +87,11 @@ namespace Panorama.Web.Host.Startup
                 services.AddSingleton<IRabbitMqConnectionPool, RabbitMqConnectionPool>();
                 
                 services.AddSingleton<ScenesProducer>();
+                
+                services.AddSingleton<IProcessMessageHandler<ScenesResultEto>, ScenesResultHandler>();
+                services.AddSingleton<IConsumer<ScenesResultEto>, ScenesResultConsumer>();
+
+                services.AddHostedService<ScenesResultConsumerWorker>();
                 
                 services.AddHostedService<RabbitMqProvisioner>();
             }
