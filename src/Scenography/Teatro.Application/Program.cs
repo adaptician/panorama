@@ -1,5 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
+using Panorama.Backing.ConnectionPools;
+using Panorama.Backing.Consumers;
+using Panorama.Backing.Options;
+using Panorama.Backing.Producers;
+using Panorama.Backing.Shared.Consumers;
+using Panorama.Backing.Shared.Messages;
+using Panorama.Backing.Shared.Scenes.Requests.Eto;
+using Panorama.Backing.Workers;
+using Panorama.Common.Enums;
+using Panorama.Common.Extensions;
+using Teatro.Application.Handlers;
 using Teatro.Core.Scenography;
 using Teatro.EntityFrameworkCore;
 using Teatro.Shared.Options;
@@ -30,6 +41,29 @@ builder.Services.Configure<MongoDbSettings>(
 
 // Register document managers.
 builder.Services.AddScoped<ScenographyDocumentManager>();
+
+
+#region Add Event Bus
+
+var eventBusSection = builder.Configuration.GetSection(EventBusOptions.SettingName);
+builder.Services.Configure<EventBusOptions>(eventBusSection);
+            
+EventBusOptions eventBusOptions = new EventBusOptions();
+eventBusSection.Bind(eventBusOptions);
+            
+if (eventBusOptions.BusType.Equals(EventBusTypeEnum.RabbitMq.GetCode()))
+{
+    builder.Services.AddSingleton<IRabbitMqConnectionPool, RabbitMqConnectionPool>();
+    
+    builder.Services.AddTransient<IProcessMessageHandler<ScenesRequestedEto>, ScenesRequestedHandler>();
+    builder.Services.AddTransient<IConsumer<ScenesRequestedEto>, ScenesConsumer>();
+    builder.Services.AddTransient<ScenesProducer>();
+
+    builder.Services.AddHostedService<ScenesConsumerWorker>();
+}
+
+#endregion
+
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();

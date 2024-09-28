@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
 using MongoDB.Driver;
-using Teatro.Shared.Repositories;
+using Panorama.Common.Repositories;
 
 namespace Teatro.Core.Repositories;
 
-public class MongoRepository<TEntity> : IRepository<TEntity> 
+public class MongoRepository<TEntity> : IRepository<TEntity, string> 
     where TEntity : class
 {
     private readonly IMongoCollection<TEntity> _collection;

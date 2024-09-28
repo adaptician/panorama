@@ -44,6 +44,8 @@ public abstract class Producer
         props.DeliveryMode = (byte)message.DeliveryMode;
         props.CorrelationId = message.CorrelationId;
         
+        // TODO: ensure exists
+        
         channel.BasicPublish(exchange: ExchangeName, routingKey: routingKey, 
             basicProperties: props, body: body);
     }

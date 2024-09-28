@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Panorama.Common\Panorama.Common.csproj" />
       <ProjectReference Include="..\Teatro.Shared\Teatro.Shared.csproj" />
     </ItemGroup>
 

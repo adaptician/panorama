@@ -7,6 +7,7 @@ using Teatro.Shared.Scenes.Dtos;
 
 namespace Panorama.Scenes;
 
+// TODO: remove
 public interface IScenographyProxy
 {
     Task<PagedResultDto<ViewSceneDto>> GetAllAsync(PagedSceneResultRequestDto request,

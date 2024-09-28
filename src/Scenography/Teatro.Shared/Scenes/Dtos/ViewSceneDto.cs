@@ -1,8 +1,9 @@
-﻿using Teatro.Shared.Bases.Dtos;
+﻿using Panorama.Backing.Shared.Scenes.Requests;
+using Teatro.Shared.Bases.Dtos;
 
 namespace Teatro.Shared.Scenes.Dtos;
 
-public class ViewSceneDto : EntityDto<long>
+public class ViewSceneDto : EntityDto<long>, IViewScene
 {
     public string Name { get; set; }
     
