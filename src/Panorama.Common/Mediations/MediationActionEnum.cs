@@ -15,5 +15,8 @@ namespace Panorama.Common.Mediations
         
         [Code("IGNORED")]
         Ignored = 70,
+        
+        [Code("REJECTED")]
+        Rejected = 90,
     }
 }

@@ -6,8 +6,9 @@ using Panorama.Common.Handlers;
 
 namespace Panorama.Scenes.Handlers;
 
-public class DeleteSceneCommandedHandler(ScenesProducer producer)
-    : CrudHandler<DeleteSceneCommanded, ScenesOperationEto>(producer)
+public class ScenesOperationHandler(ScenesProducer producer)
+    : CrudHandler<ScenesOperation, ScenesOperationEto>(producer)
 {
-    protected override string RoutingKey => RoutingKeys.Delete;
+    // TODO: change this
+    protected override string RoutingKey => RoutingKeys.GetAll;
 }

@@ -2,7 +2,7 @@
 
 namespace Panorama.Backing.Shared.Scenes.Requests.Eto
 {
-    public class UpdateSceneCommandedEto : BrokerMessage, IUpdateScene
+    public class UpdateSceneCommandedEto : IUpdateScene
     {
         public long Id { get; set; }
         public string Name { get; set; }

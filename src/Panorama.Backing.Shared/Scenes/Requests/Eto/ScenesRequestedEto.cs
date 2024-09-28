@@ -1,8 +1,6 @@
-﻿using Panorama.Backing.Shared.Messages;
-
-namespace Panorama.Backing.Shared.Scenes.Requests.Eto
+﻿namespace Panorama.Backing.Shared.Scenes.Requests.Eto
 {
-    public class ScenesRequestedEto : BrokerMessage
+    public class ScenesRequestedEto
     {
         public string Keyword { get; set; }
         

@@ -7,7 +7,7 @@ using Panorama.Common.Handlers;
 namespace Panorama.Scenes.Handlers;
 
 public class UpdateSceneCommandedHandler(ScenesProducer producer)
-    : CrudHandler<UpdateSceneCommanded, UpdateSceneCommandedEto>(producer)
+    : CrudHandler<UpdateSceneCommanded, ScenesOperationEto>(producer)
 {
     protected override string RoutingKey => RoutingKeys.Update;
 }

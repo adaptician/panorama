@@ -7,7 +7,7 @@ using Panorama.Common.Handlers;
 namespace Panorama.Scenes.Handlers;
 
 public class CreateSceneCommandedHandler(ScenesProducer producer)
-    : CrudHandler<CreateSceneCommanded, CreateSceneCommandedEto>(producer)
+    : CrudHandler<CreateSceneCommanded, ScenesOperationEto>(producer)
 {
     protected override string RoutingKey => RoutingKeys.Create;
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Abp.Runtime.Session;
 using MediatR;
 using Panorama.Backing.Producers;
+using Panorama.Backing.Shared.Common;
 using Panorama.Backing.Shared.Messages;
 using Panorama.Common.Extensions;
 using Panorama.Common.Mediations;
@@ -12,7 +13,7 @@ namespace Panorama.Common.Handlers;
 public abstract class CrudHandler<TRequest, TRequestEto>(ScenesProducer producer) 
     : PanoramaAppServiceBase, IRequestHandler<TRequest>
 where TRequest : IRequest
-where TRequestEto : IBrokerMessage
+where TRequestEto : IBrokerMessage, IOperation
 {
     protected abstract string RoutingKey { get; }
     

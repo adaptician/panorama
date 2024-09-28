@@ -1,12 +1,10 @@
 ﻿using System.Text;
 using System.Text.Json;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Panorama.Backing.Brokers;
 using Panorama.Backing.ConnectionPools;
 using Panorama.Backing.Shared.Consumers;
 using Panorama.Backing.Shared.Messages;
-using Panorama.Common.Repositories;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -40,7 +38,6 @@ public abstract class Consumer<TPayload> : DefaultBasicConsumer, IConsumer<TPayl
             exclusive: Queue.IsExclusive,
             autoDelete: Queue.WillAutoDelete);
 
-        // var consumer = new EventingBasicConsumer(_channel);
         var consumer = new AsyncEventingBasicConsumer(_channel);
         consumer.Received += async (model, ea) =>
         {
@@ -63,7 +60,7 @@ public abstract class Consumer<TPayload> : DefaultBasicConsumer, IConsumer<TPayl
         };
 
         _channel.BasicConsume(queue: Queue.Name,
-            autoAck: false, // Manual acknowledgment for reliability
+            autoAck: false, // Manual acknowledgment for reliability.
             consumer: consumer);
         
         Logger.LogTrace($"Consumer started, listening to Queue: {Queue.Name}");
@@ -71,7 +68,6 @@ public abstract class Consumer<TPayload> : DefaultBasicConsumer, IConsumer<TPayl
 
     private async Task ProcessMessage(string message)
     {
-        // Deserialize the message into the generic type T
         var payload = JsonSerializer.Deserialize<TPayload>(message);
         
         if (payload != null)

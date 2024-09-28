@@ -60,11 +60,12 @@ if (eventBusOptions.BusType.Equals(EventBusTypeEnum.RabbitMq.GetCode()))
 {
     builder.Services.AddSingleton<IRabbitMqConnectionPool, RabbitMqConnectionPool>();
     
-    builder.Services.AddSingleton<IProcessMessageHandler<ScenesRequestedEto>, ScenesRequestedHandler>();
-    builder.Services.AddSingleton<IConsumer<ScenesRequestedEto>, ScenesConsumer>();
     builder.Services.AddTransient<ScenesProducer>();
+    
+    builder.Services.AddSingleton<IProcessMessageHandler<ScenesOperationEto>, ScenesOperationHandler>();
+    builder.Services.AddSingleton<IConsumer<ScenesOperationEto>, ScenesOperationConsumer>();
 
-    builder.Services.AddHostedService<ScenesConsumerWorker>();
+    builder.Services.AddHostedService<ScenesOperationConsumerWorker>();
 }
 
 #endregion

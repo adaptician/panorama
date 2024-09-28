@@ -10,8 +10,16 @@ public class SceneMappingProfile : Profile
 {
     public SceneMappingProfile()
     {
+        // TODO: clean up
         CreateMap<PagedSceneResultRequestDto, ScenesRequested>();
-        CreateMap<ScenesRequested, ScenesRequestedEto>();
+        
+        CreateMap<ScenesOperation, ScenesOperationEto>();
+        
+        
+        
+        
+        
+        
         
         CreateMap<SceneRequested, SceneRequestedEto>();
         

@@ -2,8 +2,12 @@
 using System.Threading.Tasks;
 using Abp.Authorization;
 using MediatR;
+using Newtonsoft.Json;
 using Panorama.Authorization;
+using Panorama.Backing.Shared.Messages;
+using Panorama.Backing.Shared.Scenes.Requests.Eto;
 using Panorama.Backing.Shared.Scenes.Requests.Mediations;
+using Panorama.Common.Constants;
 using Panorama.Scenes.Dto;
 using Teatro.Shared.Scenes.Dtos;
 
@@ -17,7 +21,12 @@ public class SceneAppService(
 {
     public async Task GetAll(PagedSceneResultRequestDto request, CancellationToken cancellationToken)
     {
-        var mediateRequest = ObjectMapper.Map<ScenesRequested>(request);
+        var data = ObjectMapper.Map<ScenesRequested>(request);
+        var mediateRequest = new ScenesOperation
+        {
+            Operation = BrokerMessageOperations.GetAll,
+            Data = JsonConvert.SerializeObject(data)
+        };
         await mediatr.Send(mediateRequest, cancellationToken);
     }
 

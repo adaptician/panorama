@@ -79,6 +79,7 @@ namespace Panorama.Web.Host.Startup
             if (eventBusOptions.BusType.Equals(EventBusTypeEnum.RabbitMq.GetCode()))
             {
                 services.AddSingleton<IRabbitMqConnectionPool, RabbitMqConnectionPool>();
+                
                 services.AddSingleton<ScenesProducer>();
                 
                 services.AddHostedService<RabbitMqProvisioner>();

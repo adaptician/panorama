@@ -5,10 +5,10 @@ using Panorama.Backing.Shared.Scenes.Requests.Eto;
 
 namespace Panorama.Backing.Workers;
 
-public class ScenesConsumerWorker : ConsumerWorker<ScenesRequestedEto>
+public class ScenesOperationConsumerWorker : ConsumerWorker<ScenesOperationEto>
 {
-    public ScenesConsumerWorker(ILogger<ConsumerWorker<ScenesRequestedEto>> logger, 
-        IConsumer<ScenesRequestedEto> consumer) 
+    public ScenesOperationConsumerWorker(ILogger<ConsumerWorker<ScenesOperationEto>> logger, 
+        IConsumer<ScenesOperationEto> consumer) 
         : base(logger, consumer)
     {
     }
