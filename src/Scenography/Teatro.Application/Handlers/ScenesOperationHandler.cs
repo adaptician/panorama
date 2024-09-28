@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Panorama.Backing.Producers;
+using Panorama.Backing.Shared.Common;
 using Panorama.Backing.Shared.Messages;
 using Panorama.Backing.Shared.RoutingKeys;
 using Panorama.Backing.Shared.Scenes.Requests.Eto;
@@ -11,6 +12,7 @@ using Panorama.Common.Mediations;
 using Panorama.Common.Repositories;
 using Teatro.Core.Scenes;
 using Teatro.Shared.Bases.Etos;
+using Teatro.Shared.Scenes.Dtos;
 using Teatro.Shared.Scenes.Etos;
 
 namespace Teatro.Application.Handlers;
@@ -39,7 +41,12 @@ public class ScenesOperationHandler(
         {
             case BrokerMessageOperations.GetAll:
             {
-                await ProcessGetAll(request.Data);
+                await ProcessGetAll(request);
+                break;
+            }
+            case BrokerMessageOperations.Get:
+            {
+                await ProcessGet(request);
                 break;
             }
             default:
@@ -49,15 +56,13 @@ public class ScenesOperationHandler(
         
     }
 
-    private async Task ProcessGetAll(string messageData)
+    private async Task ProcessGetAll(ScenesOperationEto request)
     {
-        var request = JsonConvert.DeserializeObject<ScenesRequestedEto>(messageData);
+        var data = DeserializePayloadOrPublishError<ScenesRequestedEto>(request);
         
-        if (request == null)
+        if (data == null)
         {
-
-            throw new Exception($"A request to retrieve Scenes was received as invalid." +
-                                $"Request {MediationActionEnum.Rejected.GetCode()}");
+            return; // Go no further.
         }
         
         // A hosted service does not manage scope in the same way as web-related services.
@@ -71,22 +76,97 @@ public class ScenesOperationHandler(
         var totalCount = await query.CountAsync();
         var records = await query
             .OrderBy(x => x.CreationTime)
-            .Skip(request.SkipCount)
-            .Take(request.MaxResultCount)
+            .Skip(data.SkipCount)
+            .Take(data.MaxResultCount)
             .ToListAsync();
         
         logger.LogInformation($"{nameof(Scene)} retrieved. " +
-                              $"Skipped {request.SkipCount} and Took {request.MaxResultCount}");
-        
-        var resultEto = new PagedResultEto<ViewSceneEto>
+                              $"Skipped {data.SkipCount} and Took {data.MaxResultCount}");
+
+        var result = new PagedResultEto<ViewSceneEto>
         {
             Items = mapper.Map<List<ViewSceneEto>>(records),
             TotalCount = totalCount
         };
         
+        var resultEto = mapper.Map<ResultEto>(request);
+        resultEto.Data = JsonConvert.SerializeObject(result);
+        
         producer.PublishMessage(resultEto, RoutingKeys.OperationResult);
         
-        logger.LogTrace($"A request to retrieve Scenes was published. " +
+        logger.LogTrace($"A result for {request?.Operation} {nameof(Scene)} was published. " +
                         $"Request {MediationActionEnum.Published.GetCode()}");
+    }
+    
+    private async Task ProcessGet(ScenesOperationEto request)
+    {
+        var data = DeserializePayloadOrPublishError<SceneRequestedEto>(request);
+        
+        if (data == null)
+        {
+            return; // Go no further.
+        }
+        
+        // A hosted service does not manage scope in the same way as web-related services.
+        // Some services will need to be manually scoped at the appropriate time.
+        using var scope = serviceProvider.CreateScope();
+                
+        var sceneRepository = scope.ServiceProvider.GetRequiredService<IQueryableRepository<Scene, long>>();
+        
+        var record = await sceneRepository.GetAll().FirstOrDefaultAsync(x => x.Id == data.Id && !x.IsDeleted);
+        
+        if (record == null)
+        {
+            logger.LogWarning($"{nameof(Scene)} Id: {data.Id} not found");
+            
+            var errorEto = CreateErrorEto(request, MediationActionEnum.Rejected,
+                $"A request to {request?.Operation} {nameof(Scene)} failed - {nameof(Scene)} Id: {data.Id} not found" +
+                $"Request {MediationActionEnum.Rejected.GetCode()}");
+            
+            producer.PublishMessage(errorEto, RoutingKeys.OperationResult);
+
+            return; // Go no further.
+        }
+        
+        var result = mapper.Map<ViewSceneDto>(record);
+        
+        var resultEto = mapper.Map<ResultEto>(request);
+        resultEto.Data = JsonConvert.SerializeObject(result);
+        
+        producer.PublishMessage(resultEto, RoutingKeys.OperationResult);
+        
+        logger.LogTrace($"A result for {request?.Operation} {nameof(Scene)} was published. " +
+                        $"Request {MediationActionEnum.Published.GetCode()}");
+    }
+
+    private TPayload? DeserializePayloadOrPublishError<TPayload>(ScenesOperationEto request)
+    {
+        var data = JsonConvert.DeserializeObject<TPayload>(request?.Data ?? string.Empty);
+        
+        if (data == null)
+        {
+            var errorEto = CreateErrorEto(request, MediationActionEnum.Rejected,
+                $"A request to {request?.Operation} {nameof(Scene)} was received as invalid." +
+                $"Request {MediationActionEnum.Rejected.GetCode()}");
+            
+            logger.LogWarning(errorEto.Error.Message);
+            
+            producer.PublishMessage(errorEto, RoutingKeys.OperationResult);
+        }
+
+        return data;
+    }
+
+    private ResultEto CreateErrorEto(ScenesOperationEto request, MediationActionEnum decision, string message)
+    {
+        var errorEto = mapper.Map<ResultEto>(request);
+        errorEto.HasError = true;
+        errorEto.Error = new ErrorEto
+        {
+            Message = message,
+            Decision = decision.GetCode()
+        };
+
+        return errorEto;
     }
 }
