@@ -1,10 +1,12 @@
 ﻿using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Panorama.Backing.Brokers;
 using Panorama.Backing.ConnectionPools;
 using Panorama.Backing.Shared.Consumers;
 using Panorama.Backing.Shared.Messages;
+using Panorama.Common.Repositories;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -23,7 +25,8 @@ public abstract class Consumer<TPayload> : DefaultBasicConsumer, IConsumer<TPayl
         ILogger<Consumer<TPayload>> logger)
     {
         Queue = queue;
-        _channel = connectionPool.GetChannel();
+        var connection = connectionPool.GetConnection();
+        _channel = connection.CreateModel();
         _processMessageHandler = processMessageHandler;
 
         Logger = logger;
@@ -37,7 +40,8 @@ public abstract class Consumer<TPayload> : DefaultBasicConsumer, IConsumer<TPayl
             exclusive: Queue.IsExclusive,
             autoDelete: Queue.WillAutoDelete);
 
-        var consumer = new EventingBasicConsumer(_channel);
+        // var consumer = new EventingBasicConsumer(_channel);
+        var consumer = new AsyncEventingBasicConsumer(_channel);
         consumer.Received += async (model, ea) =>
         {
             var body = ea.Body.ToArray();
@@ -55,12 +59,13 @@ public abstract class Consumer<TPayload> : DefaultBasicConsumer, IConsumer<TPayl
 
             // Acknowledge message if successfully processed.
             _channel.BasicAck(ea.DeliveryTag, false);
+            await Task.Yield();
         };
 
         _channel.BasicConsume(queue: Queue.Name,
             autoAck: false, // Manual acknowledgment for reliability
             consumer: consumer);
-
+        
         Logger.LogTrace($"Consumer started, listening to Queue: {Queue.Name}");
     }
 

@@ -15,7 +15,7 @@ public class ScenesConsumer : Consumer<ScenesRequestedEto>
 
     public ScenesConsumer(IRabbitMqConnectionPool connectionPool, 
         IProcessMessageHandler<ScenesRequestedEto> handler,
-        ILogger<Consumer<ScenesRequestedEto>> logger) 
+        ILogger<ScenesConsumer> logger) 
         : base(Queue, connectionPool, handler, logger)
     {
     }

@@ -10,9 +10,12 @@ using Panorama.Backing.Shared.Scenes.Requests.Eto;
 using Panorama.Backing.Workers;
 using Panorama.Common.Enums;
 using Panorama.Common.Extensions;
+using Panorama.Common.Repositories;
 using Teatro.Application.Handlers;
+using Teatro.Core.Scenes;
 using Teatro.Core.Scenography;
 using Teatro.EntityFrameworkCore;
+using Teatro.EntityFrameworkCore.Repositories;
 using Teatro.Shared.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +45,8 @@ builder.Services.Configure<MongoDbSettings>(
 // Register document managers.
 builder.Services.AddScoped<ScenographyDocumentManager>();
 
+builder.Services.AddScoped<IQueryableRepository<Scene, long>, SceneRepository>();
+
 
 #region Add Event Bus
 
@@ -55,8 +60,8 @@ if (eventBusOptions.BusType.Equals(EventBusTypeEnum.RabbitMq.GetCode()))
 {
     builder.Services.AddSingleton<IRabbitMqConnectionPool, RabbitMqConnectionPool>();
     
-    builder.Services.AddTransient<IProcessMessageHandler<ScenesRequestedEto>, ScenesRequestedHandler>();
-    builder.Services.AddTransient<IConsumer<ScenesRequestedEto>, ScenesConsumer>();
+    builder.Services.AddSingleton<IProcessMessageHandler<ScenesRequestedEto>, ScenesRequestedHandler>();
+    builder.Services.AddSingleton<IConsumer<ScenesRequestedEto>, ScenesConsumer>();
     builder.Services.AddTransient<ScenesProducer>();
 
     builder.Services.AddHostedService<ScenesConsumerWorker>();

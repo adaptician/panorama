@@ -8,7 +8,6 @@ public class RabbitMqConnectionPool : IRabbitMqConnectionPool, IDisposable
 {
     private readonly ConnectionFactory _factory;
     private IConnection? _connection;
-    private IModel? _channel;
     
     public RabbitMqConnectionPool(IOptions<EventBusOptions> eventBusOptions)
     {
@@ -20,7 +19,8 @@ public class RabbitMqConnectionPool : IRabbitMqConnectionPool, IDisposable
         {
             HostName = rabbitMqOptions.HostName,
             UserName = rabbitMqOptions.UserName,
-            Password = rabbitMqOptions.Password
+            Password = rabbitMqOptions.Password,
+            DispatchConsumersAsync = true
         };
     }
 
@@ -34,20 +34,8 @@ public class RabbitMqConnectionPool : IRabbitMqConnectionPool, IDisposable
         return _connection;
     }
 
-    public IModel GetChannel()
-    {
-        var connection = GetConnection();
-        if (_channel == null || !_channel.IsOpen)
-        {
-            _channel = connection.CreateModel();
-        }
-
-        return _channel;
-    }
-
     public void Dispose()
     {
-        _channel?.Close();
         _connection?.Close();
     }
 }
