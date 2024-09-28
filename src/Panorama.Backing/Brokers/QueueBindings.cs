@@ -10,12 +10,12 @@ public abstract class QueueBindings : ReflectToList<QueueBinding>
         public static QueueBinding ScenesOperation = new (
             Queues.QueueNames.ScenesOperation, 
             Exchanges.ExchangeNames.ScenesExchange, 
-            RoutingKeys.GetAll);
+            RoutingKeys.Operation);
         
         public static QueueBinding ScenesResult = new (
             Queues.QueueNames.ScenesResult, 
             Exchanges.ExchangeNames.ScenesExchange, 
-            RoutingKeys.GetAllResult);
+            RoutingKeys.OperationResult);
     }
     
     public static List<QueueBinding> GetAll()

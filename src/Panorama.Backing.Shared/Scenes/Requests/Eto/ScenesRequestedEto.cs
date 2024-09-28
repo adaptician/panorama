@@ -1,6 +1,6 @@
 ﻿namespace Panorama.Backing.Shared.Scenes.Requests.Eto
 {
-    public class ScenesRequestedEto
+    public class ScenesRequestedEto : IRequestScenes
     {
         public string Keyword { get; set; }
         

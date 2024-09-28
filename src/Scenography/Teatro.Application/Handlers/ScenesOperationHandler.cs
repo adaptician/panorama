@@ -84,7 +84,7 @@ public class ScenesOperationHandler(
             TotalCount = totalCount
         };
         
-        producer.PublishMessage(resultEto, RoutingKeys.GetAllResult);
+        producer.PublishMessage(resultEto, RoutingKeys.OperationResult);
         
         logger.LogTrace($"A request to retrieve Scenes was published. " +
                         $"Request {MediationActionEnum.Published.GetCode()}");

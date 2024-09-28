@@ -9,6 +9,5 @@ namespace Panorama.Scenes.Handlers;
 public class ScenesOperationHandler(ScenesProducer producer)
     : CrudHandler<ScenesOperation, ScenesOperationEto>(producer)
 {
-    // TODO: change this
-    protected override string RoutingKey => RoutingKeys.GetAll;
+    protected override string RoutingKey => RoutingKeys.Operation;
 }

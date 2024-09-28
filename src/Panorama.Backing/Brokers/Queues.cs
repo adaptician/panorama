@@ -12,8 +12,8 @@ public abstract class Queues : ReflectToList<Queue>
     
     public static class QueueNames
     {
-        public const string ScenesOperation = "scenes_operation";
-        public const string ScenesResult = "scenes_result";
+        public const string ScenesOperation = "scenes.operation";
+        public const string ScenesResult = "scenes.result";
     }
     
     public static List<Queue> GetAll()
