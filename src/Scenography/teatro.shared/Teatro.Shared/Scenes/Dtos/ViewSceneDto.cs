@@ -1,15 +1,15 @@
-﻿using Panorama.Backing.Dead.Shared.Scenes.Requests;
-using Teatro.Shared.Bases.Dtos;
+﻿using Teatro.Shared.Bases.Dtos;
 
 namespace Teatro.Shared.Scenes.Dtos;
 
-// TODO: destroy these DTO's and ETO's - they must all come from backing shared.
-public class ViewSceneDto : EntityDto<long>, IViewScene
+// TODO: do not expose db id's
+public class ViewSceneDto : EntityDto<long>
 {
     public string Name { get; set; }
     
     public string Description { get; set; }
     
+    // TODO: do not expose db id's
     public long ScenographyId { get; set; }
     
     public string SceneData { get; set; }

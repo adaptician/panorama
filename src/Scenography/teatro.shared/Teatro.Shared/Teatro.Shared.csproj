@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Panorama.Backing.Dead.Shared\Panorama.Backing.Dead.Shared.csproj" />
     </ItemGroup>
 
 </Project>

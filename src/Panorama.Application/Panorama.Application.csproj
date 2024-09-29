@@ -16,7 +16,7 @@
     <ProjectReference Include="..\Panorama.Backing.Dead\Panorama.Backing.Dead.csproj" />
     <ProjectReference Include="..\Panorama.Common\Panorama.Common.csproj" />
     <ProjectReference Include="..\Panorama.Core\Panorama.Core.csproj" />
-    <ProjectReference Include="..\Scenography\Teatro.Shared\Teatro.Shared.csproj" />
+    <ProjectReference Include="..\Scenography\teatro.shared\Teatro.Shared\Teatro.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.4.1" />

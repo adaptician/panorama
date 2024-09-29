@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Panorama.Backing.Dead.Shared.Scenes.Requests;
+using Teatro.Shared.Bases.Dtos;
 
 namespace Teatro.Shared.Scenes.Dtos;
 
-// TODO: remove project reference to Teatro shared from Panorama.
-public class CreateSceneDto : ICreateScene
+// TODO: do not expose db id's
+public class UpdateSceneDto : EntityDto<long>
 {
     [Required(AllowEmptyStrings = false)]
     [MaxLength(SceneConstants.MaxNameLength)]
@@ -12,7 +12,4 @@ public class CreateSceneDto : ICreateScene
     
     [MaxLength(SceneConstants.MaxDescriptionLength)]
     public string Description { get; set; }
-    
-    [MaxLength(SceneConstants.MaxInitialSceneDataLength)]
-    public string InitialSceneData { get; set; }
 }

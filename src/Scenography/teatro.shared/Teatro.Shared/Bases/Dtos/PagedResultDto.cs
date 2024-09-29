@@ -1,8 +1,7 @@
-﻿using Panorama.Backing.Dead.Shared.Messages;
+﻿namespace Teatro.Shared.Bases.Dtos;
 
-namespace Teatro.Shared.Bases.Etos;
-
-public class PagedResultEto<T> : BrokerMessage, IPagedResultEto<T>
+[Serializable]
+public class PagedResultDto<T>
 {
     public virtual int TotalCount { get; set; }
     
@@ -13,11 +12,11 @@ public class PagedResultEto<T> : BrokerMessage, IPagedResultEto<T>
         set { _items = value; }
     }
 
-    public PagedResultEto()
+    public PagedResultDto()
     {
     }
 
-    public PagedResultEto(IReadOnlyList<T> items)
+    public PagedResultDto(IReadOnlyList<T> items)
     {
         Items = items;
     }
