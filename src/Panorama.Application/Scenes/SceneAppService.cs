@@ -1,7 +1,10 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Abp.Authorization;
+using MassTransit;
 using Panorama.Authorization;
+using Panorama.Backing.Bus.Shared.Scenes;
 using Panorama.Scenes.Dto;
 using Teatro.Shared.Bases.Dtos;
 using Teatro.Shared.Scenes.Dtos;
@@ -10,12 +13,16 @@ namespace Panorama.Scenes;
 
 [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations)]
 public class SceneAppService(
-    IScenographyProxy scenographyProxy
+    IScenographyProxy scenographyProxy,
+    ISendEndpointProvider sendEndpointProvider
 ) : PanoramaAppServiceBase, ISceneAppService
 {
     public async Task<PagedResultDto<ViewSceneDto>> GetAll(PagedSceneResultRequestDto request,
         CancellationToken cancellationToken)
     {
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:scenes"));
+        await endpoint.Send(new ScenesRequestedEto { MaxResultCount = request.MaxResultCount, SkipCount = request.SkipCount }, cancellationToken);
+        
         return await scenographyProxy.GetAllAsync(request, cancellationToken);
     }
 

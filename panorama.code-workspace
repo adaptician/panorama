@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "kubernetes"
+		},
+		{
+			"path": "samples"
 		}
 	]
 }

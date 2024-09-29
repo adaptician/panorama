@@ -1,7 +1,7 @@
 ﻿using Abp.Modules;
 using Abp.Reflection.Extensions;
 
-namespace Panorama.Backing;
+namespace Panorama.Backing.Bus;
 
 public class PanoramaBackingBusModule : AbpModule
 {

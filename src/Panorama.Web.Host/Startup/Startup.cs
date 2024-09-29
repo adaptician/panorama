@@ -15,6 +15,7 @@ using Abp.Extensions;
 using Panorama.Configuration;
 using Panorama.Identity;
 using Abp.AspNetCore.SignalR.Hubs;
+using MassTransit;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Panorama.Backing.Dead.ConnectionPools;
@@ -73,6 +74,30 @@ namespace Panorama.Web.Host.Startup
             services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssemblyContaining<PanoramaApplicationModule>());
 
+            #endregion
+            
+            #region Add Event Bus
+            
+            var eventBusSection = _appConfiguration.GetSection(EventBusOptions.SettingName);
+            services.Configure<EventBusOptions>(eventBusSection);
+            
+            EventBusOptions eventBusOptions = new EventBusOptions();
+            eventBusSection.Bind(eventBusOptions);
+            
+            services.AddMassTransit(mass =>
+            {
+                mass.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(eventBusOptions.RabbitMq.HostName, "/", h =>
+                    {
+                        h.Username(eventBusOptions.RabbitMq.UserName);
+                        h.Password(eventBusOptions.RabbitMq.Password);
+                    });
+
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
+            
             #endregion
             
             services.AddSignalR();
