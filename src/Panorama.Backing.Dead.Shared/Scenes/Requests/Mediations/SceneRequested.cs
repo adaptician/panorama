@@ -1,0 +1,9 @@
+﻿using MediatR;
+
+namespace Panorama.Backing.Dead.Shared.Scenes.Requests.Mediations
+{
+    public class SceneRequested : IRequestScene, IRequest
+    {
+        public long Id { get; set; }
+    }
+}

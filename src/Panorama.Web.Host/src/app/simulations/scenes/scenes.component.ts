@@ -50,9 +50,8 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
                 })
             )
             .subscribe((result) => {
-                // TODO: subscribe to event - I think this one might be on init.
-                // this.scenes = result.items;
-                // this.showPaging(result, pageNumber);
+                this.scenes = result.items;
+                this.showPaging(result, pageNumber);
             });
     }
 
@@ -71,7 +70,6 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
                             })
                         )
                         .subscribe(() => {
-                            // TODO: subscribe to event - I think this one might be on init.
                         });
                 }
             }
@@ -108,11 +106,11 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         }
 
         createOrEditSimulationDialog.content.onSave.subscribe(() => {
-            // TODO: remove this?
-            // this.refresh(); // refresh definitely not needed.
+            this.refresh();
         });
     }
 
+    // TODO:T clean this up eish.
     private subscribeToEvents(): void {
 
         this.subscribeToEvent(AppEvents.SignalR_AppEvents_Connected, () => {

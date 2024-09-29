@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panorama.EntityFrameworkCor
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D5EDBFFF-7F95-4DD2-A44B-E2EDC56FD8A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Backing.Shared", "src\Panorama.Backing.Shared\Panorama.Backing.Shared.csproj", "{FF87D601-22C6-4DA7-B779-02E1267141AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Backing.Dead.Shared", "src\Panorama.Backing.Dead.Shared\Panorama.Backing.Dead.Shared.csproj", "{FF87D601-22C6-4DA7-B779-02E1267141AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Delta", "src\Panorama.Delta\Panorama.Delta.csproj", "{647A2A9E-3C56-4F28-955C-5DE73C5227A6}"
 EndProject
@@ -43,7 +43,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teatro.Shared", "src\Scenog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Common", "src\Panorama.Common\Panorama.Common.csproj", "{C2E44804-65F0-45F9-B99D-A89B2FA51D5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Backing", "src\Panorama.Backing\Panorama.Backing.csproj", "{FE1A2587-0973-48FE-A908-5F5B9F3A9ABC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panorama.Backing.Dead", "src\Panorama.Backing.Dead\Panorama.Backing.Dead.csproj", "{FE1A2587-0973-48FE-A908-5F5B9F3A9ABC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

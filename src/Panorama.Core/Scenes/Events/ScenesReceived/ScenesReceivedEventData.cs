@@ -1,5 +1,5 @@
 ﻿using Abp.Application.Services.Dto;
-using Panorama.Backing.Shared.Scenes.Requests.Dto;
+using Panorama.Backing.Dead.Shared.Scenes.Requests.Dto;
 using Panorama.Events.Base;
 
 namespace Panorama.Scenes.Events.ScenesReceived;

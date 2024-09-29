@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Panorama.Backing.Shared.Common;
+using Panorama.Backing.Dead.Shared.Common;
 using Teatro.Core.Scenes;
 using Teatro.Shared.Scenes.Dtos;
 using Teatro.Shared.Scenes.Etos;

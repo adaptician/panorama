@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Panorama.Backing.Shared.Scenes.Requests.Eto;
-using Panorama.Backing.Shared.Scenes.Requests.Mediations;
+using Panorama.Backing.Dead.Shared.Scenes.Requests.Eto;
+using Panorama.Backing.Dead.Shared.Scenes.Requests.Mediations;
 using Panorama.Scenes.Dto;
 using Panorama.Scenes.Events.ScenesReceived;
 using Teatro.Shared.Scenes.Dtos;

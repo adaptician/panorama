@@ -17,15 +17,15 @@ using Panorama.Identity;
 using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Panorama.Backing.ConnectionPools;
-using Panorama.Backing.Consumers;
-using Panorama.Backing.Options;
-using Panorama.Backing.Producers;
-using Panorama.Backing.Provisioners;
-using Panorama.Backing.Shared.Consumers;
-using Panorama.Backing.Shared.Messages;
-using Panorama.Backing.Shared.Scenes.Requests.Eto;
-using Panorama.Backing.Workers;
+using Panorama.Backing.Dead.ConnectionPools;
+using Panorama.Backing.Dead.Consumers;
+using Panorama.Backing.Dead.Options;
+using Panorama.Backing.Dead.Producers;
+using Panorama.Backing.Dead.Provisioners;
+using Panorama.Backing.Dead.Shared.Consumers;
+using Panorama.Backing.Dead.Shared.Messages;
+using Panorama.Backing.Dead.Shared.Scenes.Requests.Eto;
+using Panorama.Backing.Dead.Workers;
 using Panorama.Common.Enums;
 using Panorama.Common.Extensions;
 using Panorama.Options;
@@ -72,30 +72,6 @@ namespace Panorama.Web.Host.Startup
 
             services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssemblyContaining<PanoramaApplicationModule>());
-
-            #endregion
-
-            #region Add Event Bus
-
-            var eventBusSection = _appConfiguration.GetSection(EventBusOptions.SettingName);
-            services.Configure<EventBusOptions>(eventBusSection);
-            
-            EventBusOptions eventBusOptions = new EventBusOptions();
-            eventBusSection.Bind(eventBusOptions);
-            
-            if (eventBusOptions.BusType.Equals(EventBusTypeEnum.RabbitMq.GetCode()))
-            {
-                services.AddSingleton<IRabbitMqConnectionPool, RabbitMqConnectionPool>();
-                
-                services.AddSingleton<ScenesProducer>();
-                
-                services.AddSingleton<IProcessMessageHandler<ScenesResultEto>, ScenesResultHandler>();
-                services.AddSingleton<IConsumer<ScenesResultEto>, ScenesResultConsumer>();
-
-                services.AddHostedService<ScenesResultConsumerWorker>();
-                
-                services.AddHostedService<RabbitMqProvisioner>();
-            }
 
             #endregion
             

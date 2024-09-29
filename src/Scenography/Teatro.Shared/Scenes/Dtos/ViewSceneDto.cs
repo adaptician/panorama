@@ -1,4 +1,4 @@
-﻿using Panorama.Backing.Shared.Scenes.Requests;
+﻿using Panorama.Backing.Dead.Shared.Scenes.Requests;
 using Teatro.Shared.Bases.Dtos;
 
 namespace Teatro.Shared.Scenes.Dtos;

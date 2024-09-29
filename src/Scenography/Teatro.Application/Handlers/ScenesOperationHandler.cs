@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Panorama.Backing.Producers;
-using Panorama.Backing.Shared.Common;
-using Panorama.Backing.Shared.Messages;
-using Panorama.Backing.Shared.RoutingKeys;
-using Panorama.Backing.Shared.Scenes.Requests.Eto;
+using Panorama.Backing.Dead.Producers;
+using Panorama.Backing.Dead.Shared.Common;
+using Panorama.Backing.Dead.Shared.Messages;
+using Panorama.Backing.Dead.Shared.RoutingKeys;
+using Panorama.Backing.Dead.Shared.Scenes.Requests.Eto;
 using Panorama.Common.Constants;
 using Panorama.Common.Extensions;
 using Panorama.Common.Mediations;
@@ -17,6 +17,7 @@ using Teatro.Shared.Scenes.Etos;
 
 namespace Teatro.Application.Handlers;
 
+[Obsolete("This is currently un-used and stale, and will THROW. Attempt to re-integrate once MassTransit is configured.")]
 public class ScenesOperationHandler(
     ILogger<ScenesOperationHandler> logger,
     IMapper mapper,
@@ -26,6 +27,8 @@ public class ScenesOperationHandler(
 {
     public async Task ProcessMessageAsync(ScenesOperationEto request)
     {
+        throw new NotImplementedException("This is currently un-used and stale. Attempt to re-integrate once MassTransit is configured.");
+        
         logger.LogTrace($"A request to process {nameof(ScenesOperationEto)} was received. " +
                      $"Request {MediationActionEnum.Received.GetCode()}");
         

@@ -1,4 +1,4 @@
-﻿using Panorama.Backing.Shared.Messages;
+﻿using Panorama.Backing.Dead.Shared.Messages;
 
 namespace Teatro.Shared.Bases.Etos;
 

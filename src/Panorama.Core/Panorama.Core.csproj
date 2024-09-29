@@ -20,6 +20,6 @@
     <PackageReference Include="Castle.Windsor.MsDependencyInjection" Version="4.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Panorama.Backing.Shared\Panorama.Backing.Shared.csproj" />
+    <ProjectReference Include="..\Panorama.Backing.Dead.Shared\Panorama.Backing.Dead.Shared.csproj" />
   </ItemGroup>
 </Project>

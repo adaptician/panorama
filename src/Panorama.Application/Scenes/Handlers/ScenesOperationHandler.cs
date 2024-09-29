@@ -1,7 +1,7 @@
-﻿using Panorama.Backing.Producers;
-using Panorama.Backing.Shared.RoutingKeys;
-using Panorama.Backing.Shared.Scenes.Requests.Eto;
-using Panorama.Backing.Shared.Scenes.Requests.Mediations;
+﻿using Panorama.Backing.Dead.Producers;
+using Panorama.Backing.Dead.Shared.RoutingKeys;
+using Panorama.Backing.Dead.Shared.Scenes.Requests.Eto;
+using Panorama.Backing.Dead.Shared.Scenes.Requests.Mediations;
 using Panorama.Common.Handlers;
 
 namespace Panorama.Scenes.Handlers;

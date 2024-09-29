@@ -29,7 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Panorama.Backing\Panorama.Backing.csproj" />
+      <ProjectReference Include="..\..\Panorama.Backing.Dead\Panorama.Backing.Dead.csproj" />
       <ProjectReference Include="..\Teatro.EntityFrameworkCore\Teatro.EntityFrameworkCore.csproj" />
     </ItemGroup>
 

@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Abp.Runtime.Session;
 using MediatR;
-using Panorama.Backing.Producers;
-using Panorama.Backing.Shared.Common;
-using Panorama.Backing.Shared.Messages;
+using Panorama.Backing.Dead.Producers;
+using Panorama.Backing.Dead.Shared.Common;
+using Panorama.Backing.Dead.Shared.Messages;
 using Panorama.Common.Extensions;
 using Panorama.Common.Mediations;
 

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Panorama.Backing.Shared.Scenes.Requests;
+using Panorama.Backing.Dead.Shared.Scenes.Requests;
 
 namespace Teatro.Shared.Scenes.Dtos;
 

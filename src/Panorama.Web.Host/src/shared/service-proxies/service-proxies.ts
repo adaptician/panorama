@@ -206,7 +206,7 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
-export class CreateSceneCommandedHandlerServiceProxy {
+export class DeadSceneServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -217,30 +217,40 @@ export class CreateSceneCommandedHandlerServiceProxy {
     }
 
     /**
-     * @param body (optional) 
+     * @param keyword (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
-    handle(body: CreateSceneCommanded | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/CreateSceneCommandedHandler/Handle";
+    getAll(keyword: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DeadScene/GetAll?";
+        if (keyword === null)
+            throw new Error("The parameter 'keyword' cannot be null.");
+        else if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json",
             })
         };
 
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHandle(response_);
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processHandle(response_ as any);
+                    return this.processGetAll(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -249,7 +259,7 @@ export class CreateSceneCommandedHandlerServiceProxy {
         }));
     }
 
-    protected processHandle(response: HttpResponseBase): Observable<void> {
+    protected processGetAll(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -267,25 +277,65 @@ export class CreateSceneCommandedHandlerServiceProxy {
         }
         return _observableOf(null as any);
     }
-}
 
-@Injectable()
-export class DeleteSceneCommandedHandlerServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getById(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DeadScene/GetById?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
 
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processGetById(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
     }
 
     /**
      * @param body (optional) 
      * @return Success
      */
-    handle(body: DeleteSceneCommanded | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/DeleteSceneCommandedHandler/Handle";
+    create(body: CreateSceneDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DeadScene/Create";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -300,11 +350,11 @@ export class DeleteSceneCommandedHandlerServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHandle(response_);
+            return this.processCreate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processHandle(response_ as any);
+                    return this.processCreate(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -313,7 +363,111 @@ export class DeleteSceneCommandedHandlerServiceProxy {
         }));
     }
 
-    protected processHandle(response: HttpResponseBase): Observable<void> {
+    protected processCreate(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: UpdateSceneDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DeadScene/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DeadScene/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -811,7 +965,7 @@ export class SceneServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<void> {
+    getAll(keyword: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ViewSceneDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Scene/GetAll?";
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
@@ -831,6 +985,7 @@ export class SceneServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Accept": "text/plain"
             })
         };
 
@@ -841,14 +996,14 @@ export class SceneServiceProxy {
                 try {
                     return this.processGetAll(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<ViewSceneDtoPagedResultDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<ViewSceneDtoPagedResultDto>;
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<void> {
+    protected processGetAll(response: HttpResponseBase): Observable<ViewSceneDtoPagedResultDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -857,7 +1012,10 @@ export class SceneServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ViewSceneDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -871,7 +1029,7 @@ export class SceneServiceProxy {
      * @param id (optional) 
      * @return Success
      */
-    getById(id: number | undefined): Observable<void> {
+    getById(id: number | undefined): Observable<ViewSceneDto> {
         let url_ = this.baseUrl + "/api/services/app/Scene/GetById?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -883,6 +1041,7 @@ export class SceneServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Accept": "text/plain"
             })
         };
 
@@ -893,14 +1052,14 @@ export class SceneServiceProxy {
                 try {
                     return this.processGetById(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<ViewSceneDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<ViewSceneDto>;
         }));
     }
 
-    protected processGetById(response: HttpResponseBase): Observable<void> {
+    protected processGetById(response: HttpResponseBase): Observable<ViewSceneDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -909,7 +1068,10 @@ export class SceneServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ViewSceneDto.fromJS(resultData200);
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -923,7 +1085,7 @@ export class SceneServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    create(body: CreateSceneDto | undefined): Observable<void> {
+    create(body: CreateSceneDto | undefined): Observable<ViewSceneDto> {
         let url_ = this.baseUrl + "/api/services/app/Scene/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -935,6 +1097,7 @@ export class SceneServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
+                "Accept": "text/plain"
             })
         };
 
@@ -945,14 +1108,14 @@ export class SceneServiceProxy {
                 try {
                     return this.processCreate(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<ViewSceneDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<ViewSceneDto>;
         }));
     }
 
-    protected processCreate(response: HttpResponseBase): Observable<void> {
+    protected processCreate(response: HttpResponseBase): Observable<ViewSceneDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -961,7 +1124,10 @@ export class SceneServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ViewSceneDto.fromJS(resultData200);
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -1077,7 +1243,7 @@ export class SceneServiceProxy {
 }
 
 @Injectable()
-export class SceneRequestedHandlerServiceProxy {
+export class ScenesOperationHandlerServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -1091,72 +1257,8 @@ export class SceneRequestedHandlerServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    handle(body: SceneRequested | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/SceneRequestedHandler/Handle";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHandle(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processHandle(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processHandle(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-@Injectable()
-export class ScenesRequestedHandlerServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    handle(body: ScenesRequested | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/ScenesRequestedHandler/Handle";
+    handle(body: ScenesOperation | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ScenesOperationHandler/Handle";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1628,70 +1730,6 @@ export class TokenAuthServiceProxy {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = AuthenticateResultModel.fromJS(resultData200);
             return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-@Injectable()
-export class UpdateSceneCommandedHandlerServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    handle(body: UpdateSceneCommanded | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/UpdateSceneCommandedHandler/Handle";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHandle(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processHandle(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processHandle(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -2695,57 +2733,6 @@ export interface ICreateRoleDto {
     grantedPermissions: string[] | undefined;
 }
 
-export class CreateSceneCommanded implements ICreateSceneCommanded {
-    name: string | undefined;
-    description: string | undefined;
-    initialSceneData: string | undefined;
-
-    constructor(data?: ICreateSceneCommanded) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.name = _data["name"];
-            this.description = _data["description"];
-            this.initialSceneData = _data["initialSceneData"];
-        }
-    }
-
-    static fromJS(data: any): CreateSceneCommanded {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateSceneCommanded();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["description"] = this.description;
-        data["initialSceneData"] = this.initialSceneData;
-        return data;
-    }
-
-    clone(): CreateSceneCommanded {
-        const json = this.toJSON();
-        let result = new CreateSceneCommanded();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICreateSceneCommanded {
-    name: string | undefined;
-    description: string | undefined;
-    initialSceneData: string | undefined;
-}
-
 export class CreateSceneDto implements ICreateSceneDto {
     name: string;
     description: string | undefined;
@@ -2929,49 +2916,6 @@ export interface ICreateUserDto {
     isActive: boolean;
     roleNames: string[] | undefined;
     password: string;
-}
-
-export class DeleteSceneCommanded implements IDeleteSceneCommanded {
-    id: number;
-
-    constructor(data?: IDeleteSceneCommanded) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): DeleteSceneCommanded {
-        data = typeof data === 'object' ? data : {};
-        let result = new DeleteSceneCommanded();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        return data;
-    }
-
-    clone(): DeleteSceneCommanded {
-        const json = this.toJSON();
-        let result = new DeleteSceneCommanded();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IDeleteSceneCommanded {
-    id: number;
 }
 
 export class FlatPermissionDto implements IFlatPermissionDto {
@@ -3889,10 +3833,11 @@ export interface IRoleListDtoListResultDto {
     items: RoleListDto[] | undefined;
 }
 
-export class SceneRequested implements ISceneRequested {
-    id: number;
+export class ScenesOperation implements IScenesOperation {
+    operation: string | undefined;
+    data: string | undefined;
 
-    constructor(data?: ISceneRequested) {
+    constructor(data?: IScenesOperation) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3903,84 +3848,36 @@ export class SceneRequested implements ISceneRequested {
 
     init(_data?: any) {
         if (_data) {
-            this.id = _data["id"];
+            this.operation = _data["operation"];
+            this.data = _data["data"];
         }
     }
 
-    static fromJS(data: any): SceneRequested {
+    static fromJS(data: any): ScenesOperation {
         data = typeof data === 'object' ? data : {};
-        let result = new SceneRequested();
+        let result = new ScenesOperation();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
+        data["operation"] = this.operation;
+        data["data"] = this.data;
         return data;
     }
 
-    clone(): SceneRequested {
+    clone(): ScenesOperation {
         const json = this.toJSON();
-        let result = new SceneRequested();
+        let result = new ScenesOperation();
         result.init(json);
         return result;
     }
 }
 
-export interface ISceneRequested {
-    id: number;
-}
-
-export class ScenesRequested implements IScenesRequested {
-    keyword: string | undefined;
-    maxResultCount: number;
-    skipCount: number;
-
-    constructor(data?: IScenesRequested) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.keyword = _data["keyword"];
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-        }
-    }
-
-    static fromJS(data: any): ScenesRequested {
-        data = typeof data === 'object' ? data : {};
-        let result = new ScenesRequested();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["keyword"] = this.keyword;
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        return data;
-    }
-
-    clone(): ScenesRequested {
-        const json = this.toJSON();
-        let result = new ScenesRequested();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IScenesRequested {
-    keyword: string | undefined;
-    maxResultCount: number;
-    skipCount: number;
+export interface IScenesOperation {
+    operation: string | undefined;
+    data: string | undefined;
 }
 
 export enum TenantAvailabilityState {
@@ -4148,57 +4045,6 @@ export interface ITenantLoginInfoDto {
     id: number;
     tenancyName: string | undefined;
     name: string | undefined;
-}
-
-export class UpdateSceneCommanded implements IUpdateSceneCommanded {
-    id: number;
-    name: string | undefined;
-    description: string | undefined;
-
-    constructor(data?: IUpdateSceneCommanded) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.name = _data["name"];
-            this.description = _data["description"];
-        }
-    }
-
-    static fromJS(data: any): UpdateSceneCommanded {
-        data = typeof data === 'object' ? data : {};
-        let result = new UpdateSceneCommanded();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["name"] = this.name;
-        data["description"] = this.description;
-        return data;
-    }
-
-    clone(): UpdateSceneCommanded {
-        const json = this.toJSON();
-        let result = new UpdateSceneCommanded();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IUpdateSceneCommanded {
-    id: number;
-    name: string | undefined;
-    description: string | undefined;
 }
 
 export class UpdateSceneDto implements IUpdateSceneDto {
@@ -4451,6 +4297,120 @@ export interface IUserLoginInfoDto {
     surname: string | undefined;
     userName: string | undefined;
     emailAddress: string | undefined;
+}
+
+export class ViewSceneDto implements IViewSceneDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
+    scenographyId: number;
+    sceneData: string | undefined;
+
+    constructor(data?: IViewSceneDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.scenographyId = _data["scenographyId"];
+            this.sceneData = _data["sceneData"];
+        }
+    }
+
+    static fromJS(data: any): ViewSceneDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ViewSceneDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["scenographyId"] = this.scenographyId;
+        data["sceneData"] = this.sceneData;
+        return data;
+    }
+
+    clone(): ViewSceneDto {
+        const json = this.toJSON();
+        let result = new ViewSceneDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IViewSceneDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
+    scenographyId: number;
+    sceneData: string | undefined;
+}
+
+export class ViewSceneDtoPagedResultDto implements IViewSceneDtoPagedResultDto {
+    totalCount: number;
+    items: ViewSceneDto[] | undefined;
+
+    constructor(data?: IViewSceneDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(ViewSceneDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ViewSceneDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ViewSceneDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+
+    clone(): ViewSceneDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new ViewSceneDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IViewSceneDtoPagedResultDto {
+    totalCount: number;
+    items: ViewSceneDto[] | undefined;
 }
 
 export class ApiException extends Error {

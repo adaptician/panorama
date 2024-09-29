@@ -1,5 +1,5 @@
-﻿using Panorama.Backing.Shared.Messages;
-using Panorama.Backing.Shared.Scenes.Requests;
+﻿using Panorama.Backing.Dead.Shared.Messages;
+using Panorama.Backing.Dead.Shared.Scenes.Requests;
 
 namespace Teatro.Shared.Scenes.Etos;
 
