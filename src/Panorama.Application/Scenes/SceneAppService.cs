@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Abp.Authorization;
+using Abp.Runtime.Session;
 using MassTransit;
 using Panorama.Authorization;
 using Panorama.Backing.Bus.Shared.Scenes;
@@ -20,8 +21,16 @@ public class SceneAppService(
     public async Task<PagedResultDto<ViewSceneDto>> GetAll(PagedSceneResultRequestDto request,
         CancellationToken cancellationToken)
     {
+        var userId = AbpSession.GetUserId();
+        var user = await UserManager.GetUserByIdAsync(userId);
+        
         var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:Scenes"));
-        await endpoint.Send(new ScenesRequestedEto { MaxResultCount = request.MaxResultCount, SkipCount = request.SkipCount }, cancellationToken);
+        await endpoint.Send(new ScenesRequestedEto
+        {
+            MaxResultCount = request.MaxResultCount, 
+            SkipCount = request.SkipCount,
+            UserCorrelationId = user.CorrelationId
+        }, cancellationToken);
         
         return await scenographyProxy.GetAllAsync(request, cancellationToken);
     }

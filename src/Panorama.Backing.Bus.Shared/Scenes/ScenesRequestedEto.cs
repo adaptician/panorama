@@ -1,11 +1,9 @@
-﻿namespace Panorama.Backing.Bus.Shared.Scenes;
+﻿using Panorama.Backing.Bus.Shared.Common.Eto;
 
-public record ScenesRequestedEto
+namespace Panorama.Backing.Bus.Shared.Scenes;
+
+public record ScenesRequestedEto : Eto
 {
-    Guid CommandId { get; }
-    
-    DateTime Timestamp { get; }
-    
     public string Keyword { get; init; }
         
     public int MaxResultCount { get; init; }

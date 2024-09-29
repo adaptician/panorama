@@ -22,6 +22,8 @@ namespace Panorama.Authorization.Users
 {
     public class UserManager : AbpUserManager<Role, User>
     {
+        private readonly IUnitOfWorkManager _unitOfWorkManager;
+        
         public UserManager(
           RoleManager roleManager,
           UserStore store,
@@ -61,22 +63,26 @@ namespace Panorama.Authorization.Users
               settingManager,
               userLoginRepository)
         {
+            _unitOfWorkManager = unitOfWorkManager;
         }
         
         public async Task<UserIdentifier> GetUserIdentifierByCorrelationIdAsync([CanBeNull] string correlationId)
         {
             if (!string.IsNullOrEmpty(correlationId))
             {
-                var userIdentifier = await Users.Where(x => x.CorrelationId.Equals(correlationId))
-                    .Select(x => new UserIdentifier(x.TenantId, x.Id))
-                    .SingleOrDefaultAsync();
-
-                if (userIdentifier is null)
+                using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
                 {
-                    throw new UserFriendlyException(L("UserNotFound"));
-                }
+                    var userIdentifier = await Users.Where(x => x.CorrelationId.Equals(correlationId))
+                        .Select(x => new UserIdentifier(x.TenantId, x.Id))
+                        .SingleOrDefaultAsync();
+                    
+                    if (userIdentifier is null)
+                    {
+                        throw new UserFriendlyException(L("UserNotFound"));
+                    }
 
-                return userIdentifier;
+                    return userIdentifier;
+                }
             }
 
             return null;
