@@ -1,6 +1,0 @@
-@Panorama.Delta_HostAddress = http://localhost:5199
-
-GET {{Panorama.Delta_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
