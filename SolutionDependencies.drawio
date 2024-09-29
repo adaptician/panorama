@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.8 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.8">
   <diagram name="Page-1" id="P96NprGeWkTExEDmWorL">
-    <mxGraphModel dx="3814" dy="2994" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1559" dy="1726" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -325,7 +325,7 @@
         <mxCell id="_yPecB4wTw0sVIpXlPJB-114" value="Teatro.EntityFrameworkCore" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;fontSize=16;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="3930" y="1340" width="270" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="_yPecB4wTw0sVIpXlPJB-115" value="Although Panorama and Teatro are deployed separately, the two have become tightly coupled as a result of re-using resoures that represent something common or shared between the microservices.&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;This is then a distributed monolith.&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fontSize=38;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+        <mxCell id="_yPecB4wTw0sVIpXlPJB-115" value="And this?" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fontSize=38;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
           <mxGeometry x="4830" y="1000" width="990" height="340" as="geometry" />
         </mxCell>
         <mxCell id="_yPecB4wTw0sVIpXlPJB-118" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
