@@ -219,11 +219,11 @@ app.Use(async (context, next) =>                {                    await next(
             EventBusOptions eventBusOptions = new EventBusOptions();
             eventBusSection.Bind(eventBusOptions);
             
-            services.AddMassTransit(mass =>
+            services.AddMassTransit(busConfigurator =>
             {
-                mass.AddConsumer<ScenesConsumer>();
+                AddEventBusConsumers(busConfigurator);
                 
-                mass.UsingRabbitMq((context, cfg) =>
+                busConfigurator.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host(eventBusOptions.RabbitMq.HostName, "/", h =>
                     {
@@ -234,6 +234,11 @@ app.Use(async (context, next) =>                {                    await next(
                     cfg.ConfigureEndpoints(context);
                 });
             });
+        }
+
+        private void AddEventBusConsumers(IBusRegistrationConfigurator busConfigurator)
+        {
+            busConfigurator.AddConsumer<ScenesConsumer>();
         }
     }
 }
