@@ -34,7 +34,9 @@ where TRequestEto : IBrokerMessage, IOperation
         var user = await UserManager.GetUserByIdAsync(userId);
 
         var requestEto = ObjectMapper.Map<TRequestEto>(request);
-        requestEto.UserId = user.CorrelationId;
+        requestEto.UserCorrelationId = user.CorrelationId;
+        requestEto.UserId = user.Id.ToString();
+        requestEto.TenantId = user.TenantId.ToString();
         
         producer.PublishMessage(requestEto, RoutingKey);
         

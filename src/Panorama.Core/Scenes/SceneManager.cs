@@ -7,7 +7,7 @@ namespace Panorama.Scenes;
 public class SceneManager(
     IAppEventManager appEventManager
     )
-: ISceneManager, IDomainService
+: DomainService, ISceneManager
 {
     public ScenesReceivedCarrier CreateScenesReceivedCarrier()
     {

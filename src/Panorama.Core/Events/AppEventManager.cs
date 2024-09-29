@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Abp;
+using Abp.Domain.Services;
 using Abp.RealTime;
 using Panorama.Events.Base;
 
 namespace Panorama.Events;
 
-public class AppEventManager : IAppEventManager
+public class AppEventManager : DomainService, IAppEventManager
 {
     private readonly IAppEventCommunicator _appCommunicator;
     private readonly IOnlineClientManager _onlineClientManager;

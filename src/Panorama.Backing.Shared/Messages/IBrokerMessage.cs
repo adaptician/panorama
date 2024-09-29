@@ -2,7 +2,7 @@
 
 namespace Panorama.Backing.Shared.Messages
 {
-    public interface IBrokerMessage : ICorrelateMessage, ICorrelateUser, ICorrelate
+    public interface IBrokerMessage : ICorrelateMessage, ICorrelateUser, ICorrelateTenant, ICorrelate
     {
         BrokerMessageDeliveryModeEnum DeliveryMode { get; set; }
         
