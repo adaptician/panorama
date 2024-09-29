@@ -60,7 +60,7 @@ namespace Panorama.Web.Host.Startup
                 //     x.ExchangeType = "direct"; // default, allows any valid exchange type
                 // });
 
-                config.ReceiveEndpoint(queueName: "scenes", endpoint =>
+                config.ReceiveEndpoint(queueName: "Scenes", endpoint =>
                 {
                     // endpoint.Bind("exchange-name", x =>
                     // {

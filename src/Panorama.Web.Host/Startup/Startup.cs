@@ -18,6 +18,7 @@ using Abp.AspNetCore.SignalR.Hubs;
 using MassTransit;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Panorama.Backing.Bus.Scenes;
 using Panorama.Backing.Dead.ConnectionPools;
 using Panorama.Backing.Dead.Consumers;
 using Panorama.Backing.Dead.Options;
@@ -78,25 +79,7 @@ namespace Panorama.Web.Host.Startup
             
             #region Add Event Bus
             
-            var eventBusSection = _appConfiguration.GetSection(EventBusOptions.SettingName);
-            services.Configure<EventBusOptions>(eventBusSection);
-            
-            EventBusOptions eventBusOptions = new EventBusOptions();
-            eventBusSection.Bind(eventBusOptions);
-            
-            services.AddMassTransit(mass =>
-            {
-                mass.UsingRabbitMq((context, cfg) =>
-                {
-                    cfg.Host(eventBusOptions.RabbitMq.HostName, "/", h =>
-                    {
-                        h.Username(eventBusOptions.RabbitMq.UserName);
-                        h.Password(eventBusOptions.RabbitMq.Password);
-                    });
-
-                    cfg.ConfigureEndpoints(context);
-                });
-            });
+            ConfigureEventBus(services);
             
             #endregion
             
@@ -225,6 +208,31 @@ app.Use(async (context, next) =>                {                    await next(
                     var webCoreXmlPath = Path.Combine(AppContext.BaseDirectory, webCoreXmlFile);
                     options.IncludeXmlComments(webCoreXmlPath);
                 }
+            });
+        }
+
+        private void ConfigureEventBus(IServiceCollection services)
+        {
+            var eventBusSection = _appConfiguration.GetSection(EventBusOptions.SettingName);
+            services.Configure<EventBusOptions>(eventBusSection);
+            
+            EventBusOptions eventBusOptions = new EventBusOptions();
+            eventBusSection.Bind(eventBusOptions);
+            
+            services.AddMassTransit(mass =>
+            {
+                mass.AddConsumer<ScenesConsumer>();
+                
+                mass.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(eventBusOptions.RabbitMq.HostName, "/", h =>
+                    {
+                        h.Username(eventBusOptions.RabbitMq.UserName);
+                        h.Password(eventBusOptions.RabbitMq.Password);
+                    });
+            
+                    cfg.ConfigureEndpoints(context);
+                });
             });
         }
     }

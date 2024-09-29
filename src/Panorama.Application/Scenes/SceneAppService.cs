@@ -20,7 +20,7 @@ public class SceneAppService(
     public async Task<PagedResultDto<ViewSceneDto>> GetAll(PagedSceneResultRequestDto request,
         CancellationToken cancellationToken)
     {
-        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:scenes"));
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:Scenes"));
         await endpoint.Send(new ScenesRequestedEto { MaxResultCount = request.MaxResultCount, SkipCount = request.SkipCount }, cancellationToken);
         
         return await scenographyProxy.GetAllAsync(request, cancellationToken);
