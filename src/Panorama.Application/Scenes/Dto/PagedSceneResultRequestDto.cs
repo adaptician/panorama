@@ -2,8 +2,7 @@
 
 namespace Panorama.Scenes.Dto;
 
-// TODO: where is the interface?
-public class PagedSceneResultRequestDto : PagedResultRequestDto//, IRequestScenes
+public class PagedSceneResultRequestDto : PagedResultRequestDto
 {
     public string Keyword { get; set; }
 }
