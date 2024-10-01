@@ -6,6 +6,7 @@ using Abp.Runtime.Session;
 using MassTransit;
 using Panorama.Authorization;
 using Panorama.Backing.Bus.Shared.Scenes;
+using Panorama.Backing.Bus.Shared.Scenes.Xto;
 using Panorama.Scenes.Dto;
 using Teatro.Shared.Bases.Dtos;
 using Teatro.Shared.Scenes.Dtos;
@@ -25,7 +26,8 @@ public class SceneAppService(
         var user = await UserManager.GetUserByIdAsync(userId);
         
         var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:Scenes"));
-        await endpoint.Send(new ScenesRequestedEto
+        //var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:Teatro.Scenes:RequestScenesXto"));
+        await endpoint.Send(new RequestScenesXto
         {
             MaxResultCount = request.MaxResultCount, 
             SkipCount = request.SkipCount,

@@ -14,7 +14,7 @@ public class SceneMappingProfile : Profile
         // TODO: clean up
         CreateMap<PagedSceneResultRequestDto, ScenesRequested>();
         
-        CreateMap<ScenesOperation, ScenesOperationEto>();
+        
         
         
         
