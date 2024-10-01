@@ -26,7 +26,6 @@ public class SceneAppService(
         var user = await UserManager.GetUserByIdAsync(userId);
         
         var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:Scenes"));
-        //var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:Teatro.Scenes:RequestScenesXto"));
         await endpoint.Send(new RequestScenesXto
         {
             MaxResultCount = request.MaxResultCount, 

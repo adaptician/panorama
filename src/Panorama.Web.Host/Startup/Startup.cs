@@ -227,7 +227,7 @@ app.Use(async (context, next) =>                {                    await next(
 
         private void AddEventBusConsumers(IBusRegistrationConfigurator busConfigurator)
         {
-            // busConfigurator.AddConsumer<ScenesConsumer, ScenesConsumerDefinition>();
+            busConfigurator.AddConsumer<ScenesConsumer, ScenesConsumerDefinition>();
         }
     }
 }
