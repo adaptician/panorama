@@ -1,0 +1,63 @@
+{
+
+    "messageId": "40370000-5d42-0015-67df-08dce0bd7d0f",
+  
+    "requestId": null,
+  
+    "correlationId": null,
+  
+    "conversationId": "40370000-5d42-0015-f06e-08dce0bd7d12",
+  
+    "initiatorId": null,
+  
+    "sourceAddress": "rabbitmq://localhost/PEGASUS_PanoramaWebHost_bus_ey5oyyn7eeybmcsbbdqqbxmzyt?temporary=true",
+  
+    "destinationAddress": "rabbitmq://localhost/scenes?bind=true",
+  
+    "responseAddress": null,
+  
+    "faultAddress": null,
+  
+    "messageType": [
+  
+      "urn:message:Panorama.Backing.Bus.Shared.Scenes:ScenesRequestedEto"
+  
+    ],
+  
+    "message": {
+  
+      "keyword": null,
+  
+      "maxResultCount": 10,
+  
+      "skipCount": 0
+  
+    },
+  
+    "expirationTime": null,
+  
+    "sentTime": "2024-09-29T19:32:43.1370207Z",
+  
+    "headers": {},
+  
+    "host": {
+  
+      "machineName": "PEGASUS",
+  
+      "processName": "Panorama.Web.Host",
+  
+      "processId": 14144,
+  
+      "assembly": "Panorama.Web.Host",
+  
+      "assemblyVersion": "1.0.0.0",
+  
+      "frameworkVersion": "8.0.8",
+  
+      "massTransitVersion": "8.2.5.0",
+  
+      "operatingSystemVersion": "Microsoft Windows NT 10.0.22631.0"
+  
+    }
+  
+  }
