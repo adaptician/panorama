@@ -52,13 +52,6 @@ namespace Panorama.Web.Host.Startup
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
 
-            #region Add Scenography proxy // TODO: remove this
-
-            services.Configure<ScenographyProxyOptions>(_appConfiguration.GetSection(ScenographyProxyOptions.SettingName));
-            services.AddHttpClient<IScenographyProxy, ScenographyProxy>();
-
-            #endregion
-
             #region Add MediatR
 
             services.AddMediatR(cfg =>

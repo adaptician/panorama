@@ -40,7 +40,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         finishedCallback: Function
     ): void {
         request.keyword = this.keyword;
-        this.setBusy('saving', true)
+        this.setBusy('loading', true)
 
         this._sceneService
             .getAll(request.keyword, request.skipCount, request.maxResultCount)
@@ -49,10 +49,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
                     finishedCallback();
                 })
             )
-            .subscribe((result) => {
-                this.scenes = result.items;
-                this.showPaging(result, pageNumber);
-            });
+            .subscribe((result) => {});
     }
 
     delete(scene: ViewSceneDto): void {
@@ -110,7 +107,6 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         });
     }
 
-    // TODO:T clean this up eish.
     private subscribeToEvents(): void {
 
         this.subscribeToEvent(AppEvents.SignalR_AppEvents_Connected, () => {
@@ -133,10 +129,14 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
     }
 
     private handleScenesReceived(data: ScenesReceivedEventData): void {
-        console.log(`DATA ${JSON.stringify(data)}`);
-        const x = "let the madness begin";
+        
+        if (data?.data) {
+            const result = data.data;
 
-        this.scenes = data.Data.items;
-        this.setBusy('saving', false)
+            this.scenes = result.items;
+            this.totalItems = result.totalCount;
+            this.showPaging(result, this.pageNumber);
+            this.setBusy('loading', false);   
+        }
     }
 }

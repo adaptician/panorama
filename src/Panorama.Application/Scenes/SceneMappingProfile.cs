@@ -1,13 +1,6 @@
 ﻿using AutoMapper;
-using Panorama.Backing.Bus.Shared.Common.Xto;
+using Panorama.Backing.Bus.Shared.Scenes.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto;
-using Panorama.Backing.Dead.Shared.Scenes.Requests.Eto;
-using Panorama.Backing.Dead.Shared.Scenes.Requests.Mediations;
-using Panorama.Scenes.Dto;
-using Panorama.Scenes.Events.ScenesReceived;
-using Teatro.Shared.Bases.Dtos;
-using Teatro.Shared.Scenes.Dtos;
-using Teatro.Shared.Scenes.Xtos;
 
 namespace Panorama.Scenes;
 
@@ -15,29 +8,6 @@ public class SceneMappingProfile : Profile
 {
     public SceneMappingProfile()
     {
-        // TODO: clean up
-        CreateMap<PagedSceneResultRequestDto, ScenesRequested>();
-        
         CreateMap<ViewSceneXto, ViewSceneDto>();
-        // CreateMap<PagedSceneResultRequestDto, ScenesRequested>();
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        CreateMap<SceneRequested, SceneRequestedEto>();
-        
-        CreateMap<CreateSceneDto, CreateSceneCommanded>();
-        CreateMap<CreateSceneCommanded, CreateSceneCommandedEto>();
-        
-        CreateMap<UpdateSceneDto, UpdateSceneCommanded>();
-        CreateMap<UpdateSceneCommanded, UpdateSceneCommandedEto>();
-        
-        CreateMap<DeleteSceneCommanded, DeleteSceneCommandedEto>();
     }
 }

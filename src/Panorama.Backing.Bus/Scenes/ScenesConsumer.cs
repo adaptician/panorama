@@ -1,14 +1,14 @@
-﻿using Abp.Application.Services.Dto;
-using Abp.Domain.Uow;
+﻿using Abp.Domain.Uow;
 using AutoMapper;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Panorama.Authorization.Users;
+using Panorama.Backing.Bus.Shared.Common.Dto;
+using Panorama.Backing.Bus.Shared.Scenes.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto;
 using Panorama.Scenes;
 using Panorama.Scenes.Events.ScenesReceived;
-using Teatro.Shared.Scenes.Dtos;
 
 namespace Panorama.Backing.Bus.Scenes;
 

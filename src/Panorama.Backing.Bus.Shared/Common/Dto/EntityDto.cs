@@ -1,4 +1,4 @@
-﻿namespace Teatro.Shared.Bases.Dtos;
+﻿namespace Panorama.Backing.Bus.Shared.Common.Dto;
 
 public abstract class EntityDto<TKey>
 {

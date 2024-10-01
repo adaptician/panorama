@@ -1,11 +1,15 @@
-﻿namespace Teatro.Shared.Bases.Dtos;
+﻿using Newtonsoft.Json;
+
+namespace Panorama.Backing.Bus.Shared.Common.Dto;
 
 [Serializable]
 public class PagedResultDto<T>
 {
+    [JsonProperty("totalCount")]
     public virtual int TotalCount { get; set; }
     
     private IReadOnlyList<T> _items;
+    [JsonProperty("items")]
     public IReadOnlyList<T> Items
     {
         get { return _items ??= new List<T>(); }
