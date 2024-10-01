@@ -1,4 +1,4 @@
-﻿namespace Teatro.Shared.Common.Xtos;
+﻿namespace Teatro.Contracts.Common.Xtos;
 
 public interface IPagedResultXto<T> : IMessageXto
 {

@@ -1,4 +1,4 @@
-﻿using Teatro.Shared.Common.Xtos;
+﻿using Teatro.Contracts.Common.Xtos;
 
 namespace Panorama.Backing.Bus.Shared.Common.Xto;
 

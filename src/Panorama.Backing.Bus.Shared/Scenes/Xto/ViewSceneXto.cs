@@ -1,5 +1,5 @@
 ﻿using Panorama.Backing.Bus.Shared.Common.Xto;
-using Teatro.Shared.Scenes.Xtos;
+using Teatro.Contracts.Scenes.Xtos;
 
 namespace Panorama.Backing.Bus.Shared.Scenes.Xto;
 

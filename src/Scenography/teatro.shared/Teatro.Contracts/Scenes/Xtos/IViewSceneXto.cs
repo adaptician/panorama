@@ -1,6 +1,6 @@
-﻿using Teatro.Shared.Common.Xtos;
+﻿using Teatro.Contracts.Common.Xtos;
 
-namespace Teatro.Shared.Scenes.Xtos;
+namespace Teatro.Contracts.Scenes.Xtos;
 
 public interface IViewSceneXto : IMessageXto
 {

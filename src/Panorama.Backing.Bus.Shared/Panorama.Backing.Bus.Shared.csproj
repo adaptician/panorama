@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Scenography\teatro.shared\Teatro.Shared\Teatro.Shared.csproj" />
+      <ProjectReference Include="..\Scenography\teatro.shared\Teatro.Contracts\Teatro.Contracts.csproj" />
     </ItemGroup>
 
     <ItemGroup>
