@@ -2,5 +2,5 @@
 
 public interface IResultXto<TResult> : IMessageXto
 {
-    TResult Data { get; set; }
+    TResult Data { get; }
 }

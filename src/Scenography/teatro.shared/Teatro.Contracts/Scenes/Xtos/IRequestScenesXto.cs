@@ -4,9 +4,9 @@ namespace Teatro.Contracts.Scenes.Xtos;
 
 public interface IRequestScenesXto : IMessageXto
 {
-    string Keyword { get; init; }
+    string Keyword { get; }
         
-    int MaxResultCount { get; init; }
+    int MaxResultCount { get; }
         
-    int SkipCount { get; init; }
+    int SkipCount { get; }
 }

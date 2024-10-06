@@ -5,7 +5,7 @@ using Teatro.Contracts.Scenes.Xtos;
 namespace Panorama.Backing.Bus.Shared.Scenes.Xto;
 
 [MessageUrn("Teatro.Scenes:SceneRequestedXto")]
-public record SceneRequestedXto : MessageXto//, ISceneRequestedXto
+public record SceneRequestedXto : MessageXto, ISceneRequestedXto<ViewSceneXto>
 {
     public ViewSceneXto Data { get; set; }
 }

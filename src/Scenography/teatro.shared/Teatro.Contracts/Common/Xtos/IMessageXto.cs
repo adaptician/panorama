@@ -2,13 +2,13 @@
 
 public interface IMessageXto
 {
-    string MessageId { get; init; }
+    string MessageId { get; }
     
-    string TenantCorrelationId { get; init; }
+    string TenantCorrelationId { get; }
     
-    string UserCorrelationId { get; init; }
+    string UserCorrelationId { get; }
     
-    string CorrelationId { get; init; }
+    string CorrelationId { get; }
     
     Guid CommandId { get; }
     

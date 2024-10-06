@@ -2,7 +2,7 @@
 
 public interface IPagedResultXto<T> : IMessageXto
 {
-    int TotalCount { get; init; }
+    int TotalCount { get; }
     
-    IReadOnlyList<T> Items { get; init; }
+    IReadOnlyList<T> Items { get; }
 }
