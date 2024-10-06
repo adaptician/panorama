@@ -266,10 +266,10 @@ SEPARATE API AND APP INGRESS
 
 PANORAMA API (http://localhost:44312/)
 
-kubectl apply -f .\kubernetes\mssqldb-manifest.yaml
+kubectl apply -f .\panorama\kubernetes\mssqldb-manifest.yaml
 
 docker build -t panorama.migrator -f .\src\Panorama.Migrator\Dockerfile .
-kubectl apply -f .\kubernetes\migrator-manifest.yaml
+kubectl apply -f .\panorama\kubernetes\migrator-manifest.yaml
 
 kubectl scale deployment panorama-migrator --replicas=0
 
@@ -293,17 +293,17 @@ kubectl apply -f .\kubernetes\combined-ingress-manifest.yaml
 
 TEATRO API (http://localhost:8484/)
 
-kubectl apply -f .\kubernetes\mongodb-manifest.yaml
-kubectl apply -f .\kubernetes\postgresdb-manifest.yaml
+kubectl apply -f .\panorama\kubernetes\mongodb-manifest.yaml
+kubectl apply -f .\panorama\kubernetes\postgresdb-manifest.yaml
 
 docker build -t teatro.api -f .\src\Scenography\Teatro.Application\Dockerfile .
-kubectl apply -f .\kubernetes\teatro-manifest.yaml
+kubectl apply -f .\panorama\kubernetes\teatro-manifest.yaml
 
 
 
 
 
-kubectl apply -f .\kubernetes\bus-manifest.yaml
+kubectl apply -f .\panorama\kubernetes\bus-manifest.yaml
 
 
 kubectl apply -f .\kubernetes\azurite-manifest.yaml             ????

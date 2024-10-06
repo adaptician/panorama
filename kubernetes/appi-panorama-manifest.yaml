@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+  nginx.conf: |
+    "user  nginx;
+    worker_processes  auto;
+
+    error_log  /var/log/nginx/error.log notice;
+    pid        /var/run/nginx.pid;
+
+    events {
+        worker_connections  1024;
+    }
+
+
+    http {
+        server{
+          location / {
+            root   /usr/share/nginx/html;
+            try_files $uri $uri/ /index.html;
+            index  index.html index.htm;
+          }
+        }
+    
+        include       /etc/nginx/mime.types;
+        default_type  application/octet-stream;
+
+        log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+                        '"$http_user_agent" "$http_x_forwarded_for"';
+
+        access_log  /var/log/nginx/access.log  main;
+        sendfile        on;
+        #tcp_nopush     on;
+
+        keepalive_timeout  65;
+
+        #gzip  on;
+
+        include /etc/nginx/conf.d/*.conf;
+        ignore_invalid_headers  off;
+    }";
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: panorama-appi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: panorama-appi
+      network: panorama
+  template:
+    metadata:
+      labels:
+        app: panorama-appi
+        network: panorama
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: panorama-api
+          image: docker.io/panorama.combined
+          imagePullPolicy: Never
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Staging
+            - name: ConnectionStrings__Default
+              value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true           
+            - name: Kestrel__Endpoints__Http__Url
+              value: "http://+:80"
+            - name: Kestrel__HttpsInlineCertAndKeyFile__Url
+              value: "https://+:443"
+            - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__Path
+              value: "/https/tls.cert"  # Path to .PEM certificate inside container
+            - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__KeyPath
+              value: "/https/tls.key"  # Path to key.PEM certificate inside container
+            - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__Password
+              value: ""  # Cert password
+            - name: ASPNETCORE_ScenographyProxy__SecretKey
+              value: "WTgWsyp22DzjiHdkG"
+          volumeMounts:
+            - name: https-cert
+              mountPath: /https  # Mount volume for the cert
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+          ports:
+            - name: http
+              containerPort: 80 # pod port
+            - name: https
+              containerPort: 443 # pod port
+      volumes:
+        - name: https-cert
+          secret:
+            secretName: tls-secret  # Kubernetes secret storing the certificate
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: panorama-appi
+spec:
+  selector:
+    app: panorama-appi
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80 # exposed service port
+      targetPort: 80 # pod port
+    - name: https
+      protocol: TCP
+      port: 443 # exposed service port
+      targetPort: 443 # pod port 
+  type: ClusterIP
