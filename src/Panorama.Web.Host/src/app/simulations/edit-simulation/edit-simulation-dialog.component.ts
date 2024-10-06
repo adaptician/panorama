@@ -2,7 +2,7 @@ import {Component, EventEmitter, Injector, Output} from '@angular/core';
 import {AppComponentBase} from "@shared/app-component-base";
 import {BsModalRef} from "ngx-bootstrap/modal";
 import {finalize} from "rxjs/operators";
-import {SceneServiceProxy, UpdateSceneDto} from "@shared/service-proxies/service-proxies";
+import {SceneServiceProxy} from "@shared/service-proxies/service-proxies";
 
 @Component({
   selector: 'sim-edit-simulation-dialog',
@@ -23,7 +23,7 @@ export class EditSimulationDialogComponent extends AppComponentBase {
     return this._sceneId;
   }
   
-  scene: UpdateSceneDto = new UpdateSceneDto();
+  // scene: UpdateSceneDto = new UpdateSceneDto();
 
   @Output() onSave = new EventEmitter<any>();
 
@@ -38,28 +38,28 @@ export class EditSimulationDialogComponent extends AppComponentBase {
   getScene(id: number): void {
     this.setBusy('loading', true);
 
-    this._sceneService
-        .getById(id)
-        .pipe(finalize(() => this.setBusy('loading', false)))
-        .subscribe(
-            (result) => {
-              this.scene = result;
-            }
-        );
+    // this._sceneService
+    //     .getById(id)
+    //     .pipe(finalize(() => this.setBusy('loading', false)))
+    //     .subscribe(
+    //         (result) => {
+    //           this.scene = result;
+    //         }
+    //     );
   }
 
   save(): void {
     this.setBusy('saving', true);
 
-    this._sceneService
-        .update(this.scene)
-        .pipe(finalize(() => this.setBusy('saving', false)))
-        .subscribe(
-            () => {
-              this.notify.info(this.l('SavedSuccessfully'));
-              this.bsModalRef.hide();
-              this.onSave.emit();
-            }
-        );
+    // this._sceneService
+    //     .update(this.scene)
+    //     .pipe(finalize(() => this.setBusy('saving', false)))
+    //     .subscribe(
+    //         () => {
+    //           this.notify.info(this.l('SavedSuccessfully'));
+    //           this.bsModalRef.hide();
+    //           this.onSave.emit();
+    //         }
+    //     );
   }
 }

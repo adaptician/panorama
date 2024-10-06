@@ -1,7 +1,6 @@
 import {Component, Injector, NgZone, OnInit} from '@angular/core';
 import {ViewSceneDto} from "@shared/service-proxies/scenography/dtos/ViewSceneDto";
-import {SceneServiceProxy} from "@shared/service-proxies/service-proxies";
-import {FilterablePagedRequestDto} from "@shared/service-proxies/common/dtos/FilterablePagedRequestDto";
+import {PagedSceneResultRequestDto, SceneServiceProxy} from "@shared/service-proxies/service-proxies";
 import {CreateSimulationDialogComponent} from "@app/simulations/create-simulation/create-simulation-dialog.component";
 import {EditSimulationDialogComponent} from "@app/simulations/edit-simulation/edit-simulation-dialog.component";
 import {PagedListingComponentBase} from "@shared/paged-listing-component-base";
@@ -35,7 +34,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
     }
 
     list(
-        request: FilterablePagedRequestDto,
+        request: PagedSceneResultRequestDto,
         pageNumber: number,
         finishedCallback: Function
     ): void {
@@ -43,7 +42,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         this.setBusy('loading', true)
 
         this._sceneService
-            .getAll(request.keyword, request.skipCount, request.maxResultCount)
+            .commandGetAll(request)
             .pipe(
                 finalize(() => {
                     finishedCallback();
@@ -53,24 +52,24 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
     }
 
     delete(scene: ViewSceneDto): void {
-        abp.message.confirm(
-            this.l('SimulationDeleteWarningMessage', scene.name),
-            undefined,
-            (result: boolean) => {
-                if (result) {
-                    this._sceneService
-                        .delete(scene.id)
-                        .pipe(
-                            finalize(() => {
-                                abp.notify.success(this.l('SuccessfullyDeleted'));
-                                this.refresh();
-                            })
-                        )
-                        .subscribe(() => {
-                        });
-                }
-            }
-        );
+        // abp.message.confirm(
+        //     this.l('SimulationDeleteWarningMessage', scene.name),
+        //     undefined,
+        //     (result: boolean) => {
+        //         if (result) {
+        //             this._sceneService
+        //                 .delete(scene.id)
+        //                 .pipe(
+        //                     finalize(() => {
+        //                         abp.notify.success(this.l('SuccessfullyDeleted'));
+        //                         this.refresh();
+        //                     })
+        //                 )
+        //                 .subscribe(() => {
+        //                 });
+        //         }
+        //     }
+        // );
     }
 
     createScene(): void {

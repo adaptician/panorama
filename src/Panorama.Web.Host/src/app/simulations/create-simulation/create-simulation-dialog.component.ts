@@ -2,7 +2,7 @@ import {Component, EventEmitter, Injector, Output} from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import {AppComponentBase} from "@shared/app-component-base";
 import {finalize} from "rxjs/operators";
-import {CreateSceneDto, SceneServiceProxy} from "@shared/service-proxies/service-proxies";
+import {SceneServiceProxy} from "@shared/service-proxies/service-proxies";
 
 @Component({
     selector: 'sim-create-simulation-dialog',
@@ -11,7 +11,7 @@ import {CreateSceneDto, SceneServiceProxy} from "@shared/service-proxies/service
 })
 export class CreateSimulationDialogComponent extends AppComponentBase {
     
-    scene: CreateSceneDto = new CreateSceneDto();
+    // scene: CreateSceneDto = new CreateSceneDto();
     
     @Output() onSave = new EventEmitter<any>();
 
@@ -26,15 +26,15 @@ export class CreateSimulationDialogComponent extends AppComponentBase {
     save(): void {
         this.setBusy('saving', true);
         
-        this._sceneService
-            .create(this.scene)
-            .pipe(finalize(() => this.setBusy('saving', false)))
-            .subscribe(
-                () => {
-                  this.notify.info(this.l('SavedSuccessfully'));
-                  this.bsModalRef.hide();
-                  this.onSave.emit();
-                }
-            );
+        // this._sceneService
+        //     .create(this.scene)
+        //     .pipe(finalize(() => this.setBusy('saving', false)))
+        //     .subscribe(
+        //         () => {
+        //           this.notify.info(this.l('SavedSuccessfully'));
+        //           this.bsModalRef.hide();
+        //           this.onSave.emit();
+        //         }
+        //     );
     }
 }

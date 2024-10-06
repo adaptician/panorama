@@ -16,7 +16,7 @@ public class SceneAppService(
 ) : PanoramaAppServiceBase, ISceneAppService
 {
     
-    public async Task GetAll(PagedSceneResultRequestDto request, CancellationToken cancellationToken)
+    public async Task CommandGetAll(PagedSceneResultRequestDto request, CancellationToken cancellationToken)
     {
         var userId = AbpSession.GetUserId();
         var user = await UserManager.GetUserByIdAsync(userId);
@@ -30,9 +30,19 @@ public class SceneAppService(
         }, cancellationToken);
     }
 
-    // public async Task<ViewSceneDto> GetById(long id, CancellationToken cancellationToken)
+    // TODO: START HERE! Implement Get By Id
+    // public async Task CommandGetById(long id, CancellationToken cancellationToken)
     // {
-    //     return await scenographyProxy.GetByIdAsync(id, cancellationToken);
+    //     var userId = AbpSession.GetUserId();
+    //     var user = await UserManager.GetUserByIdAsync(userId);
+    //     
+    //     var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:Scenes"));
+    //     await endpoint.Send(new RequestScenesXto
+    //     {
+    //         MaxResultCount = request.MaxResultCount, 
+    //         SkipCount = request.SkipCount,
+    //         UserCorrelationId = user.CorrelationId
+    //     }, cancellationToken);
     // }
     //
     // public async Task<ViewSceneDto> Create(CreateSceneDto input, CancellationToken cancellationToken)
