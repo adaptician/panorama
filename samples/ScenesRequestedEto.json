@@ -1,63 +1,81 @@
 {
 
-    "messageId": "40370000-5d42-0015-67df-08dce0bd7d0f",
-  
-    "requestId": null,
-  
+  "messageId": "b4790000-5d42-0015-e927-08dce2052b1e",
+
+  "requestId": null,
+
+  "correlationId": null,
+
+  "conversationId": "b4790000-5d42-0015-a70b-08dce2052b25",
+
+  "initiatorId": null,
+
+  "sourceAddress": "rabbitmq://localhost/PEGASUS_PanoramaWebHost_bus_sthoyyn7eeybkdy6bdqqrbe5nm?temporary=true",
+
+  "destinationAddress": "rabbitmq://localhost/Scenes?bind=true",
+
+  "responseAddress": null,
+
+  "faultAddress": null,
+
+  "messageType": [
+
+    "urn:message:Panorama.Backing.Bus.Shared.Scenes.Xto:RequestScenesXto",
+
+    "urn:message:Panorama.Backing.Bus.Shared.Common.Xto:MessageXto",
+
+    "urn:message:Teatro.Shared.Common.Xtos:IMessageXto",
+
+    "urn:message:Teatro.Shared.Scenes.Xtos:IRequestScenesXto"
+
+  ],
+
+  "message": {
+
+    "keyword": null,
+
+    "maxResultCount": 10,
+
+    "skipCount": 0,
+
+    "messageId": null,
+
+    "tenantCorrelationId": null,
+
+    "userCorrelationId": "af391bf2-7d49-4d32-9b98-24f09a408a99",
+
     "correlationId": null,
-  
-    "conversationId": "40370000-5d42-0015-f06e-08dce0bd7d12",
-  
-    "initiatorId": null,
-  
-    "sourceAddress": "rabbitmq://localhost/PEGASUS_PanoramaWebHost_bus_ey5oyyn7eeybmcsbbdqqbxmzyt?temporary=true",
-  
-    "destinationAddress": "rabbitmq://localhost/scenes?bind=true",
-  
-    "responseAddress": null,
-  
-    "faultAddress": null,
-  
-    "messageType": [
-  
-      "urn:message:Panorama.Backing.Bus.Shared.Scenes:ScenesRequestedEto"
-  
-    ],
-  
-    "message": {
-  
-      "keyword": null,
-  
-      "maxResultCount": 10,
-  
-      "skipCount": 0
-  
-    },
-  
-    "expirationTime": null,
-  
-    "sentTime": "2024-09-29T19:32:43.1370207Z",
-  
-    "headers": {},
-  
-    "host": {
-  
-      "machineName": "PEGASUS",
-  
-      "processName": "Panorama.Web.Host",
-  
-      "processId": 14144,
-  
-      "assembly": "Panorama.Web.Host",
-  
-      "assemblyVersion": "1.0.0.0",
-  
-      "frameworkVersion": "8.0.8",
-  
-      "massTransitVersion": "8.2.5.0",
-  
-      "operatingSystemVersion": "Microsoft Windows NT 10.0.22631.0"
-  
-    }
-  
+
+    "commandId": "00000000-0000-0000-0000-000000000000",
+
+    "timestamp": "0001-01-01T00:00:00"
+
+  },
+
+  "expirationTime": null,
+
+  "sentTime": "2024-10-01T10:38:20.5927719Z",
+
+  "headers": {},
+
+  "host": {
+
+    "machineName": "PEGASUS",
+
+    "processName": "Panorama.Web.Host",
+
+    "processId": 31156,
+
+    "assembly": "Panorama.Web.Host",
+
+    "assemblyVersion": "1.0.0.0",
+
+    "frameworkVersion": "8.0.8",
+
+    "massTransitVersion": "8.2.5.0",
+
+    "operatingSystemVersion": "Microsoft Windows NT 10.0.22631.0"
+
   }
+
+}

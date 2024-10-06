@@ -8,6 +8,7 @@ public class SceneMappingProfile : Profile
 {
     public SceneMappingProfile()
     {
-        CreateMap<ViewSceneXto, ViewSceneDto>();
+        CreateMap<ViewSceneXto, ViewSceneDto>()
+            .ForMember(dest => dest.CorrelationId, opt => opt.MapFrom(src => src.SceneCorrelationId));
     }
 }

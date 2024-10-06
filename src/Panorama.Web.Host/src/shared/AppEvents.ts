@@ -4,4 +4,7 @@ export class AppEvents {
     
     static SignalR_AppEvents_Scenes_Received_Listener: string = "notifyOfScenesReceived";
     static SignalR_AppEvents_Scenes_Received_Trigger: string = "app.events.scenes.received";
+
+    static SignalR_AppEvents_Scene_Received_Listener: string = "notifyOfSceneReceived";
+    static SignalR_AppEvents_Scene_Received_Trigger: string = "app.events.scene.received";
 }

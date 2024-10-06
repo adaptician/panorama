@@ -21,7 +21,7 @@ public class SceneAppService(
         var userId = AbpSession.GetUserId();
         var user = await UserManager.GetUserByIdAsync(userId);
         
-        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:Scenes"));
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:RequestScenes"));
         await endpoint.Send(new RequestScenesXto
         {
             MaxResultCount = request.MaxResultCount, 
@@ -30,20 +30,18 @@ public class SceneAppService(
         }, cancellationToken);
     }
 
-    // TODO: START HERE! Implement Get By Id
-    // public async Task CommandGetById(long id, CancellationToken cancellationToken)
-    // {
-    //     var userId = AbpSession.GetUserId();
-    //     var user = await UserManager.GetUserByIdAsync(userId);
-    //     
-    //     var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:Scenes"));
-    //     await endpoint.Send(new RequestScenesXto
-    //     {
-    //         MaxResultCount = request.MaxResultCount, 
-    //         SkipCount = request.SkipCount,
-    //         UserCorrelationId = user.CorrelationId
-    //     }, cancellationToken);
-    // }
+    public async Task CommandGetById(string correlationId, CancellationToken cancellationToken)
+    {
+        var userId = AbpSession.GetUserId();
+        var user = await UserManager.GetUserByIdAsync(userId);
+        
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:RequestScene"));
+        await endpoint.Send(new RequestSceneXto
+        {
+            SceneCorrelationId = correlationId,
+            UserCorrelationId = user.CorrelationId
+        }, cancellationToken);
+    }
     //
     // public async Task<ViewSceneDto> Create(CreateSceneDto input, CancellationToken cancellationToken)
     // {

@@ -17,6 +17,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Panorama.Backing.Bus.Scenes;
+using Panorama.Backing.Bus.Scenes.SceneRequested;
+using Panorama.Backing.Bus.Scenes.ScenesRequested;
 using Panorama.Backing.Dead.Options;
 using Panorama.Configuration;
 using Panorama.Identity;
@@ -220,7 +222,8 @@ app.Use(async (context, next) =>                {                    await next(
 
         private void AddEventBusConsumers(IBusRegistrationConfigurator busConfigurator)
         {
-            busConfigurator.AddConsumer<ScenesConsumer, ScenesConsumerDefinition>();
+            busConfigurator.AddConsumer<ScenesRequestedConsumer, ScenesRequestedConsumerDefinition>();
+            busConfigurator.AddConsumer<SceneRequestedConsumer, SceneRequestedConsumerDefinition>();
         }
     }
 }

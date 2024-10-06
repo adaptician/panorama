@@ -9,8 +9,8 @@ public interface ISceneAppService : IApplicationService
 {
     Task CommandGetAll(PagedSceneResultRequestDto request, CancellationToken cancellationToken);
 
-    // Task CommandGetById(long id, CancellationToken cancellationToken);
-    
+    Task CommandGetById(string correlationId, CancellationToken cancellationToken);
+
     // Task<ViewSceneDto> Create(CreateSceneDto input, CancellationToken cancellationToken);
     //
     // Task Update(UpdateSceneDto input, CancellationToken cancellationToken);

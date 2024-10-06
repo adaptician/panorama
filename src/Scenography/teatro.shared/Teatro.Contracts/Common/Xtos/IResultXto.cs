@@ -1,6 +1,6 @@
 ﻿namespace Teatro.Contracts.Common.Xtos;
 
-public interface IResultXto<TResult>
+public interface IResultXto<TResult> : IMessageXto
 {
-    TResult Data { get; init; }
+    TResult Data { get; set; }
 }

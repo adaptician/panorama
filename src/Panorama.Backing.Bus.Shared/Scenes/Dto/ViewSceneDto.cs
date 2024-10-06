@@ -7,6 +7,9 @@ namespace Panorama.Backing.Bus.Shared.Scenes.Dto;
 // TODO: do not expose db id's
 public class ViewSceneDto : EntityDto<long>
 {
+    [JsonProperty("correlationId")]
+    public string CorrelationId { get; set; }
+    
     [JsonProperty("name")]
     public string Name { get; set; }
     

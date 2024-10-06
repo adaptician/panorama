@@ -17,6 +17,7 @@ import {ScenesReceivedEventData} from "@shared/service-proxies/scenography/event
     animations: [appModuleAnimation()]
 })
 export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> implements OnInit {
+    
     scenes: ViewSceneDto[] = [];
     keyword = '';
 
@@ -77,12 +78,12 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
     }
 
     editScene(scene: ViewSceneDto): void {
-        this.showCreateOrEditSimulationDialog(scene.id);
+        this.showCreateOrEditSimulationDialog(scene.correlationId);
     }
 
-    showCreateOrEditSimulationDialog(id?: number): void {
+    showCreateOrEditSimulationDialog(correlationId?: string): void {
         let createOrEditSimulationDialog: BsModalRef;
-        if (!id) {
+        if (!correlationId || correlationId.length == 0) {
             createOrEditSimulationDialog = this._modalService.show(
                 CreateSimulationDialogComponent,
                 {
@@ -95,7 +96,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
                 {
                     class: 'modal-lg',
                     initialState: {
-                        sceneId: id,
+                        sceneCorrelationId: correlationId,
                     },
                 }
             );
@@ -107,12 +108,6 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
     }
 
     private subscribeToEvents(): void {
-
-        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Connected, () => {
-            this._zone.run(() => {
-                this.notify.info(this.l('IAmListeningForEvents'));
-            });
-        });
 
         this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scenes_Received_Trigger,
             (json) => {
