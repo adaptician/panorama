@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using Panorama.Backing.Bus.Shared.Common.Xto;
-using Teatro.Contracts.Scenes.Xtos;
+using Teatro.Contracts.Scenes.Xtos.RequestScenes;
 
 namespace Panorama.Backing.Bus.Shared.Scenes.Xto;
 
