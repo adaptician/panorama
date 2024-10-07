@@ -9,6 +9,7 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {appModuleAnimation} from "@shared/animations/routerTransition";
 import {AppEvents} from "@shared/AppEvents";
 import {ScenesReceivedEventData} from "@shared/service-proxies/scenography/events/ScenesReceivedEventData";
+import {SceneCreatedEventData} from "@shared/service-proxies/scenography/events/SceneCreatedEventData";
 
 @Component({
     selector: 'sim-scenes',
@@ -103,7 +104,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         }
 
         createOrEditSimulationDialog.content.onSave.subscribe(() => {
-            this.refresh();
+            this.setBusy('loading', true);
         });
     }
 
@@ -120,6 +121,17 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
                 });
             });
 
+        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scene_Created_Trigger,
+            (json) => {
+
+                const data = new SceneCreatedEventData();
+                Object.assign(data, JSON.parse(json));
+            
+                this._zone.run(() => {
+                    this.handleSceneCreated(data);
+                });
+            });
+
     }
 
     private handleScenesReceived(data: ScenesReceivedEventData): void {
@@ -131,6 +143,16 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
             this.totalItems = result.totalCount;
             this.showPaging(result, this.pageNumber);
             this.setBusy('loading', false);   
+        }
+    }
+
+    private handleSceneCreated(data: SceneCreatedEventData): void {
+
+        if (data?.data) {
+            const result = data.data;
+
+            this.setBusy('loading', false);
+            this.refresh();
         }
     }
 }

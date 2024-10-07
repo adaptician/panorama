@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Abp.Application.Services;
+using Panorama.Backing.Bus.Shared.Scenes.Dto;
 using Panorama.Scenes.Dto;
 
 namespace Panorama.Scenes;
@@ -11,7 +12,7 @@ public interface ISceneAppService : IApplicationService
 
     Task CommandGetById(string correlationId, CancellationToken cancellationToken);
 
-    // Task<ViewSceneDto> Create(CreateSceneDto input, CancellationToken cancellationToken);
+    Task CommandCreate(CreateSceneDto input, CancellationToken cancellationToken);
     //
     // Task Update(UpdateSceneDto input, CancellationToken cancellationToken);
     //

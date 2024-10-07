@@ -2,7 +2,7 @@
 using Panorama.Backing.Bus.Shared.Common.Xto;
 using Teatro.Contracts.Scenes.Xtos.RequestScene;
 
-namespace Panorama.Backing.Bus.Shared.Scenes.Xto;
+namespace Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScene;
 
 [MessageUrn("Teatro.Scenes:SceneRequestedXto")]
 public record SceneRequestedXto : MessageXto, ISceneRequestedXto<ViewSceneXto>

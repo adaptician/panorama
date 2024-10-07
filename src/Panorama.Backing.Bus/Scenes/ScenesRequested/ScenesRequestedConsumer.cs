@@ -7,6 +7,7 @@ using Panorama.Authorization.Users;
 using Panorama.Backing.Bus.Shared.Common.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto;
+using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScenes;
 using Panorama.Scenes;
 using Panorama.Scenes.Events.ScenesReceived;
 

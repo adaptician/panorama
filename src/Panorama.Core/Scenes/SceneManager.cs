@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Services;
 using Panorama.Events;
+using Panorama.Scenes.Events.SceneCreated;
 using Panorama.Scenes.Events.SceneReceived;
 using Panorama.Scenes.Events.ScenesReceived;
 
@@ -20,5 +21,11 @@ public class SceneManager(
     {
         var @event = new SceneReceivedEvent();
         return new SceneReceivedCarrier(appEventManager, @event);
+    }
+    
+    public SceneCreatedCarrier CreateSceneCreatedCarrier()
+    {
+        var @event = new SceneCreatedEvent();
+        return new SceneCreatedCarrier(appEventManager, @event);
     }
 }

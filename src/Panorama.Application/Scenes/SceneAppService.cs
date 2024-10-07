@@ -5,7 +5,10 @@ using Abp.Authorization;
 using Abp.Runtime.Session;
 using MassTransit;
 using Panorama.Authorization;
-using Panorama.Backing.Bus.Shared.Scenes.Xto;
+using Panorama.Backing.Bus.Shared.Scenes.Dto;
+using Panorama.Backing.Bus.Shared.Scenes.Xto.CreateScene;
+using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScene;
+using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScenes;
 using Panorama.Scenes.Dto;
 
 namespace Panorama.Scenes;
@@ -42,12 +45,22 @@ public class SceneAppService(
             UserCorrelationId = user.CorrelationId
         }, cancellationToken);
     }
-    //
-    // public async Task<ViewSceneDto> Create(CreateSceneDto input, CancellationToken cancellationToken)
-    // {
-    //     return await scenographyProxy.CreateAsync(input, cancellationToken);
-    // }
-    //
+    
+    public async Task CommandCreate(CreateSceneDto input, CancellationToken cancellationToken)
+    {
+        var userId = AbpSession.GetUserId();
+        var user = await UserManager.GetUserByIdAsync(userId);
+        
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:CreateScene"));
+        await endpoint.Send(new CreateSceneXto()
+        {
+            Name = input.Name,
+            Description = input.Description,
+            SceneData = input.SceneData,
+            UserCorrelationId = user.CorrelationId
+        }, cancellationToken);
+    }
+    
     // public async Task Update(UpdateSceneDto input, CancellationToken cancellationToken)
     // {
     //     await scenographyProxy.UpdateAsync(input, cancellationToken);

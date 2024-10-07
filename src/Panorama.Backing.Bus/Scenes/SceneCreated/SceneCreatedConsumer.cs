@@ -5,24 +5,23 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Panorama.Authorization.Users;
 using Panorama.Backing.Bus.Shared.Scenes.Dto;
-using Panorama.Backing.Bus.Shared.Scenes.Xto;
-using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScene;
+using Panorama.Backing.Bus.Shared.Scenes.Xto.CreateScene;
 using Panorama.Scenes;
-using Panorama.Scenes.Events.SceneReceived;
+using Panorama.Scenes.Events.SceneCreated;
 
-namespace Panorama.Backing.Bus.Scenes.SceneRequested;
+namespace Panorama.Backing.Bus.Scenes.SceneCreated;
 
-public class SceneRequestedConsumer(ILogger<SceneRequestedXto> logger,
+public class SceneCreatedConsumer(ILogger<SceneCreatedXto> logger,
     IServiceProvider serviceProvider,
     IMapper mapper,
     UserManager userManager,
     ISceneManager sceneManager
 ) 
-    : IConsumer<SceneRequestedXto>
+    : IConsumer<SceneCreatedXto>
 {
-    public async Task Consume(ConsumeContext<SceneRequestedXto> context)
+    public async Task Consume(ConsumeContext<SceneCreatedXto> context)
     {
-        logger.LogInformation("Received scenes requested: {messageId}",
+        logger.LogInformation("Received scene created: {messageId}",
             context.MessageId
         );
 
@@ -40,8 +39,8 @@ public class SceneRequestedConsumer(ILogger<SceneRequestedXto> logger,
         
         var userIdentifier = await userManager.GetUserIdentifierByCorrelationIdAsync(message.UserCorrelationId);
 
-        var carrier = sceneManager.CreateSceneReceivedCarrier();
-        await carrier.Broadcast(new SceneReceivedEventData { 
+        var carrier = sceneManager.CreateSceneCreatedCarrier();
+        await carrier.Broadcast(new SceneCreatedEventData { 
             Data = mapper.Map<ViewSceneDto>(message.Data)
         }, userIdentifier);
         

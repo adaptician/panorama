@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Services;
+using Panorama.Scenes.Events.SceneCreated;
 using Panorama.Scenes.Events.SceneReceived;
 using Panorama.Scenes.Events.ScenesReceived;
 
@@ -8,4 +9,5 @@ public interface ISceneManager : IDomainService
 {
     ScenesReceivedCarrier CreateScenesReceivedCarrier();
     SceneReceivedCarrier CreateSceneReceivedCarrier();
+    SceneCreatedCarrier CreateSceneCreatedCarrier();
 }
