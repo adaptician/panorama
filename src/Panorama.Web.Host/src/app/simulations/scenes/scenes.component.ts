@@ -11,6 +11,7 @@ import {AppEvents} from "@shared/AppEvents";
 import {ScenesReceivedEventData} from "@shared/service-proxies/scenography/events/ScenesReceivedEventData";
 import {SceneCreatedEventData} from "@shared/service-proxies/scenography/events/SceneCreatedEventData";
 import {SceneUpdatedEventData} from "@shared/service-proxies/scenography/events/SceneUpdatedEventData";
+import {SceneDeletedEventData} from "@shared/service-proxies/scenography/events/SceneDeletedEventData";
 
 @Component({
     selector: 'sim-scenes',
@@ -55,24 +56,19 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
     }
 
     delete(scene: ViewSceneDto): void {
-        // abp.message.confirm(
-        //     this.l('SimulationDeleteWarningMessage', scene.name),
-        //     undefined,
-        //     (result: boolean) => {
-        //         if (result) {
-        //             this._sceneService
-        //                 .delete(scene.id)
-        //                 .pipe(
-        //                     finalize(() => {
-        //                         abp.notify.success(this.l('SuccessfullyDeleted'));
-        //                         this.refresh();
-        //                     })
-        //                 )
-        //                 .subscribe(() => {
-        //                 });
-        //         }
-        //     }
-        // );
+        abp.message.confirm(
+            this.l('SimulationDeleteWarningMessage', scene.name),
+            undefined,
+            (result: boolean) => {
+                if (result) {
+                    this._sceneService
+                        .commandDelete(scene.correlationId)
+                        .pipe(finalize(() => this.setBusy('saving', false)))
+                        .subscribe(() => {
+                        });
+                }
+            }
+        );
     }
 
     createScene(): void {
@@ -144,6 +140,17 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
                 });
             });
 
+        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scene_Deleted_Trigger,
+            (json) => {
+
+                const data = new SceneDeletedEventData();
+                Object.assign(data, JSON.parse(json));
+
+                this._zone.run(() => {
+                    this.handleSceneDeleted(data);
+                });
+            });
+        
     }
 
     private handleScenesReceived(data: ScenesReceivedEventData): void {
@@ -172,6 +179,15 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
 
         if (data?.data) {
             const result = data.data;
+
+            this.setBusy('loading', false);
+            this.refresh();
+        }
+    }
+
+    private handleSceneDeleted(data: SceneDeletedEventData): void {
+
+        if (data) {
 
             this.setBusy('loading', false);
             this.refresh();

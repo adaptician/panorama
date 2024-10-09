@@ -1,6 +1,6 @@
 ﻿using Teatro.Contracts.Common.Xtos;
 
-namespace Teatro.Contracts.Scenes.Xtos;
+namespace Teatro.Contracts.Scenes.Xtos.DeleteScene;
 
 public interface IDeleteSceneXto : IMessageXto, ICorrelateScene
 {

@@ -1,0 +1,10 @@
+﻿using MassTransit;
+using Panorama.Backing.Bus.Shared.Common.Xto;
+using Teatro.Contracts.Scenes.Xtos.DeleteScene;
+
+namespace Panorama.Backing.Bus.Shared.Scenes.Xto.DeleteScene;
+
+[MessageUrn("Teatro.Scenes:SceneDeletedXto")]
+public record SceneDeletedXto : MessageXto, ISceneDeletedXto
+{
+}

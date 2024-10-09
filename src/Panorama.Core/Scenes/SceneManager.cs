@@ -1,6 +1,7 @@
 ﻿using Abp.Domain.Services;
 using Panorama.Events;
 using Panorama.Scenes.Events.SceneCreated;
+using Panorama.Scenes.Events.SceneDeleted;
 using Panorama.Scenes.Events.SceneReceived;
 using Panorama.Scenes.Events.ScenesReceived;
 using Panorama.Scenes.Events.SceneUpdated;
@@ -34,5 +35,11 @@ public class SceneManager(
     {
         var @event = new SceneUpdatedEvent();
         return new SceneUpdatedCarrier(appEventManager, @event);
+    }
+    
+    public SceneDeletedCarrier CreateSceneDeletedCarrier()
+    {
+        var @event = new SceneDeletedEvent();
+        return new SceneDeletedCarrier(appEventManager, @event);
     }
 }

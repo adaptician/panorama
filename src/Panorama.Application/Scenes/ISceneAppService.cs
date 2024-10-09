@@ -16,5 +16,5 @@ public interface ISceneAppService : IApplicationService
 
     Task CommandUpdate(UpdateSceneDto input, CancellationToken cancellationToken);
 
-    // Task Delete(long id, CancellationToken cancellationToken);
+    Task CommandDelete(string correlationId, CancellationToken cancellationToken);
 }

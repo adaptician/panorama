@@ -7,6 +7,7 @@ using MassTransit;
 using Panorama.Authorization;
 using Panorama.Backing.Bus.Shared.Scenes.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.CreateScene;
+using Panorama.Backing.Bus.Shared.Scenes.Xto.DeleteScene;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScene;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScenes;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.UpdateScene;
@@ -76,9 +77,17 @@ public class SceneAppService(
             UserCorrelationId = user.CorrelationId
         }, cancellationToken);
     }
-    //
-    // public async Task Delete(long id, CancellationToken cancellationToken)
-    // {
-    //     await scenographyProxy.DeleteAsync(id, cancellationToken);
-    // }
+    
+    public async Task CommandDelete(string correlationId, CancellationToken cancellationToken)
+    {
+        var userId = AbpSession.GetUserId();
+        var user = await UserManager.GetUserByIdAsync(userId);
+        
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:DeleteScene"));
+        await endpoint.Send(new DeleteSceneXto()
+        {
+            SceneCorrelationId = correlationId,
+            UserCorrelationId = user.CorrelationId
+        }, cancellationToken);
+    }
 }

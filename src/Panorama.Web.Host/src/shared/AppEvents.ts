@@ -13,4 +13,7 @@ export class AppEvents {
 
     static SignalR_AppEvents_Scene_Updated_Listener: string = "notifyOfSceneUpdated";
     static SignalR_AppEvents_Scene_Updated_Trigger: string = "app.events.scene.updated";
+
+    static SignalR_AppEvents_Scene_Deleted_Listener: string = "notifyOfSceneDeleted";
+    static SignalR_AppEvents_Scene_Deleted_Trigger: string = "app.events.scene.deleted";
 }
