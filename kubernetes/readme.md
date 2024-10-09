@@ -264,11 +264,11 @@ SEPARATE API AND APP INGRESS
 
 
 
-PANORAMA API (http://localhost:44312/)
+PANORAMA API (http://localhost:44312/) ---
 
 kubectl apply -f .\panorama\kubernetes\mssqldb-manifest.yaml
 
-docker build -t panorama.migrator -f .\src\Panorama.Migrator\Dockerfile .
+docker build -t panorama.migrator -f .\panorama\src\Panorama.Migrator\Dockerfile .
 kubectl apply -f .\panorama\kubernetes\migrator-manifest.yaml
 
 kubectl scale deployment panorama-migrator --replicas=0
@@ -278,30 +278,32 @@ kubectl scale deployment panorama-migrator --replicas=0
 
 
 
-PANORAMA APP (http://localhost:4201/)
+PANORAMA APP (http://localhost:4201/) ---
 
 ~~docker build -t panorama.app -f .\src\Panorama.Web.Host\Angular.Dockerfile .~~
 ~~kubectl apply -f .\kubernetes\app-manifest.yaml~~
 
 
-COMBINED PANORAMA
-docker build -t panorama.combined -f .\src\Panorama.Web.Host\Combined.Dockerfile .
+COMBINED PANORAMA ---
 
-kubectl apply -f .\kubernetes\combined-panorama-manifest.yaml
-kubectl apply -f .\kubernetes\combined-ingress-manifest.yaml
+docker build -t panorama.appi -f .\panorama\src\Panorama.Web.Host\Combined.Dockerfile .
+
+kubectl apply -f .\panorama\kubernetes\appi-panorama-manifest.yaml
 
 
-TEATRO API (http://localhost:8484/)
+TEATRO API (http://localhost:8484/) ---
 
 kubectl apply -f .\panorama\kubernetes\mongodb-manifest.yaml
 kubectl apply -f .\panorama\kubernetes\postgresdb-manifest.yaml
 
-docker build -t teatro.api -f .\src\Scenography\Teatro.Application\Dockerfile .
+docker build -t teatro.api -f .\teatro\Teatro\Teatro.Application\Dockerfile .
 kubectl apply -f .\panorama\kubernetes\teatro-manifest.yaml
 
+INGRESS ---
 
+kubectl apply -f .\panorama\kubernetes\appi-ingress-manifest.yaml
 
-
+EVENT BUS ---
 
 kubectl apply -f .\panorama\kubernetes\bus-manifest.yaml
 

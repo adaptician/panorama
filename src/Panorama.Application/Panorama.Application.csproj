@@ -15,7 +15,6 @@
     <ProjectReference Include="..\Panorama.Backing.Bus.Shared\Panorama.Backing.Bus.Shared.csproj" />
     <ProjectReference Include="..\Panorama.Common\Panorama.Common.csproj" />
     <ProjectReference Include="..\Panorama.Core\Panorama.Core.csproj" />
-    <ProjectReference Include="..\Scenography\teatro.shared\Teatro.Shared\Teatro.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.5" />

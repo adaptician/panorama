@@ -8,11 +8,11 @@ FROM node:20 AS app-build
 WORKDIR /app
 
 # Install dependencies.
-COPY src/Panorama.Web.Host/package*.json ./
+COPY panorama/src/Panorama.Web.Host/package*.json ./
 RUN yarn install
 
 # Copy the rest of the application files.
-COPY src/Panorama.Web.Host .
+COPY panorama/src/Panorama.Web.Host .
 
 # Build the Angular app.
 RUN yarn run ng build --configuration production
@@ -30,14 +30,21 @@ ARG BUILD_CONFIGURATION=Release
 
 # Copy application files over to container.
 WORKDIR /deployed
-COPY ["src/Panorama.Web.Host/Panorama.Web.Host.csproj", "src/Panorama.Web.Host/"]
-COPY ["src/Panorama.Web.Core/Panorama.Web.Core.csproj", "src/Panorama.Web.Core/"]
-COPY ["src/Panorama.Application/Panorama.Application.csproj", "src/Panorama.Application/"]
-COPY ["src/Panorama.Core/Panorama.Core.csproj", "src/Panorama.Core/"]
-COPY ["src/Panorama.EntityFrameworkCore/Panorama.EntityFrameworkCore.csproj", "src/Panorama.EntityFrameworkCore/"]
+COPY ["panorama/src/Scenography/teatro.shared/Teatro.Contracts/Teatro.Contracts.csproj", "src/Scenography/teatro.shared/Teatro.Contracts/"]
 
-# Copy shared projects.
-COPY ["src/Scenography/Teatro.Shared/Teatro.Shared.csproj", "src/Scenography/Teatro.Shared/"]
+COPY ["panorama/src/Panorama.Application/Panorama.Application.csproj", "src/Panorama.Application/"]
+
+COPY ["panorama/src/Panorama.Backing.Bus/Panorama.Backing.Bus.csproj", "src/Panorama.Backing.Bus/"]
+COPY ["panorama/src/Panorama.Backing.Bus.Shared/Panorama.Backing.Bus.Shared.csproj", "src/Panorama.Backing.Bus.Shared/"]
+
+COPY ["panorama/src/Panorama.Common/Panorama.Common.csproj", "src/Panorama.Common/"]
+
+COPY ["panorama/src/Panorama.Core/Panorama.Core.csproj", "src/Panorama.Core/"]
+COPY ["panorama/src/Panorama.EntityFrameworkCore/Panorama.EntityFrameworkCore.csproj", "src/Panorama.EntityFrameworkCore/"]
+
+COPY ["panorama/src/Panorama.Web.Core/Panorama.Web.Core.csproj", "src/Panorama.Web.Core/"]
+
+COPY ["panorama/src/Panorama.Web.Host/Panorama.Web.Host.csproj", "src/Panorama.Web.Host/"]
 
 # Restore within the container.
 WORKDIR "/deployed/src/Panorama.Web.Host"
@@ -45,14 +52,21 @@ RUN dotnet restore
 
 # Copy restored files.
 WORKDIR /deployed
-COPY ["src/Panorama.Web.Host", "src/Panorama.Web.Host"]
-COPY ["src/Panorama.Web.Core", "src/Panorama.Web.Core"]
-COPY ["src/Panorama.Application", "src/Panorama.Application"]
-COPY ["src/Panorama.Core", "src/Panorama.Core"]
-COPY ["src/Panorama.EntityFrameworkCore", "src/Panorama.EntityFrameworkCore"]
+COPY ["panorama/src/Scenography/teatro.shared/Teatro.Contracts", "src/Scenography/teatro.shared/Teatro.Contracts"]
 
-# Copy shared projects.
-COPY ["src/Scenography/Teatro.Shared", "src/Scenography/Teatro.Shared"]
+COPY ["panorama/src/Panorama.Application", "src/Panorama.Application"]
+
+COPY ["panorama/src/Panorama.Backing.Bus", "src/Panorama.Backing.Bus"]
+COPY ["panorama/src/Panorama.Backing.Bus.Shared", "src/Panorama.Backing.Bus.Shared"]
+
+COPY ["panorama/src/Panorama.Common", "src/Panorama.Common"]
+
+COPY ["panorama/src/Panorama.Core", "src/Panorama.Core"]
+COPY ["panorama/src/Panorama.EntityFrameworkCore", "src/Panorama.EntityFrameworkCore"]
+
+COPY ["panorama/src/Panorama.Web.Core", "src/Panorama.Web.Core"]
+
+COPY ["panorama/src/Panorama.Web.Host", "src/Panorama.Web.Host"]
 
 # Build the application.
 WORKDIR "/deployed/src/Panorama.Web.Host"

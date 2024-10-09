@@ -62,7 +62,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: panorama-api
-          image: docker.io/panorama.combined
+          image: docker.io/panorama.appi
           imagePullPolicy: Never
           env:
             - name: ASPNETCORE_ENVIRONMENT
@@ -79,8 +79,10 @@ spec:
               value: "/https/tls.key"  # Path to key.PEM certificate inside container
             - name: ASPNETCORE_Kestrel__HttpsInlineCertAndKeyFile__Password
               value: ""  # Cert password
-            - name: ASPNETCORE_ScenographyProxy__SecretKey
-              value: "WTgWsyp22DzjiHdkG"
+            - name: EventBus__RabbitMq__UserName
+              value: "guest"
+            - name: EventBus__RabbitMq__Password
+              value: "guest"
           volumeMounts:
             - name: https-cert
               mountPath: /https  # Mount volume for the cert
