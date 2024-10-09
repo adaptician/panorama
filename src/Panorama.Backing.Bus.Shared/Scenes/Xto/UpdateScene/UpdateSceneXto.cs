@@ -1,10 +1,11 @@
 ﻿using MassTransit;
 using Panorama.Backing.Bus.Shared.Common.Xto;
+using Teatro.Contracts;
 using Teatro.Contracts.Scenes.Xtos.UpdateScene;
 
 namespace Panorama.Backing.Bus.Shared.Scenes.Xto.UpdateScene;
 
-[MessageUrn("Teatro.Scenes:UpdateSceneXto")]
+[MessageUrn(SceneMessageUrn.TeatroScenes_UpdateScene)]
 public record UpdateSceneXto : MessageXto, IUpdateSceneXto
 {
     public string SceneCorrelationId { get; init; }

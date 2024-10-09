@@ -12,6 +12,7 @@ using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScene;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScenes;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.UpdateScene;
 using Panorama.Scenes.Dto;
+using Teatro.Contracts;
 
 namespace Panorama.Scenes;
 
@@ -26,7 +27,7 @@ public class SceneAppService(
         var userId = AbpSession.GetUserId();
         var user = await UserManager.GetUserByIdAsync(userId);
         
-        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:RequestScenes"));
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri(SceneMessageUrn.Queue_RequestScenes));
         await endpoint.Send(new RequestScenesXto
         {
             MaxResultCount = request.MaxResultCount, 
@@ -40,7 +41,7 @@ public class SceneAppService(
         var userId = AbpSession.GetUserId();
         var user = await UserManager.GetUserByIdAsync(userId);
         
-        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:RequestScene"));
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri(SceneMessageUrn.Queue_RequestScene));
         await endpoint.Send(new RequestSceneXto
         {
             SceneCorrelationId = correlationId,
@@ -53,7 +54,7 @@ public class SceneAppService(
         var userId = AbpSession.GetUserId();
         var user = await UserManager.GetUserByIdAsync(userId);
         
-        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:CreateScene"));
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri(SceneMessageUrn.Queue_CreateScene));
         await endpoint.Send(new CreateSceneXto()
         {
             Name = input.Name,
@@ -68,7 +69,7 @@ public class SceneAppService(
         var userId = AbpSession.GetUserId();
         var user = await UserManager.GetUserByIdAsync(userId);
         
-        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:UpdateScene"));
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri(SceneMessageUrn.Queue_UpdateScene));
         await endpoint.Send(new UpdateSceneXto()
         {
             SceneCorrelationId = input.CorrelationId,
@@ -83,7 +84,7 @@ public class SceneAppService(
         var userId = AbpSession.GetUserId();
         var user = await UserManager.GetUserByIdAsync(userId);
         
-        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:DeleteScene"));
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri(SceneMessageUrn.Queue_DeleteScene));
         await endpoint.Send(new DeleteSceneXto()
         {
             SceneCorrelationId = correlationId,

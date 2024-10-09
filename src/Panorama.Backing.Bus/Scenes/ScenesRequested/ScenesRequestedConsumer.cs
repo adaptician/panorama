@@ -13,8 +13,6 @@ using Panorama.Scenes.Events.ScenesReceived;
 
 namespace Panorama.Backing.Bus.Scenes.ScenesRequested;
 
-// Possible to consume multiple message types, but not sure if it will apply:
-// https://masstransit.io/documentation/configuration#consume-multiple-message-types
 public class ScenesRequestedConsumer(ILogger<ScenesRequestedXto> logger,
     IServiceProvider serviceProvider,
     IMapper mapper,
