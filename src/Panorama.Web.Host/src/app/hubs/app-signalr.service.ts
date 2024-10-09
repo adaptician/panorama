@@ -61,6 +61,10 @@ export class AppSignalrService extends AppComponentBase {
         connection.on(AppEvents.SignalR_AppEvents_Scene_Created_Listener, (event) => {
             abp.event.trigger(AppEvents.SignalR_AppEvents_Scene_Created_Trigger, event);
         });
+
+        connection.on(AppEvents.SignalR_AppEvents_Scene_Updated_Listener, (event) => {
+            abp.event.trigger(AppEvents.SignalR_AppEvents_Scene_Updated_Trigger, event);
+        });
     }
 
     init(): void {

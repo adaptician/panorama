@@ -30,7 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Panorama.Backing.Bus\Panorama.Backing.Bus.csproj" />
-    <ProjectReference Include="..\Panorama.Backing.Dead\Panorama.Backing.Dead.csproj" />
     <ProjectReference Include="..\Panorama.Web.Core\Panorama.Web.Core.csproj" />
   </ItemGroup>
   <ItemGroup>

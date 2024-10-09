@@ -1,10 +1,9 @@
 import {Component, EventEmitter, Injector, NgZone, OnInit, Output} from '@angular/core';
 import {AppComponentBase} from "@shared/app-component-base";
 import {BsModalRef} from "ngx-bootstrap/modal";
-import {SceneServiceProxy} from "@shared/service-proxies/service-proxies";
+import {SceneServiceProxy, UpdateSceneDto} from "@shared/service-proxies/service-proxies";
 import {AppEvents} from "@shared/AppEvents";
 import {SceneReceivedEventData} from "@shared/service-proxies/scenography/events/SceneReceivedEventData";
-import {ViewSceneDto} from "@shared/service-proxies/scenography/dtos/ViewSceneDto";
 import {finalize} from "rxjs/operators";
 
 @Component({
@@ -26,8 +25,7 @@ export class EditSimulationDialogComponent extends AppComponentBase implements O
     return this._sceneCorrelationId;
   }
   
-  // scene: UpdateSceneDto = new UpdateSceneDto();
-  scene: ViewSceneDto = new ViewSceneDto();
+  scene: UpdateSceneDto = new UpdateSceneDto();
 
   @Output() onSave = new EventEmitter<any>();
 
@@ -56,23 +54,22 @@ export class EditSimulationDialogComponent extends AppComponentBase implements O
   save(): void {
     this.setBusy('saving', true);
 
-    // this._sceneService
-    //     .update(this.scene)
-    //     .pipe(finalize(() => this.setBusy('saving', false)))
-    //     .subscribe(
-    //         () => {
-    //           this.notify.info(this.l('SavedSuccessfully'));
-    //           this.bsModalRef.hide();
-    //           this.onSave.emit();
-    //         }
-    //     );
+    this._sceneService
+        .commandUpdate(this.scene)
+        .pipe(finalize(() => this.setBusy('saving', false)))
+        .subscribe(
+            () => {
+              this.notify.info(this.l('SavedSuccessfully'));
+              this.bsModalRef.hide();
+              this.onSave.emit();
+            }
+        );
   }
 
   private subscribeToEvents(): void {
 
     this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scene_Received_Trigger,
         (json) => {
-console.log(`SCENE RECEIVED ${json}`);
           const data = new SceneReceivedEventData();
           Object.assign(data, JSON.parse(json));
 
@@ -86,9 +83,8 @@ console.log(`SCENE RECEIVED ${json}`);
   private handleSceneReceived(data: SceneReceivedEventData): void {
 
     if (data?.data) {
-      const result = data.data;
+      Object.assign(this.scene, data.data);
 
-      this.scene = result;
       this.setBusy('loading', false);
     }
   }

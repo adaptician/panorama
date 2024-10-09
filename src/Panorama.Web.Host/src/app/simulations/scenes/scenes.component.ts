@@ -10,6 +10,7 @@ import {appModuleAnimation} from "@shared/animations/routerTransition";
 import {AppEvents} from "@shared/AppEvents";
 import {ScenesReceivedEventData} from "@shared/service-proxies/scenography/events/ScenesReceivedEventData";
 import {SceneCreatedEventData} from "@shared/service-proxies/scenography/events/SceneCreatedEventData";
+import {SceneUpdatedEventData} from "@shared/service-proxies/scenography/events/SceneUpdatedEventData";
 
 @Component({
     selector: 'sim-scenes',
@@ -132,6 +133,17 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
                 });
             });
 
+        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scene_Updated_Trigger,
+            (json) => {
+
+                const data = new SceneUpdatedEventData();
+                Object.assign(data, JSON.parse(json));
+
+                this._zone.run(() => {
+                    this.handleSceneUpdated(data);
+                });
+            });
+
     }
 
     private handleScenesReceived(data: ScenesReceivedEventData): void {
@@ -147,6 +159,16 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
     }
 
     private handleSceneCreated(data: SceneCreatedEventData): void {
+
+        if (data?.data) {
+            const result = data.data;
+
+            this.setBusy('loading', false);
+            this.refresh();
+        }
+    }
+
+    private handleSceneUpdated(data: SceneUpdatedEventData): void {
 
         if (data?.data) {
             const result = data.data;

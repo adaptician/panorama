@@ -13,8 +13,8 @@ public interface ISceneAppService : IApplicationService
     Task CommandGetById(string correlationId, CancellationToken cancellationToken);
 
     Task CommandCreate(CreateSceneDto input, CancellationToken cancellationToken);
-    //
-    // Task Update(UpdateSceneDto input, CancellationToken cancellationToken);
-    //
+
+    Task CommandUpdate(UpdateSceneDto input, CancellationToken cancellationToken);
+
     // Task Delete(long id, CancellationToken cancellationToken);
 }

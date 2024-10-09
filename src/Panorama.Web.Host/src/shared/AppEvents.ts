@@ -10,4 +10,7 @@ export class AppEvents {
 
     static SignalR_AppEvents_Scene_Created_Listener: string = "notifyOfSceneCreated";
     static SignalR_AppEvents_Scene_Created_Trigger: string = "app.events.scene.created";
+
+    static SignalR_AppEvents_Scene_Updated_Listener: string = "notifyOfSceneUpdated";
+    static SignalR_AppEvents_Scene_Updated_Trigger: string = "app.events.scene.updated";
 }

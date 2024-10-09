@@ -16,15 +16,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Panorama.Backing.Bus.Scenes;
+using Panorama.Backing.Bus.Options;
 using Panorama.Backing.Bus.Scenes.SceneCreated;
 using Panorama.Backing.Bus.Scenes.SceneRequested;
 using Panorama.Backing.Bus.Scenes.ScenesRequested;
-using Panorama.Backing.Dead.Options;
+using Panorama.Backing.Bus.Scenes.SceneUpdated;
 using Panorama.Configuration;
 using Panorama.Identity;
-using Panorama.Options;
-using Panorama.Scenes;
 using Panorama.SignalR;
 
 namespace Panorama.Web.Host.Startup
@@ -226,6 +224,7 @@ app.Use(async (context, next) =>                {                    await next(
             busConfigurator.AddConsumer<ScenesRequestedConsumer, ScenesRequestedConsumerDefinition>();
             busConfigurator.AddConsumer<SceneRequestedConsumer, SceneRequestedConsumerDefinition>();
             busConfigurator.AddConsumer<SceneCreatedConsumer, SceneCreatedConsumerDefinition>();
+            busConfigurator.AddConsumer<SceneUpdatedConsumer, SceneUpdatedConsumerDefinition>();
         }
     }
 }

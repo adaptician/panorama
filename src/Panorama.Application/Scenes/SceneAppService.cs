@@ -9,6 +9,7 @@ using Panorama.Backing.Bus.Shared.Scenes.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.CreateScene;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScene;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScenes;
+using Panorama.Backing.Bus.Shared.Scenes.Xto.UpdateScene;
 using Panorama.Scenes.Dto;
 
 namespace Panorama.Scenes;
@@ -61,10 +62,20 @@ public class SceneAppService(
         }, cancellationToken);
     }
     
-    // public async Task Update(UpdateSceneDto input, CancellationToken cancellationToken)
-    // {
-    //     await scenographyProxy.UpdateAsync(input, cancellationToken);
-    // }
+    public async Task CommandUpdate(UpdateSceneDto input, CancellationToken cancellationToken)
+    {
+        var userId = AbpSession.GetUserId();
+        var user = await UserManager.GetUserByIdAsync(userId);
+        
+        var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:UpdateScene"));
+        await endpoint.Send(new UpdateSceneXto()
+        {
+            SceneCorrelationId = input.CorrelationId,
+            Name = input.Name,
+            Description = input.Description,
+            UserCorrelationId = user.CorrelationId
+        }, cancellationToken);
+    }
     //
     // public async Task Delete(long id, CancellationToken cancellationToken)
     // {

@@ -3,6 +3,7 @@ using Panorama.Events;
 using Panorama.Scenes.Events.SceneCreated;
 using Panorama.Scenes.Events.SceneReceived;
 using Panorama.Scenes.Events.ScenesReceived;
+using Panorama.Scenes.Events.SceneUpdated;
 
 namespace Panorama.Scenes;
 
@@ -27,5 +28,11 @@ public class SceneManager(
     {
         var @event = new SceneCreatedEvent();
         return new SceneCreatedCarrier(appEventManager, @event);
+    }
+    
+    public SceneUpdatedCarrier CreateSceneUpdatedCarrier()
+    {
+        var @event = new SceneUpdatedEvent();
+        return new SceneUpdatedCarrier(appEventManager, @event);
     }
 }
