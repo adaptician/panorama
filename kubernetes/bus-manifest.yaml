@@ -37,7 +37,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-bus
+  name: rabbitmq
 spec:
   selector:
     app: rabbitmq
