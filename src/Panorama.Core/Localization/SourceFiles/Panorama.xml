@@ -130,5 +130,7 @@
     <text name="UserNotFound">User not found.</text>
     
     <text name="IAmListeningForEvents">I am listening for events</text>
+    
+    <text name="MessagePublishingFailed">Message publishing failed.</text>
   </texts>
 </localizationDictionary>
