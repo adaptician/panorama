@@ -270,6 +270,8 @@ kubectl apply -f .\panorama\kubernetes\mssqldb-manifest.yaml
 
 kubectl port-forward mssqldb-0 1433:1433
 
+NB: connection string must look at 127.0.0.1 - localhost will not work!
+
 MIGRATOR
 docker build -t panorama.migrator -f .\panorama\src\Panorama.Migrator\Dockerfile .
 kubectl apply -f .\panorama\kubernetes\migrator-manifest.yaml
@@ -355,6 +357,8 @@ MSSQL
 kubectl apply -f .\panorama\kubernetes\mssqldb-manifest.yaml
 kubectl port-forward mssqldb-0 1433:1433
 
+NB: connection string must look at 127.0.0.1 - localhost will not work!
+
 MONGODB
 kubectl apply -f .\panorama\kubernetes\mongodb-manifest.yaml
 kubectl port-forward mongodb-0 27017:27017
@@ -365,6 +369,6 @@ kubectl port-forward postgresdb-0 5432:5432
 
 RABBITMQ
 kubectl apply -f .\panorama\kubernetes\rabbitmq-manifest.yaml
+kubectl port-forward rabbitmq-0 5672:5672
 kubectl port-forward rabbitmq-0 15672:15672
-
 
