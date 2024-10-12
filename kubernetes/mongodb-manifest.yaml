@@ -48,4 +48,4 @@ spec:
       targetPort: 27017
   selector:
     app: mongodb
-  type: LoadBalancer # REMOVE for use in PROD ENV
+  type: ClusterIP
