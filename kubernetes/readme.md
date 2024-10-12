@@ -255,7 +255,6 @@ kubectl config set-context --current --namespace=panorama
 
 kubectl apply -f .\panorama\kubernetes\networkpolicy.yaml
 
-kubectl create secret tls tls-secret --cert=.\panorama\kubernetes\certs\panorama.local+1.pem --key=.\panorama\kubernetes\certs\panorama.local+1-key.pem
 
 
 SEPARATE API AND APP INGRESS
@@ -288,6 +287,13 @@ PANORAMA APP (http://localhost:4201/) ---
 ~~kubectl apply -f .\kubernetes\app-manifest.yaml~~
 
 
+RABBITMQ
+
+kubectl apply -f .\panorama\kubernetes\rabbitmq-manifest.yaml
+
+kubectl port-forward rabbitmq-0 15672:15672
+
+
 COMBINED PANORAMA ---
 
 APPI
@@ -309,17 +315,24 @@ kubectl apply -f .\panorama\kubernetes\postgresdb-manifest.yaml
 kubectl port-forward postgresdb-0 5432:5432
 
 docker build -t teatro.api -f .\teatro\Teatro\Teatro.Application\Dockerfile .
+
 kubectl apply -f .\panorama\kubernetes\teatro-manifest.yaml
+
+
+TLS SECRET
+
+LOCAL (OBSOLETE)
+kubectl create secret tls tls-secret --cert=.\panorama\kubernetes\certs\panorama.local+1.pem --key=.\panorama\kubernetes\certs\panorama.local+1-key.pem
+
+STAGING
+kubectl create secret tls tls-secret --cert=.\panorama\kubernetes\certs\panorama.staging+1.pem --key=.\panorama\kubernetes\certs\panorama.staging+1-key.pem
+
 
 INGRESS
 
-kubectl apply -f .\panorama\kubernetes\panorama-ingress-manifest.yaml
+kubectl apply -f .\panorama\kubernetes\staging-ingress-manifest.yaml
 
-RABBITMQ
 
-kubectl apply -f .\panorama\kubernetes\rabbitmq-manifest.yaml
-
-kubectl port-forward rabbitmq-0 15672:15672
 
 
 --kubectl apply -f .\kubernetes\azurite-manifest.yaml             ????

@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: "panorama.local" 
+    - host: "panorama.staging" 
       http:
         paths:   
         - pathType: Prefix
@@ -18,7 +18,7 @@ spec:
               port:
                 number: 80
     # Debug to interact with service directly.
-    # - host: "scenography.panorama.local"
+    # - host: "scenography.panorama.staging"
     #   http:
     #     paths:
     #     - pathType: Prefix
@@ -30,5 +30,5 @@ spec:
     #             number: 80
   tls:
     - hosts:
-        - "*.panorama.local"
+        - "*.panorama.staging"
       secretName: tls-secret  # Kubernetes secret storing the certificate

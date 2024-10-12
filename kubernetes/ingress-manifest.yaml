@@ -1,3 +1,4 @@
+# OBSOLETE - HERE FOR REFERENCE ONLY!
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
