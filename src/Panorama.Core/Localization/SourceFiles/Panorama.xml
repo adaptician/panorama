@@ -133,5 +133,14 @@
     
     <text name="MessagePublishingFailed">Message publishing failed </text>
     <text name="MessageConsumptionFailed">Message consumption failed </text>
+    
+    <text name="MenuItem_Scenes">Scenes</text>
+    <text name="SimulationsScenesFeature">Scenes</text>
+    <text name="SimulationsScenesFeatureDescription">Scenography used as the starting state for simulations</text>
+    <text name="Permission_Simulations_Scenes">Scenes</text>
+    <text name="Permission_Simulations_Scenes_View">may view scenes</text>
+    <text name="Permission_Simulations_Scenes_Create">may create scenes</text>
+    <text name="Permission_Simulations_Scenes_Update">may update scenes</text>
+    <text name="Permission_Simulations_Scenes_Delete">may delete scenes</text>
   </texts>
 </localizationDictionary>

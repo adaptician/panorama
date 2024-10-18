@@ -17,12 +17,13 @@ using Teatro.Contracts;
 
 namespace Panorama.Scenes;
 
-[AbpAuthorize(PermissionNames.Pages_Tenant_Simulations)]
+[AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Scenes)]
 public class SceneAppService(
     ISendEndpointProvider sendEndpointProvider
 ) : PanoramaAppServiceBase, ISceneAppService
 {
     
+    [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Scenes_View)]
     public async Task CommandGetAll(PagedSceneResultRequestDto request, CancellationToken cancellationToken)
     {
         try
@@ -45,6 +46,7 @@ public class SceneAppService(
         }
     }
 
+    [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Scenes_View)]
     public async Task CommandGetById(string correlationId, CancellationToken cancellationToken)
     {
         try
@@ -66,6 +68,7 @@ public class SceneAppService(
         }
     }
     
+    [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Scenes_Create)]
     public async Task CommandCreate(CreateSceneDto input, CancellationToken cancellationToken)
     {
         try
@@ -89,6 +92,7 @@ public class SceneAppService(
         }
     }
     
+    [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Scenes_Update)]
     public async Task CommandUpdate(UpdateSceneDto input, CancellationToken cancellationToken)
     {
         try
@@ -112,6 +116,7 @@ public class SceneAppService(
         }
     }
     
+    [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Scenes_Delete)]
     public async Task CommandDelete(string correlationId, CancellationToken cancellationToken)
     {
         try
