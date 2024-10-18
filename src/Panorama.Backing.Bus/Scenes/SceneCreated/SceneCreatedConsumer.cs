@@ -7,9 +7,9 @@ using Panorama.Authorization.Users;
 using Panorama.Backing.Bus.Shared.Common.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.CreateScene;
+using Panorama.Events.Errors;
 using Panorama.Scenes;
 using Panorama.Scenes.Events.SceneCreated;
-using Panorama.Scenes.Events.SceneErrored;
 
 namespace Panorama.Backing.Bus.Scenes.SceneCreated;
 
@@ -37,10 +37,10 @@ public class SceneCreatedConsumer(ILogger logger,
         var uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
         using var uow = uowManager.Begin();
         
-        var userIdentifier = await userManager.GetUserIdentifierByCorrelationIdAsync(message.UserCorrelationId);
-
         try
         {
+            var userIdentifier = await userManager.GetUserIdentifierByCorrelationIdAsync(message.UserCorrelationId);
+            
             var carrier = sceneManager.CreateSceneCreatedCarrier();
             await carrier.Broadcast(new SceneCreatedEventData
             {
@@ -52,8 +52,8 @@ public class SceneCreatedConsumer(ILogger logger,
             var errorMessage = $"Failed to consume result for {nameof(SceneCreatedXto)}";
             logger.Error(errorMessage, e);
             
-            var carrier = sceneManager.CreateSceneErroredCarrier();
-            await carrier.Broadcast(new SceneErroredEventData
+            var carrier = sceneManager.CreateErroredCarrier();
+            await carrier.Broadcast(new ErroredEventData
             {
                 Error = new ErrorDto
                 {

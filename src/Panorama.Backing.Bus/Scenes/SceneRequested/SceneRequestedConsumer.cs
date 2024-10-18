@@ -7,8 +7,8 @@ using Panorama.Authorization.Users;
 using Panorama.Backing.Bus.Shared.Common.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScene;
+using Panorama.Events.Errors;
 using Panorama.Scenes;
-using Panorama.Scenes.Events.SceneErrored;
 using Panorama.Scenes.Events.SceneReceived;
 
 namespace Panorama.Backing.Bus.Scenes.SceneRequested;
@@ -37,10 +37,10 @@ public class SceneRequestedConsumer(ILogger logger,
         var uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
         using var uow = uowManager.Begin();
         
-        var userIdentifier = await userManager.GetUserIdentifierByCorrelationIdAsync(message.UserCorrelationId);
-
         try
         {
+            var userIdentifier = await userManager.GetUserIdentifierByCorrelationIdAsync(message.UserCorrelationId);
+            
             var carrier = sceneManager.CreateSceneReceivedCarrier();
             await carrier.Broadcast(new SceneReceivedEventData { 
                 Data = mapper.Map<ViewSceneDto>(message.Data)
@@ -51,8 +51,8 @@ public class SceneRequestedConsumer(ILogger logger,
             var errorMessage = $"Failed to consume result for {nameof(SceneRequestedXto)}";
             logger.Error(errorMessage, e);
             
-            var carrier = sceneManager.CreateSceneErroredCarrier();
-            await carrier.Broadcast(new SceneErroredEventData
+            var carrier = sceneManager.CreateErroredCarrier();
+            await carrier.Broadcast(new ErroredEventData
             {
                 Error = new ErrorDto
                 {

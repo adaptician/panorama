@@ -2,9 +2,9 @@
 using Panorama.Backing.Bus.Shared.Common.Dto;
 using Panorama.Events.Base;
 
-namespace Panorama.Scenes.Events.SceneErrored;
+namespace Panorama.Events.Errors;
 
-public class SceneErroredEventData : AppEventData
+public class ErroredEventData : AppEventData
 {
     [JsonProperty("error")]
     public ErrorDto Error { get; set; }
