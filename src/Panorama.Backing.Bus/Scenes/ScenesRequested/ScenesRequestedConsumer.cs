@@ -2,18 +2,18 @@
 using AutoMapper;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Panorama.Authorization.Users;
 using Panorama.Backing.Bus.Shared.Common.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Dto;
-using Panorama.Backing.Bus.Shared.Scenes.Xto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScenes;
 using Panorama.Scenes;
+using Panorama.Scenes.Events.SceneErrored;
 using Panorama.Scenes.Events.ScenesReceived;
+using Castle.Core.Logging;
 
 namespace Panorama.Backing.Bus.Scenes.ScenesRequested;
 
-public class ScenesRequestedConsumer(ILogger<ScenesRequestedXto> logger,
+public class ScenesRequestedConsumer(ILogger logger,
     IServiceProvider serviceProvider,
     IMapper mapper,
     UserManager userManager,
@@ -23,9 +23,7 @@ public class ScenesRequestedConsumer(ILogger<ScenesRequestedXto> logger,
 {
     public async Task Consume(ConsumeContext<ScenesRequestedXto> context)
     {
-        logger.LogInformation("Received scenes requested: {messageId}",
-            context.MessageId
-        );
+        logger.Info($"Received scenes requested: {context.MessageId}");
 
         if (context.Message is null)
         {
@@ -41,15 +39,34 @@ public class ScenesRequestedConsumer(ILogger<ScenesRequestedXto> logger,
         
         var userIdentifier = await userManager.GetUserIdentifierByCorrelationIdAsync(message.UserCorrelationId);
 
-        var carrier = sceneManager.CreateScenesReceivedCarrier();
-        await carrier.Broadcast(new ScenesReceivedEventData { 
-            Data = new PagedResultDto<ViewSceneDto>
+        try
+        {
+            var carrier = sceneManager.CreateScenesReceivedCarrier();
+            await carrier.Broadcast(new ScenesReceivedEventData { 
+                Data = new PagedResultDto<ViewSceneDto>
+                {
+                    TotalCount = message.Data.TotalCount,
+                    Items = mapper.Map<List<ViewSceneDto>>(message.Data.Items)
+                }
+            }, userIdentifier);
+        }
+        catch (Exception e)
+        {
+            var errorMessage = $"Failed to consume result for {nameof(ScenesRequestedXto)}";
+            logger.Error(errorMessage, e);
+            
+            var carrier = sceneManager.CreateSceneErroredCarrier();
+            await carrier.Broadcast(new SceneErroredEventData
             {
-                TotalCount = message.Data.TotalCount,
-                Items = mapper.Map<List<ViewSceneDto>>(message.Data.Items)
-            }
-        }, userIdentifier);
-        
-        await uow.CompleteAsync();
+                Error = new ErrorDto
+                {
+                    ErrorMessage = errorMessage
+                }
+            });
+        }
+        finally
+        {
+            await uow.CompleteAsync();
+        }
     }
 }

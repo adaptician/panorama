@@ -2,17 +2,18 @@
 using AutoMapper;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Castle.Core.Logging;
 using Panorama.Authorization.Users;
+using Panorama.Backing.Bus.Shared.Common.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Dto;
-using Panorama.Backing.Bus.Shared.Scenes.Xto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScene;
 using Panorama.Scenes;
+using Panorama.Scenes.Events.SceneErrored;
 using Panorama.Scenes.Events.SceneReceived;
 
 namespace Panorama.Backing.Bus.Scenes.SceneRequested;
 
-public class SceneRequestedConsumer(ILogger<SceneRequestedXto> logger,
+public class SceneRequestedConsumer(ILogger logger,
     IServiceProvider serviceProvider,
     IMapper mapper,
     UserManager userManager,
@@ -22,9 +23,7 @@ public class SceneRequestedConsumer(ILogger<SceneRequestedXto> logger,
 {
     public async Task Consume(ConsumeContext<SceneRequestedXto> context)
     {
-        logger.LogInformation("Received scenes requested: {messageId}",
-            context.MessageId
-        );
+        logger.Info($"Received scenes requested: {context.MessageId}");
 
         if (context.Message is null)
         {
@@ -40,11 +39,30 @@ public class SceneRequestedConsumer(ILogger<SceneRequestedXto> logger,
         
         var userIdentifier = await userManager.GetUserIdentifierByCorrelationIdAsync(message.UserCorrelationId);
 
-        var carrier = sceneManager.CreateSceneReceivedCarrier();
-        await carrier.Broadcast(new SceneReceivedEventData { 
-            Data = mapper.Map<ViewSceneDto>(message.Data)
-        }, userIdentifier);
-        
-        await uow.CompleteAsync();
+        try
+        {
+            var carrier = sceneManager.CreateSceneReceivedCarrier();
+            await carrier.Broadcast(new SceneReceivedEventData { 
+                Data = mapper.Map<ViewSceneDto>(message.Data)
+            }, userIdentifier);
+        }
+        catch (Exception e)
+        {
+            var errorMessage = $"Failed to consume result for {nameof(SceneRequestedXto)}";
+            logger.Error(errorMessage, e);
+            
+            var carrier = sceneManager.CreateSceneErroredCarrier();
+            await carrier.Broadcast(new SceneErroredEventData
+            {
+                Error = new ErrorDto
+                {
+                    ErrorMessage = errorMessage
+                }
+            });
+        }
+        finally
+        {
+            await uow.CompleteAsync();
+        }
     }
 }

@@ -1,15 +1,17 @@
 ﻿using Abp.Domain.Uow;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Castle.Core.Logging;
 using Panorama.Authorization.Users;
+using Panorama.Backing.Bus.Shared.Common.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.DeleteScene;
 using Panorama.Scenes;
 using Panorama.Scenes.Events.SceneDeleted;
+using Panorama.Scenes.Events.SceneErrored;
 
 namespace Panorama.Backing.Bus.Scenes.SceneDeleted;
 
-public class SceneDeletedConsumer(ILogger<SceneDeletedXto> logger,
+public class SceneDeletedConsumer(ILogger logger,
     IServiceProvider serviceProvider,
     UserManager userManager,
     ISceneManager sceneManager
@@ -18,9 +20,7 @@ public class SceneDeletedConsumer(ILogger<SceneDeletedXto> logger,
 {
     public async Task Consume(ConsumeContext<SceneDeletedXto> context)
     {
-        logger.LogInformation("Received scene deleted: {messageId}",
-            context.MessageId
-        );
+        logger.Info($"Received scene deleted: {context.MessageId}");
 
         if (context.Message is null)
         {
@@ -36,9 +36,28 @@ public class SceneDeletedConsumer(ILogger<SceneDeletedXto> logger,
         
         var userIdentifier = await userManager.GetUserIdentifierByCorrelationIdAsync(message.UserCorrelationId);
 
-        var carrier = sceneManager.CreateSceneDeletedCarrier();
-        await carrier.Broadcast(new SceneDeletedEventData(), userIdentifier);
-        
-        await uow.CompleteAsync();
+        try
+        {
+            var carrier = sceneManager.CreateSceneDeletedCarrier();
+            await carrier.Broadcast(new SceneDeletedEventData(), userIdentifier);
+        }
+        catch (Exception e)
+        {
+            var errorMessage = $"Failed to consume result for {nameof(SceneDeletedXto)}";
+            logger.Error(errorMessage, e);
+            
+            var carrier = sceneManager.CreateSceneErroredCarrier();
+            await carrier.Broadcast(new SceneErroredEventData
+            {
+                Error = new ErrorDto
+                {
+                    ErrorMessage = errorMessage
+                }
+            });
+        }
+        finally
+        {
+            await uow.CompleteAsync();
+        }
     }
 }

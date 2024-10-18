@@ -1,4 +1,3 @@
-import {ViewSceneDto} from "../dtos/ViewSceneDto";
 
 export class SceneDeletedEventData {
 

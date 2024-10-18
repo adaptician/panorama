@@ -12,6 +12,7 @@ import {ScenesReceivedEventData} from "@shared/service-proxies/scenography/event
 import {SceneCreatedEventData} from "@shared/service-proxies/scenography/events/SceneCreatedEventData";
 import {SceneUpdatedEventData} from "@shared/service-proxies/scenography/events/SceneUpdatedEventData";
 import {SceneDeletedEventData} from "@shared/service-proxies/scenography/events/SceneDeletedEventData";
+import {SceneErroredEventData} from "@shared/service-proxies/scenography/events/SceneErroredEventData";
 
 @Component({
     selector: 'sim-scenes',
@@ -150,6 +151,17 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
                     this.handleSceneDeleted(data);
                 });
             });
+
+        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scene_Errored_Trigger,
+            (json) => {
+
+                const data = new SceneErroredEventData();
+                Object.assign(data, JSON.parse(json));
+
+                this._zone.run(() => {
+                    this.handleSceneErrored(data);
+                });
+            });
         
     }
 
@@ -192,5 +204,17 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
             this.setBusy('loading', false);
             this.refresh();
         }
+    }
+
+    private handleSceneErrored(data: SceneErroredEventData): void {
+
+        this.setBusy('loading', false);
+        abp.message.error(
+            this.l('MessageConsumptionFailed', data?.error?.errorMessage),
+            undefined,
+            () => {
+                this.refresh();
+            }
+        );
     }
 }

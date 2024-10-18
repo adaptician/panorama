@@ -1,6 +1,7 @@
 ﻿using Abp.Domain.Services;
 using Panorama.Scenes.Events.SceneCreated;
 using Panorama.Scenes.Events.SceneDeleted;
+using Panorama.Scenes.Events.SceneErrored;
 using Panorama.Scenes.Events.SceneReceived;
 using Panorama.Scenes.Events.ScenesReceived;
 using Panorama.Scenes.Events.SceneUpdated;
@@ -14,4 +15,5 @@ public interface ISceneManager : IDomainService
     SceneCreatedCarrier CreateSceneCreatedCarrier();
     SceneUpdatedCarrier CreateSceneUpdatedCarrier();
     SceneDeletedCarrier CreateSceneDeletedCarrier();
+    SceneErroredCarrier CreateSceneErroredCarrier();
 }

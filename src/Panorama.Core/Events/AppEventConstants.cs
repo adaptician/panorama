@@ -7,4 +7,5 @@ public static class AppEventConstants
     public const string NotifyOfSceneCreated = "notifyOfSceneCreated";
     public const string NotifyOfSceneUpdated = "notifyOfSceneUpdated";
     public const string NotifyOfSceneDeleted = "notifyOfSceneDeleted";
+    public const string NotifyOfSceneErrored = "notifyOfSceneErrored";
 }

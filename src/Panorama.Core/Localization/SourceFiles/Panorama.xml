@@ -131,6 +131,7 @@
     
     <text name="IAmListeningForEvents">I am listening for events</text>
     
-    <text name="MessagePublishingFailed">Message publishing failed.</text>
+    <text name="MessagePublishingFailed">Message publishing failed </text>
+    <text name="MessageConsumptionFailed">Message consumption failed </text>
   </texts>
 </localizationDictionary>

@@ -2,6 +2,7 @@
 using Panorama.Events;
 using Panorama.Scenes.Events.SceneCreated;
 using Panorama.Scenes.Events.SceneDeleted;
+using Panorama.Scenes.Events.SceneErrored;
 using Panorama.Scenes.Events.SceneReceived;
 using Panorama.Scenes.Events.ScenesReceived;
 using Panorama.Scenes.Events.SceneUpdated;
@@ -41,5 +42,11 @@ public class SceneManager(
     {
         var @event = new SceneDeletedEvent();
         return new SceneDeletedCarrier(appEventManager, @event);
+    }
+    
+    public SceneErroredCarrier CreateSceneErroredCarrier()
+    {
+        var @event = new SceneErroredEvent();
+        return new SceneErroredCarrier(appEventManager, @event);
     }
 }

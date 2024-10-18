@@ -29,9 +29,9 @@ export class AppSignalrService extends AppComponentBase {
         connection.onclose(e => {
             this._isConnected = false;
             if (e) {
-                abp.log.debug('Casting connection closed with error: ' + e);
+                abp.log.debug('Hub connection closed with error: ' + e);
             } else {
-                abp.log.debug('Casting disconnected');
+                abp.log.debug('Hub disconnected');
             }
 
             if (!abp.signalr.autoConnect) {
@@ -50,6 +50,22 @@ export class AppSignalrService extends AppComponentBase {
     }
 
     registerEvents(connection): void {
+        this.registerEventsForScenes(connection);
+    }
+
+    init(): void {
+        this._zone.runOutsideAngular(() => {
+            abp.signalr.connect();
+            abp.signalr
+                .startConnection(abp.appPath + AppEvents.SignalR_AppEvents_UrlPath, (connection) => {
+                    abp.event.trigger(AppEvents.SignalR_AppEvents_Connected);
+                    this._isConnected = true;
+                    this.configureConnection(connection);
+            });
+        });
+    }
+    
+    private registerEventsForScenes(connection): void {
         connection.on(AppEvents.SignalR_AppEvents_Scenes_Received_Listener, (event) => {
             abp.event.trigger(AppEvents.SignalR_AppEvents_Scenes_Received_Trigger, event);
         });
@@ -69,17 +85,9 @@ export class AppSignalrService extends AppComponentBase {
         connection.on(AppEvents.SignalR_AppEvents_Scene_Deleted_Listener, (event) => {
             abp.event.trigger(AppEvents.SignalR_AppEvents_Scene_Deleted_Trigger, event);
         });
-    }
 
-    init(): void {
-        this._zone.runOutsideAngular(() => {
-            abp.signalr.connect();
-            abp.signalr
-                .startConnection(abp.appPath + AppEvents.SignalR_AppEvents_UrlPath, (connection) => {
-                    abp.event.trigger(AppEvents.SignalR_AppEvents_Connected);
-                    this._isConnected = true;
-                    this.configureConnection(connection);
-            });
+        connection.on(AppEvents.SignalR_AppEvents_Scene_Errored_Listener, (event) => {
+            abp.event.trigger(AppEvents.SignalR_AppEvents_Scene_Errored_Trigger, event);
         });
     }
 }
