@@ -1,6 +1,6 @@
 {
-  "remoteServiceBaseUrl": "https://panorama.local",
-  "appBaseUrl": "https://panorama.local",
+  "remoteServiceBaseUrl": "https://panorama.staging",
+  "appBaseUrl": "https://panorama.staging",
   "localeMappings": [
     {
       "from": "pt-BR",
