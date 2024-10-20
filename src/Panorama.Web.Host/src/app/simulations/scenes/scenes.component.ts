@@ -1,17 +1,18 @@
 import {Component, Injector, NgZone, OnInit} from '@angular/core';
 import {ViewSceneDto} from "@shared/service-proxies/scenography/dtos/ViewSceneDto";
 import {PagedSceneResultRequestDto, SceneServiceProxy} from "@shared/service-proxies/service-proxies";
-import {CreateSimulationDialogComponent} from "@app/simulations/create-simulation/create-simulation-dialog.component";
-import {EditSimulationDialogComponent} from "@app/simulations/edit-simulation/edit-simulation-dialog.component";
 import {PagedListingComponentBase} from "@shared/paged-listing-component-base";
 import {finalize} from "rxjs/operators";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {appModuleAnimation} from "@shared/animations/routerTransition";
 import {AppEvents} from "@shared/AppEvents";
-import {ScenesReceivedEventData} from "@shared/service-proxies/scenography/events/ScenesReceivedEventData";
+import {ScenesRetrievedEventData} from "@shared/service-proxies/scenography/events/ScenesRetrievedEventData";
 import {SceneCreatedEventData} from "@shared/service-proxies/scenography/events/SceneCreatedEventData";
 import {SceneUpdatedEventData} from "@shared/service-proxies/scenography/events/SceneUpdatedEventData";
 import {SceneDeletedEventData} from "@shared/service-proxies/scenography/events/SceneDeletedEventData";
+import {SceneErroredEventData} from "@shared/service-proxies/scenography/events/SceneErroredEventData";
+import {CreateSceneDialogComponent} from "@app/simulations/scenes/create-scene/create-scene-dialog.component";
+import {EditSceneDialogComponent} from "@app/simulations/scenes/edit-simulation/edit-scene-dialog.component";
 
 @Component({
     selector: 'sim-scenes',
@@ -43,7 +44,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         finishedCallback: Function
     ): void {
         request.keyword = this.keyword;
-        this.setBusy('loading', true)
+        this.setBusy('loading', true);
 
         this._sceneService
             .commandGetAll(request)
@@ -57,13 +58,14 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
 
     delete(scene: ViewSceneDto): void {
         abp.message.confirm(
-            this.l('SimulationDeleteWarningMessage', scene.name),
+            this.l('SceneDeleteWarningMessage', scene.name),
             undefined,
             (result: boolean) => {
                 if (result) {
+                    this.setBusy('saving', true);
+                    
                     this._sceneService
                         .commandDelete(scene.correlationId)
-                        .pipe(finalize(() => this.setBusy('saving', false)))
                         .subscribe(() => {
                         });
                 }
@@ -72,25 +74,25 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
     }
 
     createScene(): void {
-        this.showCreateOrEditSimulationDialog();
+        this.showCreateOrEditSceneDialog();
     }
 
     editScene(scene: ViewSceneDto): void {
-        this.showCreateOrEditSimulationDialog(scene.correlationId);
+        this.showCreateOrEditSceneDialog(scene.correlationId);
     }
 
-    showCreateOrEditSimulationDialog(correlationId?: string): void {
-        let createOrEditSimulationDialog: BsModalRef;
+    showCreateOrEditSceneDialog(correlationId?: string): void {
+        let createOrEditSceneDialog: BsModalRef;
         if (!correlationId || correlationId.length == 0) {
-            createOrEditSimulationDialog = this._modalService.show(
-                CreateSimulationDialogComponent,
+            createOrEditSceneDialog = this._modalService.show(
+                CreateSceneDialogComponent,
                 {
                     class: 'modal-lg',
                 }
             );
         } else {
-            createOrEditSimulationDialog = this._modalService.show(
-                EditSimulationDialogComponent,
+            createOrEditSceneDialog = this._modalService.show(
+                EditSceneDialogComponent,
                 {
                     class: 'modal-lg',
                     initialState: {
@@ -100,17 +102,17 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
             );
         }
 
-        createOrEditSimulationDialog.content.onSave.subscribe(() => {
-            this.setBusy('loading', true);
+        createOrEditSceneDialog.content.onSave.subscribe(() => {
+            this.setBusy('saving', true);
         });
     }
 
     private subscribeToEvents(): void {
 
-        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scenes_Received_Trigger,
+        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scenes_Retrieved_Trigger,
             (json) => {
 
-                const data = new ScenesReceivedEventData();
+                const data = new ScenesRetrievedEventData();
                 Object.assign(data, JSON.parse(json));
 
                 this._zone.run(() => {
@@ -150,10 +152,21 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
                     this.handleSceneDeleted(data);
                 });
             });
+
+        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scene_Errored_Trigger,
+            (json) => {
+
+                const data = new SceneErroredEventData();
+                Object.assign(data, JSON.parse(json));
+
+                this._zone.run(() => {
+                    this.handleSceneErrored(data);
+                });
+            });
         
     }
 
-    private handleScenesReceived(data: ScenesReceivedEventData): void {
+    private handleScenesReceived(data: ScenesRetrievedEventData): void {
         
         if (data?.data) {
             const result = data.data;
@@ -170,7 +183,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         if (data?.data) {
             const result = data.data;
 
-            this.setBusy('loading', false);
+            this.setBusy('saving', false);
             this.refresh();
         }
     }
@@ -180,7 +193,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         if (data?.data) {
             const result = data.data;
 
-            this.setBusy('loading', false);
+            this.setBusy('saving', false);
             this.refresh();
         }
     }
@@ -189,8 +202,21 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
 
         if (data) {
 
-            this.setBusy('loading', false);
+            this.setBusy('saving', false);
             this.refresh();
         }
+    }
+
+    private handleSceneErrored(data: SceneErroredEventData): void {
+
+        this.resetBusy();
+        
+        abp.message.error(
+            this.l('MessageConsumptionFailed', data?.error?.errorMessage),
+            undefined,
+            () => {
+                this.refresh();
+            }
+        );
     }
 }

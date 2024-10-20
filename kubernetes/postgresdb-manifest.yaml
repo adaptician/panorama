@@ -51,4 +51,4 @@ spec:
       targetPort: 5432
   selector:
     app: postgresdb
-  type: LoadBalancer # REMOVE for use in PROD ENV
+  type: ClusterIP

@@ -2,16 +2,18 @@
 using AutoMapper;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Castle.Core.Logging;
 using Panorama.Authorization.Users;
+using Panorama.Backing.Bus.Shared.Common.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.CreateScene;
+using Panorama.Events.Errors;
 using Panorama.Scenes;
 using Panorama.Scenes.Events.SceneCreated;
 
 namespace Panorama.Backing.Bus.Scenes.SceneCreated;
 
-public class SceneCreatedConsumer(ILogger<SceneCreatedXto> logger,
+public class SceneCreatedConsumer(ILogger logger,
     IServiceProvider serviceProvider,
     IMapper mapper,
     UserManager userManager,
@@ -21,9 +23,7 @@ public class SceneCreatedConsumer(ILogger<SceneCreatedXto> logger,
 {
     public async Task Consume(ConsumeContext<SceneCreatedXto> context)
     {
-        logger.LogInformation("Received scene created: {messageId}",
-            context.MessageId
-        );
+        logger.Info($"Received scene created: {context.MessageId}");
 
         if (context.Message is null)
         {
@@ -37,13 +37,33 @@ public class SceneCreatedConsumer(ILogger<SceneCreatedXto> logger,
         var uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
         using var uow = uowManager.Begin();
         
-        var userIdentifier = await userManager.GetUserIdentifierByCorrelationIdAsync(message.UserCorrelationId);
-
-        var carrier = sceneManager.CreateSceneCreatedCarrier();
-        await carrier.Broadcast(new SceneCreatedEventData { 
-            Data = mapper.Map<ViewSceneDto>(message.Data)
-        }, userIdentifier);
-        
-        await uow.CompleteAsync();
+        try
+        {
+            var userIdentifier = await userManager.GetUserIdentifierByCorrelationIdAsync(message.UserCorrelationId);
+            
+            var carrier = sceneManager.CreateSceneCreatedCarrier();
+            await carrier.Broadcast(new SceneCreatedEventData
+            {
+                Data = mapper.Map<ViewSceneDto>(message.Data)
+            }, userIdentifier);
+        }
+        catch (Exception e)
+        {
+            var errorMessage = $"Failed to consume result for {nameof(SceneCreatedXto)}";
+            logger.Error(errorMessage, e);
+            
+            var carrier = sceneManager.CreateErroredCarrier();
+            await carrier.Broadcast(new ErroredEventData
+            {
+                Error = new ErrorDto
+                {
+                    ErrorMessage = errorMessage
+                }
+            });
+        }
+        finally
+        {
+            await uow.CompleteAsync();
+        }
     }
 }

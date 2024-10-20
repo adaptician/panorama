@@ -6,15 +6,15 @@ public static class SceneMessageUrn
 {
     public const string TeatroScenes = "Teatro.Scenes";
     
-    public const string TeatroScenes_RequestScenes = $"{TeatroScenes}:RequestScenesXto";
-    public const string Queue_RequestScenes = $"{TeatroMessageUrn.ShortUriQueue}:RequestScenes";
-    public const string TeatroScenes_ScenesRequested = $"{TeatroScenes}:ScenesRequestedXto";
-    public const string Queue_ScenesRequested = $"{TeatroMessageUrn.ShortUriQueue}:ScenesRequested";
+    public const string TeatroScenes_RetrieveScenes = $"{TeatroScenes}:RetrieveScenesXto";
+    public const string Queue_RetrieveScenes = $"{TeatroMessageUrn.ShortUriQueue}:RetrieveScenes";
+    public const string TeatroScenes_ScenesRetrieved = $"{TeatroScenes}:ScenesRetrievedXto";
+    public const string Queue_ScenesRetrieved = $"{TeatroMessageUrn.ShortUriQueue}:ScenesRetrieved";
     
-    public const string TeatroScenes_RequestScene = $"{TeatroScenes}:RequestSceneXto";
-    public const string Queue_RequestScene = $"{TeatroMessageUrn.ShortUriQueue}:RequestScene";
-    public const string TeatroScenes_SceneRequested = $"{TeatroScenes}:SceneRequestedXto";
-    public const string Queue_SceneRequested = $"{TeatroMessageUrn.ShortUriQueue}:SceneRequested";
+    public const string TeatroScenes_RetrieveScene = $"{TeatroScenes}:RetrieveSceneXto";
+    public const string Queue_RetrieveScene = $"{TeatroMessageUrn.ShortUriQueue}:RetrieveScene";
+    public const string TeatroScenes_SceneRetrieved = $"{TeatroScenes}:SceneRetrievedXto";
+    public const string Queue_SceneRetrieved = $"{TeatroMessageUrn.ShortUriQueue}:SceneRetrieved";
     
     public const string TeatroScenes_CreateScene = $"{TeatroScenes}:CreateSceneXto";
     public const string Queue_CreateScene = $"{TeatroMessageUrn.ShortUriQueue}:CreateScene";

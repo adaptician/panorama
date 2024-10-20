@@ -16,12 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Panorama.Backing.Bus;
 using Panorama.Backing.Bus.Options;
-using Panorama.Backing.Bus.Scenes.SceneCreated;
-using Panorama.Backing.Bus.Scenes.SceneDeleted;
-using Panorama.Backing.Bus.Scenes.SceneRequested;
-using Panorama.Backing.Bus.Scenes.ScenesRequested;
-using Panorama.Backing.Bus.Scenes.SceneUpdated;
 using Panorama.Configuration;
 using Panorama.Identity;
 using Panorama.SignalR;
@@ -32,7 +28,7 @@ namespace Panorama.Web.Host.Startup
     {
         private const string _defaultCorsPolicyName = "localhost";
 
-        private const string _apiVersion = "v1";
+        private const string _apiVersion = "v0.2";
 
         private readonly IConfigurationRoot _appConfiguration;
         private readonly IWebHostEnvironment _hostingEnvironment;
@@ -53,13 +49,6 @@ namespace Panorama.Web.Host.Startup
 
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
-
-            #region Add MediatR
-
-            services.AddMediatR(cfg =>
-                cfg.RegisterServicesFromAssemblyContaining<PanoramaApplicationModule>());
-
-            #endregion
             
             #region Add Event Bus
             
@@ -222,11 +211,7 @@ app.Use(async (context, next) =>                {                    await next(
 
         private void AddEventBusConsumers(IBusRegistrationConfigurator busConfigurator)
         {
-            busConfigurator.AddConsumer<ScenesRequestedConsumer, ScenesRequestedConsumerDefinition>();
-            busConfigurator.AddConsumer<SceneRequestedConsumer, SceneRequestedConsumerDefinition>();
-            busConfigurator.AddConsumer<SceneCreatedConsumer, SceneCreatedConsumerDefinition>();
-            busConfigurator.AddConsumer<SceneUpdatedConsumer, SceneUpdatedConsumerDefinition>();
-            busConfigurator.AddConsumer<SceneDeletedConsumer, SceneDeletedConsumerDefinition>();
+            busConfigurator.AddConsumersFromNamespaceContaining<PanoramaBackingBusModule>();
         }
     }
 }

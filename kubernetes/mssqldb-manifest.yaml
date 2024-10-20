@@ -49,4 +49,4 @@ spec:
       targetPort: 1433
   selector:
     app: mssqldb
-  type: LoadBalancer # REMOVE for use in PROD ENV
+  type: ClusterIP

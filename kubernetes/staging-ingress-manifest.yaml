@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: panorama-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: "panorama.staging" 
+      http:
+        paths:   
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: panorama-appi
+              port:
+                number: 80
+    # Debug to interact with service directly.
+    # - host: "scenography.panorama.staging"
+    #   http:
+    #     paths:
+    #     - pathType: Prefix
+    #       path: "/"
+    #       backend:
+    #         service:
+    #           name: teatro-api
+    #           port:
+    #             number: 80
+  tls:
+    - hosts:
+        - "*.panorama.staging"
+      secretName: tls-secret  # Kubernetes secret storing the certificate

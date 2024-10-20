@@ -70,8 +70,8 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                     new MenuItem(
                         this.l('MenuItem_Scenes'),
                         '/app/simulations/scenes',
-                        'fas fa-gamepad',
-                        'Pages.Tenant.Simulations' // TODO:T update permissions
+                        'fa fa-images',
+                        'Pages.Tenant.Simulations.Scenes'
                     )
                 ]
             ),

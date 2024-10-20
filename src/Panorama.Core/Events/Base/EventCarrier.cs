@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Abp;
+using Panorama.Events.Errors;
 
 namespace Panorama.Events.Base;
 

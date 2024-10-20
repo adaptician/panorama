@@ -113,7 +113,7 @@ It is hosted using a Stateful Set, which provides stable network identities, ens
 
 While this example uses a single replica, you can increase the replicas count for horizontal scaling. Ensure you configure RabbitMQ clustering appropriately.
 
-`kubectl apply -f .\kubernetes\bus-manifest.yaml`
+`kubectl apply -f .\kubernetes\rabbitmq-manifest.yaml`
 
 AMQP API: http://localhost:5672/
 Management API: http://localhost:15672/
@@ -253,9 +253,8 @@ If you are in a different namespace (eg. you switched and forgot to clear the se
 
 kubectl config set-context --current --namespace=panorama
 
-kubectl apply -f .\kubernetes\networkpolicy.yaml
+kubectl apply -f .\panorama\kubernetes\networkpolicy.yaml
 
-kubectl create secret tls tls-secret --cert=.\kubernetes\certs\panorama.local.pem --key=.\kubernetes\certs\panorama.local-key.pem
 
 
 SEPARATE API AND APP INGRESS
@@ -266,8 +265,14 @@ SEPARATE API AND APP INGRESS
 
 PANORAMA API (http://localhost:44312/) ---
 
+MSSQL
 kubectl apply -f .\panorama\kubernetes\mssqldb-manifest.yaml
 
+kubectl port-forward mssqldb-0 1433:1433
+
+NB: connection string must look at 127.0.0.1 - localhost will not work!
+
+MIGRATOR
 docker build -t panorama.migrator -f .\panorama\src\Panorama.Migrator\Dockerfile .
 kubectl apply -f .\panorama\kubernetes\migrator-manifest.yaml
 
@@ -284,8 +289,16 @@ PANORAMA APP (http://localhost:4201/) ---
 ~~kubectl apply -f .\kubernetes\app-manifest.yaml~~
 
 
+RABBITMQ
+
+kubectl apply -f .\panorama\kubernetes\rabbitmq-manifest.yaml
+
+kubectl port-forward rabbitmq-0 15672:15672
+
+
 COMBINED PANORAMA ---
 
+APPI
 docker build -t panorama.appi -f .\panorama\src\Panorama.Web.Host\Combined.Dockerfile .
 
 kubectl apply -f .\panorama\kubernetes\appi-panorama-manifest.yaml
@@ -293,22 +306,38 @@ kubectl apply -f .\panorama\kubernetes\appi-panorama-manifest.yaml
 
 TEATRO API (http://localhost:8484/) ---
 
+MONGODB
 kubectl apply -f .\panorama\kubernetes\mongodb-manifest.yaml
+
+kubectl port-forward mongodb-0 27017:27017
+
+POSTGRESDB
 kubectl apply -f .\panorama\kubernetes\postgresdb-manifest.yaml
 
+kubectl port-forward postgresdb-0 5432:5432
+
 docker build -t teatro.api -f .\teatro\Teatro\Teatro.Application\Dockerfile .
+
 kubectl apply -f .\panorama\kubernetes\teatro-manifest.yaml
 
-INGRESS ---
 
-kubectl apply -f .\panorama\kubernetes\appi-ingress-manifest.yaml
+TLS SECRET
 
-EVENT BUS ---
+LOCAL (OBSOLETE)
+kubectl create secret tls tls-secret --cert=.\panorama\kubernetes\certs\panorama.local+1.pem --key=.\panorama\kubernetes\certs\panorama.local+1-key.pem
 
-kubectl apply -f .\panorama\kubernetes\bus-manifest.yaml
+STAGING
+kubectl create secret tls tls-secret --cert=.\panorama\kubernetes\certs\panorama.staging+1.pem --key=.\panorama\kubernetes\certs\panorama.staging+1-key.pem
 
 
-kubectl apply -f .\kubernetes\azurite-manifest.yaml             ????
+INGRESS
+
+kubectl apply -f .\panorama\kubernetes\staging-ingress-manifest.yaml
+
+
+
+
+--kubectl apply -f .\kubernetes\azurite-manifest.yaml             ????
 
 
 DOMINO (http://localhost:7474)
@@ -320,4 +349,26 @@ kubectl apply -f .\kubernetes\mongodb-manifest.yaml
 
 
 
+
+
+QUICK START LOCAL BACKING:
+
+MSSQL
+kubectl apply -f .\panorama\kubernetes\mssqldb-manifest.yaml
+kubectl port-forward mssqldb-0 1433:1433
+
+NB: connection string must look at 127.0.0.1 - localhost will not work!
+
+MONGODB
+kubectl apply -f .\panorama\kubernetes\mongodb-manifest.yaml
+kubectl port-forward mongodb-0 27017:27017
+
+POSTGRESDB
+kubectl apply -f .\panorama\kubernetes\postgresdb-manifest.yaml
+kubectl port-forward postgresdb-0 5432:5432
+
+RABBITMQ
+kubectl apply -f .\panorama\kubernetes\rabbitmq-manifest.yaml
+kubectl port-forward rabbitmq-0 5672:5672
+kubectl port-forward rabbitmq-0 15672:15672
 
