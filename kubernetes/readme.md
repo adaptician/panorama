@@ -249,6 +249,44 @@ If you are in a different namespace (eg. you switched and forgot to clear the se
 # Bash into Pod to Debug
 `kubectl exec --stdin --tty <pod_name> -- /bin/bash`
 
+# Deploy from Docker Hub
+
+## Authenticate
+https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+
+`docker login`
+
+This will generate a `config.json` file.
+
+IF this worked, and added the credentials to the file, you could create a secret from this file.
+HOWEVER, this is not working. Credentials are stored in a credential manager.
+
+`kubectl apply -f .\panorama\kubernetes\regcred-secret.yaml`
+
+Generated a Base64 string using ConvertTo-Base64 Powershell function.
+From: https://powershellfaqs.com/convert-files-to-base64-in-powershell/
+
+```
+function ConvertTo-Base64 {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$InputFile,
+        [Parameter(Mandatory=$true)]
+        [string]$OutputFile
+    )
+
+    $fileContent = Get-Content -Path $InputFile -Encoding Byte
+    $base64String = [System.Convert]::ToBase64String($fileContent)
+    Set-Content -Path $OutputFile -Value $base64String
+}
+```
+
+## INSTEAD but not as good
+
+`kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>`
+
+
+
 # Quickfire section
 
 kubectl config set-context --current --namespace=panorama
@@ -274,6 +312,11 @@ NB: connection string must look at 127.0.0.1 - localhost will not work!
 
 MIGRATOR
 docker build -t panorama.migrator -f .\panorama\src\Panorama.Migrator\Dockerfile .
+
+docker image tag panorama.migrator adaptician/panorama.migrator:0.3.0
+
+docker push adaptician/panorama.migrator:0.3.0
+
 kubectl apply -f .\panorama\kubernetes\migrator-manifest.yaml
 
 kubectl scale deployment panorama-migrator --replicas=0
@@ -301,7 +344,12 @@ COMBINED PANORAMA ---
 APPI
 docker build -t panorama.appi -f .\panorama\src\Panorama.Web.Host\Combined.Dockerfile .
 
+docker image tag panorama.appi adaptician/panorama.appi:0.3.0
+
+docker push adaptician/panorama.appi:0.3.0
+
 kubectl apply -f .\panorama\kubernetes\appi-panorama-manifest.yaml
+
 
 
 TEATRO API (http://localhost:8484/) ---
@@ -316,7 +364,12 @@ kubectl apply -f .\panorama\kubernetes\postgresdb-manifest.yaml
 
 kubectl port-forward postgresdb-0 5432:5432
 
+API
 docker build -t teatro.api -f .\teatro\Teatro\Teatro.Application\Dockerfile .
+
+docker image tag teatro.api adaptician/teatro.api:0.3.0
+
+docker push adaptician/teatro.api:0.3.0
 
 kubectl apply -f .\panorama\kubernetes\teatro-manifest.yaml
 
@@ -341,9 +394,12 @@ kubectl apply -f .\panorama\kubernetes\staging-ingress-manifest.yaml
 
 
 DOMINO (http://localhost:7474)
-docker build -t causation.api -f .\src\Panorama.Delta\Dockerfile .
+docker build -t causation.api:0.3.0 -f .\src\Panorama.Delta\Dockerfile .
 kubectl apply -f .\kubernetes\causation-manifest.yaml
 
+docker image tag causation.api adaptician/causation.api:0.3.0
+
+docker push adaptician/causation.api:0.3.0
 
 kubectl apply -f .\kubernetes\mongodb-manifest.yaml
 
