@@ -12,7 +12,12 @@ const routes: Routes = [
         data: { permission: 'Pages.Tenant.Simulations' },
         canActivate: [AppRouteGuard]
     },
-    { path: 'scenes', component: ScenesComponent, data: { permission: 'Pages.Tenant.Simulations' }, canActivate: [AppRouteGuard] }
+    { 
+        path: 'scenes', 
+        component: ScenesComponent, 
+        data: { permission: 'Pages.Tenant.Simulations.Scenes' }, 
+        canActivate: [AppRouteGuard] 
+    }
 ];
 
 @NgModule({

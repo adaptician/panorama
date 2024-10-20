@@ -7,11 +7,11 @@ import {SceneRetrievedEventData} from "@shared/service-proxies/scenography/event
 import {finalize} from "rxjs/operators";
 
 @Component({
-  selector: 'sim-edit-simulation-dialog',
-  templateUrl: './edit-simulation-dialog.component.html',
-  styleUrl: './edit-simulation-dialog.component.less'
+  selector: 'sim-edit-scene-dialog',
+  templateUrl: './edit-scene-dialog.component.html',
+  styleUrl: './edit-scene-dialog.component.less'
 })
-export class EditSimulationDialogComponent extends AppComponentBase implements OnInit {
+export class EditSceneDialogComponent extends AppComponentBase implements OnInit {
 
   private _sceneCorrelationId: string;
   set sceneCorrelationId(value: string) {

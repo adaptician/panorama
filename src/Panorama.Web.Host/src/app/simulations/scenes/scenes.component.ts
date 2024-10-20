@@ -1,8 +1,6 @@
 import {Component, Injector, NgZone, OnInit} from '@angular/core';
 import {ViewSceneDto} from "@shared/service-proxies/scenography/dtos/ViewSceneDto";
 import {PagedSceneResultRequestDto, SceneServiceProxy} from "@shared/service-proxies/service-proxies";
-import {CreateSimulationDialogComponent} from "@app/simulations/create-simulation/create-simulation-dialog.component";
-import {EditSimulationDialogComponent} from "@app/simulations/edit-simulation/edit-simulation-dialog.component";
 import {PagedListingComponentBase} from "@shared/paged-listing-component-base";
 import {finalize} from "rxjs/operators";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
@@ -13,6 +11,8 @@ import {SceneCreatedEventData} from "@shared/service-proxies/scenography/events/
 import {SceneUpdatedEventData} from "@shared/service-proxies/scenography/events/SceneUpdatedEventData";
 import {SceneDeletedEventData} from "@shared/service-proxies/scenography/events/SceneDeletedEventData";
 import {SceneErroredEventData} from "@shared/service-proxies/scenography/events/SceneErroredEventData";
+import {CreateSceneDialogComponent} from "@app/simulations/scenes/create-scene/create-scene-dialog.component";
+import {EditSceneDialogComponent} from "@app/simulations/scenes/edit-simulation/edit-scene-dialog.component";
 
 @Component({
     selector: 'sim-scenes',
@@ -84,14 +84,14 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         let createOrEditSimulationDialog: BsModalRef;
         if (!correlationId || correlationId.length == 0) {
             createOrEditSimulationDialog = this._modalService.show(
-                CreateSimulationDialogComponent,
+                CreateSceneDialogComponent,
                 {
                     class: 'modal-lg',
                 }
             );
         } else {
             createOrEditSimulationDialog = this._modalService.show(
-                EditSimulationDialogComponent,
+                EditSceneDialogComponent,
                 {
                     class: 'modal-lg',
                     initialState: {

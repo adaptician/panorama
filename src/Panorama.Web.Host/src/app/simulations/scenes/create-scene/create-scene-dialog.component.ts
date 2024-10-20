@@ -5,11 +5,11 @@ import {finalize} from "rxjs/operators";
 import {CreateSceneDto, SceneServiceProxy} from "@shared/service-proxies/service-proxies";
 
 @Component({
-    selector: 'sim-create-simulation-dialog',
-    templateUrl: './create-simulation-dialog.component.html',
-    styleUrl: './create-simulation-dialog.component.less'
+    selector: 'sim-create-scene-dialog',
+    templateUrl: './create-scene-dialog.component.html',
+    styleUrl: './create-scene-dialog.component.less'
 })
-export class CreateSimulationDialogComponent extends AppComponentBase {
+export class CreateSceneDialogComponent extends AppComponentBase {
     
     scene: CreateSceneDto = new CreateSceneDto();
     
