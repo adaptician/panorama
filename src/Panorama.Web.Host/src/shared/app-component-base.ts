@@ -49,6 +49,12 @@ export abstract class AppComponentBase implements OnDestroy {
         this.busy[key] = isBusy;
     }
     
+    protected resetBusy(): void {
+        for (let key in Object.keys(this.busy)) {
+            this.busy[key] = false;
+        }
+    }
+    
     protected mapper: AutoMapper;
 
     constructor(injector: Injector) {

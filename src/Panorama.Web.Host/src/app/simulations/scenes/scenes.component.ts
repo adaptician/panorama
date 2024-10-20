@@ -44,7 +44,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         finishedCallback: Function
     ): void {
         request.keyword = this.keyword;
-        this.setBusy('loading', true)
+        this.setBusy('loading', true);
 
         this._sceneService
             .commandGetAll(request)
@@ -62,9 +62,10 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
             undefined,
             (result: boolean) => {
                 if (result) {
+                    this.setBusy('saving', true);
+                    
                     this._sceneService
                         .commandDelete(scene.correlationId)
-                        .pipe(finalize(() => this.setBusy('saving', false)))
                         .subscribe(() => {
                         });
                 }
@@ -102,7 +103,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         }
 
         createOrEditSimulationDialog.content.onSave.subscribe(() => {
-            this.setBusy('loading', true);
+            this.setBusy('saving', true);
         });
     }
 
@@ -182,7 +183,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         if (data?.data) {
             const result = data.data;
 
-            this.setBusy('loading', false);
+            this.setBusy('saving', false);
             this.refresh();
         }
     }
@@ -192,7 +193,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         if (data?.data) {
             const result = data.data;
 
-            this.setBusy('loading', false);
+            this.setBusy('saving', false);
             this.refresh();
         }
     }
@@ -201,14 +202,15 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
 
         if (data) {
 
-            this.setBusy('loading', false);
+            this.setBusy('saving', false);
             this.refresh();
         }
     }
 
     private handleSceneErrored(data: SceneErroredEventData): void {
 
-        this.setBusy('loading', false);
+        this.resetBusy();
+        
         abp.message.error(
             this.l('MessageConsumptionFailed', data?.error?.errorMessage),
             undefined,
