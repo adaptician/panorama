@@ -49,13 +49,6 @@ namespace Panorama.Web.Host.Startup
 
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
-
-            #region Add MediatR
-
-            services.AddMediatR(cfg =>
-                cfg.RegisterServicesFromAssemblyContaining<PanoramaApplicationModule>());
-
-            #endregion
             
             #region Add Event Bus
             
