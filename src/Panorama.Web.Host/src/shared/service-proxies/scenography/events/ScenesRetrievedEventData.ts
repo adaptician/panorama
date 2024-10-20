@@ -1,10 +1,10 @@
 import {ViewSceneDto} from "../dtos/ViewSceneDto";
 import {PagedResultDto} from "../../common/dtos/PagedResultDto";
 
-export class ScenesReceivedEventData {
+export class ScenesRetrievedEventData {
     data: PagedResultDto<ViewSceneDto>;
     
-    constructor(data: Partial<ScenesReceivedEventData> = {}) {
+    constructor(data: Partial<ScenesRetrievedEventData> = {}) {
         this.data = data.data || undefined;
     }
 }

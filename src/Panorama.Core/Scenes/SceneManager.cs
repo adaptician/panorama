@@ -1,8 +1,8 @@
 ﻿using Panorama.Events;
 using Panorama.Scenes.Events.SceneCreated;
 using Panorama.Scenes.Events.SceneDeleted;
-using Panorama.Scenes.Events.SceneReceived;
-using Panorama.Scenes.Events.ScenesReceived;
+using Panorama.Scenes.Events.SceneRetrieved;
+using Panorama.Scenes.Events.ScenesRetrieved;
 using Panorama.Scenes.Events.SceneUpdated;
 
 namespace Panorama.Scenes;
@@ -13,16 +13,16 @@ public class SceneManager(
 : EventCarrierManager(appEventManager), ISceneManager
 {
 
-    public ScenesReceivedCarrier CreateScenesReceivedCarrier()
+    public ScenesRetrievedCarrier CreateScenesReceivedCarrier()
     {
-        var @event = new ScenesReceivedEvent();
-        return new ScenesReceivedCarrier(AppEventManager, @event);
+        var @event = new ScenesRetrievedEvent();
+        return new ScenesRetrievedCarrier(AppEventManager, @event);
     }
     
-    public SceneReceivedCarrier CreateSceneReceivedCarrier()
+    public SceneRetrievedCarrier CreateSceneReceivedCarrier()
     {
-        var @event = new SceneReceivedEvent();
-        return new SceneReceivedCarrier(AppEventManager, @event);
+        var @event = new SceneRetrievedEvent();
+        return new SceneRetrievedCarrier(AppEventManager, @event);
     }
     
     public SceneCreatedCarrier CreateSceneCreatedCarrier()

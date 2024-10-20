@@ -1,27 +1,27 @@
 ﻿using Abp.Domain.Uow;
 using AutoMapper;
+using Castle.Core.Logging;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using Castle.Core.Logging;
 using Panorama.Authorization.Users;
 using Panorama.Backing.Bus.Shared.Common.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Dto;
-using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScene;
+using Panorama.Backing.Bus.Shared.Scenes.Xto.RetrieveScene;
 using Panorama.Events.Errors;
 using Panorama.Scenes;
-using Panorama.Scenes.Events.SceneReceived;
+using Panorama.Scenes.Events.SceneRetrieved;
 
-namespace Panorama.Backing.Bus.Scenes.SceneRequested;
+namespace Panorama.Backing.Bus.Scenes.SceneRetrieved;
 
-public class SceneRequestedConsumer(ILogger logger,
+public class SceneRetrievedConsumer(ILogger logger,
     IServiceProvider serviceProvider,
     IMapper mapper,
     UserManager userManager,
     ISceneManager sceneManager
 ) 
-    : IConsumer<SceneRequestedXto>
+    : IConsumer<SceneRetrievedXto>
 {
-    public async Task Consume(ConsumeContext<SceneRequestedXto> context)
+    public async Task Consume(ConsumeContext<SceneRetrievedXto> context)
     {
         logger.Info($"Received scenes requested: {context.MessageId}");
 
@@ -42,13 +42,13 @@ public class SceneRequestedConsumer(ILogger logger,
             var userIdentifier = await userManager.GetUserIdentifierByCorrelationIdAsync(message.UserCorrelationId);
             
             var carrier = sceneManager.CreateSceneReceivedCarrier();
-            await carrier.Broadcast(new SceneReceivedEventData { 
+            await carrier.Broadcast(new SceneRetrievedEventData { 
                 Data = mapper.Map<ViewSceneDto>(message.Data)
             }, userIdentifier);
         }
         catch (Exception e)
         {
-            var errorMessage = $"Failed to consume result for {nameof(SceneRequestedXto)}";
+            var errorMessage = $"Failed to consume result for {nameof(SceneRetrievedXto)}";
             logger.Error(errorMessage, e);
             
             var carrier = sceneManager.CreateErroredCarrier();

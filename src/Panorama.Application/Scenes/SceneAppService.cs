@@ -9,8 +9,8 @@ using Panorama.Authorization;
 using Panorama.Backing.Bus.Shared.Scenes.Dto;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.CreateScene;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.DeleteScene;
-using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScene;
-using Panorama.Backing.Bus.Shared.Scenes.Xto.RequestScenes;
+using Panorama.Backing.Bus.Shared.Scenes.Xto.RetrieveScene;
+using Panorama.Backing.Bus.Shared.Scenes.Xto.RetrieveScenes;
 using Panorama.Backing.Bus.Shared.Scenes.Xto.UpdateScene;
 using Panorama.Scenes.Dto;
 using Teatro.Contracts;
@@ -31,8 +31,8 @@ public class SceneAppService(
             var userId = AbpSession.GetUserId();
             var user = await UserManager.GetUserByIdAsync(userId);
         
-            var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri(SceneMessageUrn.Queue_RequestScenes));
-            await endpoint.Send(new RequestScenesXto
+            var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri(SceneMessageUrn.Queue_RetrieveScenes));
+            await endpoint.Send(new RetrieveScenesXto
             {
                 MaxResultCount = request.MaxResultCount, 
                 SkipCount = request.SkipCount,
@@ -54,8 +54,8 @@ public class SceneAppService(
             var userId = AbpSession.GetUserId();
             var user = await UserManager.GetUserByIdAsync(userId);
         
-            var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri(SceneMessageUrn.Queue_RequestScene));
-            await endpoint.Send(new RequestSceneXto
+            var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri(SceneMessageUrn.Queue_RetrieveScene));
+            await endpoint.Send(new RetrieveSceneXto
             {
                 SceneCorrelationId = correlationId,
                 UserCorrelationId = user.CorrelationId

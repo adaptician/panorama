@@ -3,7 +3,7 @@ import {AppComponentBase} from "@shared/app-component-base";
 import {BsModalRef} from "ngx-bootstrap/modal";
 import {SceneServiceProxy, UpdateSceneDto} from "@shared/service-proxies/service-proxies";
 import {AppEvents} from "@shared/AppEvents";
-import {SceneReceivedEventData} from "@shared/service-proxies/scenography/events/SceneReceivedEventData";
+import {SceneRetrievedEventData} from "@shared/service-proxies/scenography/events/SceneRetrievedEventData";
 import {finalize} from "rxjs/operators";
 
 @Component({
@@ -68,19 +68,19 @@ export class EditSimulationDialogComponent extends AppComponentBase implements O
 
   private subscribeToEvents(): void {
 
-    this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scene_Received_Trigger,
+    this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scene_Retrieved_Trigger,
         (json) => {
-          const data = new SceneReceivedEventData();
+          const data = new SceneRetrievedEventData();
           Object.assign(data, JSON.parse(json));
 
           this._zone.run(() => {
-            this.handleSceneReceived(data);
+            this.handleSceneRetrieved(data);
           });
         });
 
   }
 
-  private handleSceneReceived(data: SceneReceivedEventData): void {
+  private handleSceneRetrieved(data: SceneRetrievedEventData): void {
 
     if (data?.data) {
       Object.assign(this.scene, data.data);

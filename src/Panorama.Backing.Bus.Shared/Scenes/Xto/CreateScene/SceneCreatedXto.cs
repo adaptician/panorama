@@ -8,5 +8,5 @@ namespace Panorama.Backing.Bus.Shared.Scenes.Xto.CreateScene;
 [MessageUrn(SceneMessageUrn.TeatroScenes_SceneCreated)]
 public record SceneCreatedXto : MessageXto, ISceneCreatedXto<ViewSceneXto>
 {
-    public ViewSceneXto Data { get; set; }
+    public ViewSceneXto? Data { get; set; }
 }

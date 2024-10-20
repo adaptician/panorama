@@ -1,8 +1,8 @@
 ﻿using Teatro.Contracts.Common.Xtos;
 
-namespace Teatro.Contracts.Scenes.Xtos.RequestScenes;
+namespace Teatro.Contracts.Scenes.Xtos.RetrieveScenes;
 
-public interface IRequestScenesXto : IMessageXto
+public interface IRetrieveScenesXto : IMessageXto
 {
     string Keyword { get; }
         

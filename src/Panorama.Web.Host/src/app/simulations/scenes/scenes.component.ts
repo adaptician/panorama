@@ -8,7 +8,7 @@ import {finalize} from "rxjs/operators";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {appModuleAnimation} from "@shared/animations/routerTransition";
 import {AppEvents} from "@shared/AppEvents";
-import {ScenesReceivedEventData} from "@shared/service-proxies/scenography/events/ScenesReceivedEventData";
+import {ScenesRetrievedEventData} from "@shared/service-proxies/scenography/events/ScenesRetrievedEventData";
 import {SceneCreatedEventData} from "@shared/service-proxies/scenography/events/SceneCreatedEventData";
 import {SceneUpdatedEventData} from "@shared/service-proxies/scenography/events/SceneUpdatedEventData";
 import {SceneDeletedEventData} from "@shared/service-proxies/scenography/events/SceneDeletedEventData";
@@ -108,10 +108,10 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
 
     private subscribeToEvents(): void {
 
-        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scenes_Received_Trigger,
+        this.subscribeToEvent(AppEvents.SignalR_AppEvents_Scenes_Retrieved_Trigger,
             (json) => {
 
-                const data = new ScenesReceivedEventData();
+                const data = new ScenesRetrievedEventData();
                 Object.assign(data, JSON.parse(json));
 
                 this._zone.run(() => {
@@ -165,7 +165,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         
     }
 
-    private handleScenesReceived(data: ScenesReceivedEventData): void {
+    private handleScenesReceived(data: ScenesRetrievedEventData): void {
         
         if (data?.data) {
             const result = data.data;
