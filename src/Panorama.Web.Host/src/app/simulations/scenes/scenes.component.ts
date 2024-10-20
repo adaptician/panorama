@@ -58,7 +58,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
 
     delete(scene: ViewSceneDto): void {
         abp.message.confirm(
-            this.l('SimulationDeleteWarningMessage', scene.name),
+            this.l('SceneDeleteWarningMessage', scene.name),
             undefined,
             (result: boolean) => {
                 if (result) {
@@ -74,24 +74,24 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
     }
 
     createScene(): void {
-        this.showCreateOrEditSimulationDialog();
+        this.showCreateOrEditSceneDialog();
     }
 
     editScene(scene: ViewSceneDto): void {
-        this.showCreateOrEditSimulationDialog(scene.correlationId);
+        this.showCreateOrEditSceneDialog(scene.correlationId);
     }
 
-    showCreateOrEditSimulationDialog(correlationId?: string): void {
-        let createOrEditSimulationDialog: BsModalRef;
+    showCreateOrEditSceneDialog(correlationId?: string): void {
+        let createOrEditSceneDialog: BsModalRef;
         if (!correlationId || correlationId.length == 0) {
-            createOrEditSimulationDialog = this._modalService.show(
+            createOrEditSceneDialog = this._modalService.show(
                 CreateSceneDialogComponent,
                 {
                     class: 'modal-lg',
                 }
             );
         } else {
-            createOrEditSimulationDialog = this._modalService.show(
+            createOrEditSceneDialog = this._modalService.show(
                 EditSceneDialogComponent,
                 {
                     class: 'modal-lg',
@@ -102,7 +102,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
             );
         }
 
-        createOrEditSimulationDialog.content.onSave.subscribe(() => {
+        createOrEditSceneDialog.content.onSave.subscribe(() => {
             this.setBusy('saving', true);
         });
     }

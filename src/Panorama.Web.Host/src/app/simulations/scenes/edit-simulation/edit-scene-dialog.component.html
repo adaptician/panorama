@@ -1,11 +1,11 @@
 <form
         class="form-horizontal"
         autocomplete="off"
-        #editSimulationForm="ngForm"
+        #editSceneForm="ngForm"
         (ngSubmit)="save()"
 >
     <abp-modal-header
-            [title]="'EditSimulation' | localize"
+            [title]="'EditScene' | localize"
             (onCloseClick)="bsModalRef.hide()"
     ></abp-modal-header>
     <div class="modal-body">
@@ -63,7 +63,7 @@
     </div>
     <abp-modal-footer
             [cancelDisabled]="(busy | anyBusy:lastBusy)"
-            [saveDisabled]="!editSimulationForm.form.valid || (busy | anyBusy:lastBusy)"
+            [saveDisabled]="!editSceneForm.form.valid || (busy | anyBusy:lastBusy)"
             (onCancelClick)="bsModalRef.hide()"
     ></abp-modal-footer>
 </form>
