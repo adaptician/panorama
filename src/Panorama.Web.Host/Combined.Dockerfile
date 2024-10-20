@@ -30,7 +30,7 @@ ARG BUILD_CONFIGURATION=Release
 
 # Copy application files over to container.
 WORKDIR /deployed
-COPY ["panorama/src/Scenography/teatro.shared/Teatro.Contracts/Teatro.Contracts.csproj", "src/Scenography/teatro.shared/Teatro.Contracts/"]
+COPY ["panorama/src/Scenography/Teatro.Contracts/Teatro.Contracts/Teatro.Contracts.csproj", "src/Scenography/Teatro.Contracts/Teatro.Contracts/"]
 
 COPY ["panorama/src/Panorama.Application/Panorama.Application.csproj", "src/Panorama.Application/"]
 
@@ -52,7 +52,7 @@ RUN dotnet restore
 
 # Copy restored files.
 WORKDIR /deployed
-COPY ["panorama/src/Scenography/teatro.shared/Teatro.Contracts", "src/Scenography/teatro.shared/Teatro.Contracts"]
+COPY ["panorama/src/Scenography/Teatro.Contracts/Teatro.Contracts", "src/Scenography/Teatro.Contracts/Teatro.Contracts"]
 
 COPY ["panorama/src/Panorama.Application", "src/Panorama.Application"]
 
