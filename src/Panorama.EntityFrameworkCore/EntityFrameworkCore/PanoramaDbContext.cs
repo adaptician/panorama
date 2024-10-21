@@ -10,8 +10,14 @@ namespace Panorama.EntityFrameworkCore
     public class PanoramaDbContext : AbpZeroDbContext<Tenant, Role, User, PanoramaDbContext>
     {
         /* Define a DbSet for each entity of the application */
-        
+
+        #region Simulations
+
         public virtual DbSet<Simulation> Simulations { get; set; }
+        public virtual DbSet<SimulationRun> SimulationRuns { get; set; }
+        
+
+        #endregion
         
         public PanoramaDbContext(DbContextOptions<PanoramaDbContext> options)
             : base(options)
