@@ -15,7 +15,7 @@ namespace Panorama.EntityFrameworkCore
 
         public virtual DbSet<Simulation> Simulations { get; set; }
         public virtual DbSet<SimulationRun> SimulationRuns { get; set; }
-        
+        public virtual DbSet<SimulationRunParticipant> SimulationRunParticipants { get; set; }
 
         #endregion
         
@@ -51,6 +51,12 @@ namespace Panorama.EntityFrameworkCore
             modelBuilder.Entity<Simulation>(b =>
             {
                 b.HasIndex(e => new { e.Name }).IsUnique();
+            });
+            
+            modelBuilder.Entity<SimulationRunParticipant>(b =>
+            {
+                // A user may only participate in a single running simulation at any given time.
+                b.HasIndex(e => new { e.UserId }).IsUnique().HasFilter("[IsDeleted] = 0");
             });
 
             #endregion
