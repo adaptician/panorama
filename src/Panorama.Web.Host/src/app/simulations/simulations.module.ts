@@ -6,17 +6,11 @@ import {FormsModule} from "@angular/forms";
 import {NgxPaginationModule} from "@node_modules/ngx-pagination";
 import {SharedModule} from "@shared/shared.module";
 import {TabsModule} from "ngx-bootstrap/tabs";
-import {ScenesComponent} from './scenes/scenes.component';
-import {CreateSceneDialogComponent} from "@app/simulations/scenes/create-scene/create-scene-dialog.component";
-import {EditSceneDialogComponent} from "@app/simulations/scenes/edit-simulation/edit-scene-dialog.component";
 
 
 @NgModule({
   declarations: [
-    SimulationsComponent,
-    CreateSceneDialogComponent,
-    EditSceneDialogComponent,
-    ScenesComponent
+    SimulationsComponent
   ],
   imports: [
     CommonModule,

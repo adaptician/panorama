@@ -13,11 +13,11 @@
 
         public const string Pages_Tenant_Simulations = "Pages.Tenant.Simulations";
         
-        public const string Pages_Tenant_Simulations_Scenes = "Pages.Tenant.Simulations.Scenes";
-        public const string Pages_Tenant_Simulations_Scenes_View = "Pages.Tenant.Simulations.Scenes.View";
-        public const string Pages_Tenant_Simulations_Scenes_Create = "Pages.Tenant.Simulations.Scenes.Create";
-        public const string Pages_Tenant_Simulations_Scenes_Update = "Pages.Tenant.Simulations.Scenes.Update";
-        public const string Pages_Tenant_Simulations_Scenes_Delete = "Pages.Tenant.Simulations.Scenes.Delete";
+        public const string Pages_Tenant_Scenes = "Pages.Tenant.Scenes";
+        public const string Pages_Tenant_Scenes_View = "Pages.Tenant.Scenes.View";
+        public const string Pages_Tenant_Scenes_Create = "Pages.Tenant.Scenes.Create";
+        public const string Pages_Tenant_Scenes_Update = "Pages.Tenant.Scenes.Update";
+        public const string Pages_Tenant_Scenes_Delete = "Pages.Tenant.Scenes.Delete";
 
         #endregion
     }

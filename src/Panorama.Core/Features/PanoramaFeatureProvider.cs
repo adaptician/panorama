@@ -8,7 +8,22 @@ public class PanoramaFeatureProvider : FeatureProvider
 {
     public override void SetFeatures(IFeatureDefinitionContext context)
     {
-        var simulations = context.Create(
+        #region Scenes
+
+        context.Create(
+            PanoramaFeatures.ScenesFeature,
+            defaultValue: "true",
+            displayName: L("ScenesFeature"),
+            description: L("ScenesFeatureDescription"),
+            inputType: new CheckboxInputType(),
+            scope: FeatureScopes.Tenant
+        );
+
+        #endregion
+
+        #region Simulations
+
+        context.Create(
             PanoramaFeatures.SimulationsFeature,
             defaultValue: "true",
             displayName: L("SimulationsFeature"),
@@ -17,14 +32,7 @@ public class PanoramaFeatureProvider : FeatureProvider
             scope: FeatureScopes.Tenant
         );
 
-        simulations.CreateChildFeature(
-            PanoramaFeatures.SimulationsScenesFeature,
-            defaultValue: "true",
-            displayName: L("SimulationsScenesFeature"),
-            description: L("SimulationsScenesFeatureDescription"),
-            inputType: new CheckboxInputType(),
-            scope: FeatureScopes.Tenant
-        );
+        #endregion
     }
     
     protected static ILocalizableString L(string name)

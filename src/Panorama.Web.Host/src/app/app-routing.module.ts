@@ -28,6 +28,12 @@ import {SimulationsComponent} from "@app/simulations/simulations.component";
                         path: 'simulations',
                         loadChildren: () => import('app/simulations/simulations.module').then(m => m.SimulationsModule), // Lazy load simulations module
                         data: { preload: true }
+                    },
+
+                    {
+                        path: 'scenes',
+                        loadChildren: () => import('app/scenes/scenes.module').then(m => m.ScenesModule), // Lazy load scenes module
+                        data: { preload: true }
                     }
                 ]
             }

@@ -11,8 +11,8 @@ import {SceneCreatedEventData} from "@shared/service-proxies/scenography/events/
 import {SceneUpdatedEventData} from "@shared/service-proxies/scenography/events/SceneUpdatedEventData";
 import {SceneDeletedEventData} from "@shared/service-proxies/scenography/events/SceneDeletedEventData";
 import {SceneErroredEventData} from "@shared/service-proxies/scenography/events/SceneErroredEventData";
-import {CreateSceneDialogComponent} from "@app/simulations/scenes/create-scene/create-scene-dialog.component";
-import {EditSceneDialogComponent} from "@app/simulations/scenes/edit-simulation/edit-scene-dialog.component";
+import {CreateSceneDialogComponent} from "@app/scenes/create-scene/create-scene-dialog.component";
+import {EditSceneDialogComponent} from "@app/scenes/edit-simulation/edit-scene-dialog.component";
 
 @Component({
     selector: 'sim-scenes',

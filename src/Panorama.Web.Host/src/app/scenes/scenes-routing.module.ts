@@ -1,14 +1,14 @@
 import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
-import {SimulationsComponent} from "./simulations.component";
+import {ScenesComponent} from "./scenes.component";
 import {AppRouteGuard} from "@shared/auth/auth-route-guard";
 
 const routes: Routes = [
     {
         path: '',
-        component: SimulationsComponent,
+        component: ScenesComponent,
         pathMatch: 'full',
-        data: { permission: 'Pages.Tenant.Simulations' },
+        data: { permission: 'Pages.Tenant.Scenes' },
         canActivate: [AppRouteGuard]
     }
 ];
@@ -17,4 +17,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class SimulationsRoutingModule {}
+export class ScenesRoutingModule {}
