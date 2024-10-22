@@ -28,7 +28,7 @@ namespace Panorama.Web.Host.Startup
     {
         private const string _defaultCorsPolicyName = "localhost";
 
-        private const string _apiVersion = "v0.2";
+        private const string _apiVersion = "v0.3";
 
         private readonly IConfigurationRoot _appConfiguration;
         private readonly IWebHostEnvironment _hostingEnvironment;
