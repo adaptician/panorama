@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using Panorama.Authorization.Users;
 
@@ -11,7 +12,7 @@ namespace Panorama.Simulations;
 /// Upon user exit, the record is softly deleted, and forms part of history tracking.
 /// </summary>
 [Table(nameof(SimulationRunParticipant), Schema = SchemaNames.Panorama)]
-public class SimulationRunParticipant : FullAuditedEntity<long>
+public class SimulationRunParticipant : FullAuditedEntity<long>, IMustHaveTenant
 {
     /// <summary>
     /// The identifier of the running simulation being participated in.
@@ -36,4 +37,6 @@ public class SimulationRunParticipant : FullAuditedEntity<long>
     /// The time at which the user ended their participation in the running simulation.
     /// </summary>
     public DateTime? ExitTime { get; set; }
+    
+    public int TenantId { get; set; }
 }
