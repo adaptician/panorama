@@ -28,4 +28,6 @@ public class SimulationRun : FullAuditedEntity<long>
     /// The time at which the simulation stopped running.
     /// </summary>
     public DateTime? EndTime { get; set; }
+    
+    public virtual ICollection<SimulationRunParticipant> SimulationRunParticipants { get; set; }
 }

@@ -19,4 +19,6 @@ public class Simulation : FullAuditedEntity<long>
     [Required(AllowEmptyStrings = false)]
     [MaxLength(SimulationConstants.MaxCorrelationIdLength)]
     public string SceneCorrelationId { get; set; }
+    
+    public virtual ICollection<SimulationRun> SimulationRuns { get; set; }
 }
