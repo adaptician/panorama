@@ -6,11 +6,13 @@ import {FormsModule} from "@angular/forms";
 import {NgxPaginationModule} from "@node_modules/ngx-pagination";
 import {SharedModule} from "@shared/shared.module";
 import {TabsModule} from "ngx-bootstrap/tabs";
+import { CreateSimulationDialogComponent } from './create-simulation/create-simulation-dialog.component';
 
 
 @NgModule({
   declarations: [
-    SimulationsComponent
+    SimulationsComponent,
+    CreateSimulationDialogComponent
   ],
   imports: [
     CommonModule,

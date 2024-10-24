@@ -120,12 +120,23 @@
     
     <text name="SimulationsFeature">Simulations</text>
     <text name="SimulationsFeatureDescription">Interactive simulations</text>
+
     <text name="Permission_Simulations">Simulations</text>
+    <text name="Permission_Simulations_View">may view simulations</text>
+    <text name="Permission_Simulations_Create">may create simulations</text>
+    <text name="Permission_Simulations_Update">may update simulations</text>
+    <text name="Permission_Simulations_Delete">may delete simulations</text>
+
+    <text name="SimulationWithNameExists">Unable to create simulation - a simulation with this name already exists.</text>
+    
     <text name="MenuItem_Simulations">Simulations</text>
     <text name="Simulations">Simulations</text>
     <text name="CreateNewSimulation">Create new simulation</text>
     <text name="EditSimulation">Edit simulation</text>
     <text name="SimulationDeleteWarningMessage">Simulation {0} will be deleted.</text>
+    
+    <text name="SimulationsHeading">Simulations</text>
+    <text name="HasRunningSimulations">Has running</text>
     
     <text name="UserNotFound">User not found.</text>
     
@@ -148,5 +159,7 @@
     <text name="CreateNewScene">Create new scene</text>
     <text name="EditScene">Edit scene</text>
     <text name="SceneDeleteWarningMessage">Scene {0} will be deleted.</text>
+    
+    <text name="BadRequest">Unable to perform action requested - request input is invalid.</text>
   </texts>
 </localizationDictionary>

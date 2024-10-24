@@ -15,6 +15,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.ConfigurationServiceProxy,
         
         ApiServiceProxies.SceneServiceProxy,
+        ApiServiceProxies.SimulationServiceProxy,
         
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]

@@ -8,7 +8,7 @@ const routes: Routes = [
         path: '',
         component: SimulationsComponent,
         pathMatch: 'full',
-        data: { permission: 'Pages.Tenant.Simulations' },
+        data: { permission: 'Pages.Tenant.Simulations.View' },
         canActivate: [AppRouteGuard]
     }
 ];
