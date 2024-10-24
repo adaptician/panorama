@@ -404,10 +404,16 @@ docker push adaptician/causation.api:0.3.0
 kubectl apply -f .\kubernetes\mongodb-manifest.yaml
 
 
+### Database Migrations
 
+ dotnet ef migrations add <name> --project Teatro.EntityFrameworkCore --startup-project Teatro.Application
+
+ dotnet ef database update --project Panorama.EntityFrameworkCore --startup-project Panorama.Web.Host
 
 
 QUICK START LOCAL BACKING:
+
+kubectl --namespace default port-forward kubeview-8659bcf-kjgr8 8000:8000
 
 MSSQL
 kubectl apply -f .\panorama\kubernetes\mssqldb-manifest.yaml
