@@ -7,6 +7,7 @@ import {NgxPaginationModule} from "@node_modules/ngx-pagination";
 import {SharedModule} from "@shared/shared.module";
 import {TabsModule} from "ngx-bootstrap/tabs";
 import { CreateSimulationDialogComponent } from './create-simulation/create-simulation-dialog.component';
+import {TreeModule} from "primeng/tree";
 
 
 @NgModule({
@@ -14,14 +15,15 @@ import { CreateSimulationDialogComponent } from './create-simulation/create-simu
     SimulationsComponent,
     CreateSimulationDialogComponent
   ],
-  imports: [
-    CommonModule,
-    SimulationsRoutingModule,
-    FormsModule,
-    NgxPaginationModule,
-    TabsModule,
-    SharedModule,
-    TabsModule,
-  ]
+    imports: [
+        CommonModule,
+        SimulationsRoutingModule,
+        FormsModule,
+        NgxPaginationModule,
+        TabsModule,
+        SharedModule,
+        TabsModule,
+        TreeModule,
+    ]
 })
 export class SimulationsModule { }

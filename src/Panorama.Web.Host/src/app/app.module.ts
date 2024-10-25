@@ -39,6 +39,7 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import {AppSignalrService} from "@app/hubs/app-signalr.service";
+import {TreeModule} from 'primeng/tree';
 
 @NgModule({
     declarations: [
@@ -84,6 +85,7 @@ import {AppSignalrService} from "@app/hubs/app-signalr.service";
         ServiceProxyModule,
         SharedModule,
         NgxPaginationModule,
+        TreeModule,
     ],
     providers: [
         //#region Custom Providers

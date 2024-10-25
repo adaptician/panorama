@@ -8,6 +8,9 @@ import {
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {finalize} from "rxjs/operators";
 import {CreateSimulationDialogComponent} from "@app/simulations/create-simulation/create-simulation-dialog.component";
+import {PanoTreeNode} from "@shared/service-proxies/common/trees/PanoTreeNode";
+import {TreeNode} from "primeng/api/treenode";
+
 
 class PagedSimulationsRequestDto extends PagedRequestDto {
     keyword: string;
@@ -23,6 +26,9 @@ class PagedSimulationsRequestDto extends PagedRequestDto {
 export class SimulationsComponent extends PagedListingComponentBase<GetSimulationDto> {
     
     simulations: GetSimulationDto[] = [];
+    simulationNodes: SimulationTreeNode[] = [];
+    files!: TreeNode[];
+    
     keyword = '';
     hasRunning: boolean | null;
     advancedFiltersVisible = false;
@@ -58,6 +64,8 @@ export class SimulationsComponent extends PagedListingComponentBase<GetSimulatio
             .subscribe((result: GetSimulationDtoPagedResultDto) => {
                 this.simulations = result.items;
                 this.showPaging(result, pageNumber);
+                
+                this.simulationNodes = this.mapTreeNodes(this.simulations);
             });
     }
 
@@ -99,5 +107,36 @@ export class SimulationsComponent extends PagedListingComponentBase<GetSimulatio
         this.keyword = '';
         this.hasRunning = undefined;
         this.getDataPage(1);
+    }
+    
+    private mapTreeNodes(sims: GetSimulationDto[]): SimulationTreeNode[] {
+        if (!sims) return [];
+        
+        return sims.map(_ => {
+            return new SimulationTreeNode(_);
+        }, []);
+    }
+}
+
+class SimulationTreeNode extends PanoTreeNode<GetSimulationDto> {
+    description?: string;
+    sceneName?: string;
+    sceneCorrelationId?: string;
+    runningCount?: number;
+    
+    constructor(data: GetSimulationDto) {
+        super();
+        
+        if (data) {
+            // base
+            this.label = data.name;
+            this.data = data;
+            
+            // concrete
+            this.description = data.description;
+            // this.sceneName = data.sceneName; // TODO:T add scene name to UI grid.
+            this.sceneCorrelationId = data.sceneCorrelationId;
+            // this.runningCount = data.runningCount; // TODO:T add count of running simulations.
+        }
     }
 }
