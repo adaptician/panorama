@@ -255,3 +255,5 @@ src/Panorama.Web.Mvc/secrets.json
 src/Panorama.Web.Host/secrets.json
 src/Panorama.Migrator/secrets.json
 src/Panorama.Web.Host/App_Data/Logs/Logs.txt
+src/Panorama.Web.Host/App_Data/Logs/Logs.txt.1
+src/Panorama.Web.Host/App_Data/Logs/Logs.txt.2
