@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
@@ -66,5 +67,39 @@ public class SimulationAppService : PanoramaAppServiceBase, ISimulationAppServic
         }
 
         await _simulationRepository.InsertAsync(entity);
+    }
+
+    [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Update)]
+    public async Task UpdateSimulation(UpdateSimulationDto input)
+    {
+        if (input is null)
+        {
+            throw new UserFriendlyException(L("BadRequest"));
+        }
+
+        var existing = await _simulationRepository
+            .GetAll()
+            .Include(i => i.SimulationRuns)
+            .SingleOrDefaultAsync(x => x.Id == input.Id);
+
+        if (existing is null)
+        {
+            Logger.Error($"An error occurred while trying to update ${nameof(Simulation)} with Id ${input.Id} - " +
+                         $"simulation was not found.");
+            throw new UserFriendlyException(L("SimulationNotFound"));
+        }
+
+        var hasRunning = existing.SimulationRuns is not null && existing.SimulationRuns.Count > 0;
+
+        if (hasRunning && !input.SceneCorrelationId.Equals(existing.SceneCorrelationId))
+        {
+            throw new UserFriendlyException(L("SceneCannotBeUpdatedForSimulationWithRunning"));
+        }
+        
+        ObjectMapper.Map(input, existing);
+
+        await CurrentUnitOfWork.SaveChangesAsync();
+        
+        // TODO:T Add handling to the UI. Hide SceneCorrelationId once running count > 0.
     }
 }

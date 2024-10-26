@@ -139,6 +139,8 @@
     <text name="HasRunningSimulations">Has running</text>
     <text name="AreRunningSuffix">running</text>
     <text name="SceneCorrelationId">Scene correlation identifier</text>
+    <text name="SimulationNotFound">Simulation not found.</text>
+    <text name="SceneCannotBeUpdatedForSimulationWithRunning">Scene cannot be changed once a simulation has been run.</text>
     
     <text name="UserNotFound">User not found.</text>
     
