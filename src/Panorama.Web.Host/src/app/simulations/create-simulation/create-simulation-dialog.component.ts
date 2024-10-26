@@ -27,7 +27,7 @@ export class CreateSimulationDialogComponent extends AppComponentBase {
     this.setBusy('saving', true);
 
     this._simulationService
-        .create(this.simulation)
+        .createSimulation(this.simulation)
         .pipe(finalize(() => this.setBusy('saving', false)))
         .subscribe(
             () => {

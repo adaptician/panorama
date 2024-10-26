@@ -681,8 +681,8 @@ export class SceneServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    commandGetAll(body: PagedSceneResultRequestDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Scene/CommandGetAll";
+    commandGetAllScenes(body: PagedSceneResultRequestDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Scene/CommandGetAllScenes";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -697,11 +697,11 @@ export class SceneServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCommandGetAll(response_);
+            return this.processCommandGetAllScenes(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCommandGetAll(response_ as any);
+                    return this.processCommandGetAllScenes(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -710,7 +710,7 @@ export class SceneServiceProxy {
         }));
     }
 
-    protected processCommandGetAll(response: HttpResponseBase): Observable<void> {
+    protected processCommandGetAllScenes(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -733,8 +733,8 @@ export class SceneServiceProxy {
      * @param correlationId (optional) 
      * @return Success
      */
-    commandGetById(correlationId: string | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Scene/CommandGetById?";
+    commandGetSceneById(correlationId: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Scene/CommandGetSceneById?";
         if (correlationId === null)
             throw new Error("The parameter 'correlationId' cannot be null.");
         else if (correlationId !== undefined)
@@ -749,11 +749,11 @@ export class SceneServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCommandGetById(response_);
+            return this.processCommandGetSceneById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCommandGetById(response_ as any);
+                    return this.processCommandGetSceneById(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -762,7 +762,7 @@ export class SceneServiceProxy {
         }));
     }
 
-    protected processCommandGetById(response: HttpResponseBase): Observable<void> {
+    protected processCommandGetSceneById(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -785,8 +785,8 @@ export class SceneServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    commandCreate(body: CreateSceneDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Scene/CommandCreate";
+    commandCreateScene(body: CreateSceneDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Scene/CommandCreateScene";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -801,11 +801,11 @@ export class SceneServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCommandCreate(response_);
+            return this.processCommandCreateScene(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCommandCreate(response_ as any);
+                    return this.processCommandCreateScene(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -814,7 +814,7 @@ export class SceneServiceProxy {
         }));
     }
 
-    protected processCommandCreate(response: HttpResponseBase): Observable<void> {
+    protected processCommandCreateScene(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -837,8 +837,8 @@ export class SceneServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    commandUpdate(body: UpdateSceneDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Scene/CommandUpdate";
+    commandUpdateScene(body: UpdateSceneDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Scene/CommandUpdateScene";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -853,11 +853,11 @@ export class SceneServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCommandUpdate(response_);
+            return this.processCommandUpdateScene(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCommandUpdate(response_ as any);
+                    return this.processCommandUpdateScene(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -866,7 +866,7 @@ export class SceneServiceProxy {
         }));
     }
 
-    protected processCommandUpdate(response: HttpResponseBase): Observable<void> {
+    protected processCommandUpdateScene(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -889,8 +889,8 @@ export class SceneServiceProxy {
      * @param correlationId (optional) 
      * @return Success
      */
-    commandDelete(correlationId: string | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Scene/CommandDelete?";
+    commandDeleteScene(correlationId: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Scene/CommandDeleteScene?";
         if (correlationId === null)
             throw new Error("The parameter 'correlationId' cannot be null.");
         else if (correlationId !== undefined)
@@ -905,11 +905,11 @@ export class SceneServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCommandDelete(response_);
+            return this.processCommandDeleteScene(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCommandDelete(response_ as any);
+                    return this.processCommandDeleteScene(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -918,7 +918,7 @@ export class SceneServiceProxy {
         }));
     }
 
-    protected processCommandDelete(response: HttpResponseBase): Observable<void> {
+    protected processCommandDeleteScene(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1019,8 +1019,8 @@ export class SimulationServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, hasRunning: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<GetSimulationDtoPagedResultDto> {
-        let url_ = this.baseUrl + "/api/services/app/Simulation/GetAll?";
+    getAllSimulations(keyword: string | undefined, hasRunning: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<GetSimulationDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Simulation/GetAllSimulations?";
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -1048,11 +1048,11 @@ export class SimulationServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
+            return this.processGetAllSimulations(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAll(response_ as any);
+                    return this.processGetAllSimulations(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<GetSimulationDtoPagedResultDto>;
                 }
@@ -1061,7 +1061,7 @@ export class SimulationServiceProxy {
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<GetSimulationDtoPagedResultDto> {
+    protected processGetAllSimulations(response: HttpResponseBase): Observable<GetSimulationDtoPagedResultDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1087,8 +1087,8 @@ export class SimulationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    create(body: CreateSimulationDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Simulation/Create";
+    createSimulation(body: CreateSimulationDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Simulation/CreateSimulation";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1103,11 +1103,11 @@ export class SimulationServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
+            return this.processCreateSimulation(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCreate(response_ as any);
+                    return this.processCreateSimulation(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -1116,7 +1116,7 @@ export class SimulationServiceProxy {
         }));
     }
 
-    protected processCreate(response: HttpResponseBase): Observable<void> {
+    protected processCreateSimulation(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2910,6 +2910,7 @@ export class GetSimulationDto implements IGetSimulationDto {
     name: string | undefined;
     description: string | undefined;
     sceneCorrelationId: string | undefined;
+    runningCount: number;
     tenantId: number;
 
     constructor(data?: IGetSimulationDto) {
@@ -2927,6 +2928,7 @@ export class GetSimulationDto implements IGetSimulationDto {
             this.name = _data["name"];
             this.description = _data["description"];
             this.sceneCorrelationId = _data["sceneCorrelationId"];
+            this.runningCount = _data["runningCount"];
             this.tenantId = _data["tenantId"];
         }
     }
@@ -2944,6 +2946,7 @@ export class GetSimulationDto implements IGetSimulationDto {
         data["name"] = this.name;
         data["description"] = this.description;
         data["sceneCorrelationId"] = this.sceneCorrelationId;
+        data["runningCount"] = this.runningCount;
         data["tenantId"] = this.tenantId;
         return data;
     }
@@ -2961,6 +2964,7 @@ export interface IGetSimulationDto {
     name: string | undefined;
     description: string | undefined;
     sceneCorrelationId: string | undefined;
+    runningCount: number;
     tenantId: number;
 }
 

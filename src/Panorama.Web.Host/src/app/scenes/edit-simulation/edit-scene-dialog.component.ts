@@ -46,7 +46,7 @@ export class EditSceneDialogComponent extends AppComponentBase implements OnInit
     this.setBusy('loading', true);
 
     this._sceneService
-        .commandGetById(correlationId)
+        .commandGetSceneById(correlationId)
         .pipe(finalize(() => this.setBusy('loading', false)))
         .subscribe(() => {});
   }
@@ -55,7 +55,7 @@ export class EditSceneDialogComponent extends AppComponentBase implements OnInit
     this.setBusy('saving', true);
 
     this._sceneService
-        .commandUpdate(this.scene)
+        .commandUpdateScene(this.scene)
         .pipe(finalize(() => this.setBusy('saving', false)))
         .subscribe(
             () => {

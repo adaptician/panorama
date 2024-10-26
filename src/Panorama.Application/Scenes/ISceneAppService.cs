@@ -8,13 +8,13 @@ namespace Panorama.Scenes;
 
 public interface ISceneAppService : IApplicationService
 {
-    Task CommandGetAll(PagedSceneResultRequestDto request, CancellationToken cancellationToken);
+    Task CommandGetAllScenes(PagedSceneResultRequestDto request, CancellationToken cancellationToken);
 
-    Task CommandGetById(string correlationId, CancellationToken cancellationToken);
+    Task CommandGetSceneById(string correlationId, CancellationToken cancellationToken);
 
-    Task CommandCreate(CreateSceneDto input, CancellationToken cancellationToken);
+    Task CommandCreateScene(CreateSceneDto input, CancellationToken cancellationToken);
 
-    Task CommandUpdate(UpdateSceneDto input, CancellationToken cancellationToken);
+    Task CommandUpdateScene(UpdateSceneDto input, CancellationToken cancellationToken);
 
-    Task CommandDelete(string correlationId, CancellationToken cancellationToken);
+    Task CommandDeleteScene(string correlationId, CancellationToken cancellationToken);
 }

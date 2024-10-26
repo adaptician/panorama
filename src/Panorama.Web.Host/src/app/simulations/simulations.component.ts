@@ -50,7 +50,7 @@ export class SimulationsComponent extends PagedListingComponentBase<GetSimulatio
         request.hasRunning = this.hasRunning;
 
         this._simulationService
-            .getAll(
+            .getAllSimulations(
                 request.keyword,
                 request.hasRunning,
                 request.skipCount,

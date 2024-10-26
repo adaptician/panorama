@@ -47,7 +47,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
         this.setBusy('loading', true);
 
         this._sceneService
-            .commandGetAll(request)
+            .commandGetAllScenes(request)
             .pipe(
                 finalize(() => {
                     finishedCallback();
@@ -65,7 +65,7 @@ export class ScenesComponent extends PagedListingComponentBase<ViewSceneDto> imp
                     this.setBusy('saving', true);
                     
                     this._sceneService
-                        .commandDelete(scene.correlationId)
+                        .commandDeleteScene(scene.correlationId)
                         .subscribe(() => {
                         });
                 }

@@ -24,7 +24,7 @@ public class SceneAppService(
 {
     
     [AbpAuthorize(PermissionNames.Pages_Tenant_Scenes_View)]
-    public async Task CommandGetAll(PagedSceneResultRequestDto request, CancellationToken cancellationToken)
+    public async Task CommandGetAllScenes(PagedSceneResultRequestDto request, CancellationToken cancellationToken)
     {
         try
         {
@@ -47,7 +47,7 @@ public class SceneAppService(
     }
 
     [AbpAuthorize(PermissionNames.Pages_Tenant_Scenes_View)]
-    public async Task CommandGetById(string correlationId, CancellationToken cancellationToken)
+    public async Task CommandGetSceneById(string correlationId, CancellationToken cancellationToken)
     {
         try
         {
@@ -69,7 +69,7 @@ public class SceneAppService(
     }
     
     [AbpAuthorize(PermissionNames.Pages_Tenant_Scenes_Create)]
-    public async Task CommandCreate(CreateSceneDto input, CancellationToken cancellationToken)
+    public async Task CommandCreateScene(CreateSceneDto input, CancellationToken cancellationToken)
     {
         try
         {
@@ -93,7 +93,7 @@ public class SceneAppService(
     }
     
     [AbpAuthorize(PermissionNames.Pages_Tenant_Scenes_Update)]
-    public async Task CommandUpdate(UpdateSceneDto input, CancellationToken cancellationToken)
+    public async Task CommandUpdateScene(UpdateSceneDto input, CancellationToken cancellationToken)
     {
         try
         {
@@ -117,7 +117,7 @@ public class SceneAppService(
     }
     
     [AbpAuthorize(PermissionNames.Pages_Tenant_Scenes_Delete)]
-    public async Task CommandDelete(string correlationId, CancellationToken cancellationToken)
+    public async Task CommandDeleteScene(string correlationId, CancellationToken cancellationToken)
     {
         try
         {

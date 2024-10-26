@@ -27,7 +27,7 @@ export class CreateSceneDialogComponent extends AppComponentBase {
         this.setBusy('saving', true);
         
         this._sceneService
-            .commandCreate(this.scene)
+            .commandCreateScene(this.scene)
             .pipe(finalize(() => this.setBusy('saving', false)))
             .subscribe(
                 () => {

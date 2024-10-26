@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
@@ -23,7 +22,7 @@ public class SimulationAppService : PanoramaAppServiceBase, ISimulationAppServic
     }
 
     [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_View)]
-    public async Task<PagedResultDto<GetSimulationDto>> GetAll(PagedSimulationResultRequestDto input)
+    public async Task<PagedResultDto<GetSimulationDto>> GetAllSimulations(PagedSimulationResultRequestDto input)
     {
         if (input is null)
         {
@@ -50,7 +49,7 @@ public class SimulationAppService : PanoramaAppServiceBase, ISimulationAppServic
     }
 
     [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Create)]
-    public async Task Create(CreateSimulationDto input)
+    public async Task CreateSimulation(CreateSimulationDto input)
     {
         if (input is null)
         {
