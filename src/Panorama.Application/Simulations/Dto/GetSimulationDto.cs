@@ -10,6 +10,8 @@ public class GetSimulationDto : EntityDto<long>, IMustHaveTenant
     public string Description { get; set; }
     
     public string SceneCorrelationId { get; set; }
+    
+    public int RunningCount { get; set; }
 
     public int TenantId { get; set; }
 }

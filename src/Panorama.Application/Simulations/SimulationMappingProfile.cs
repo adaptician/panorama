@@ -8,5 +8,7 @@ public class SimulationMappingProfile : Profile
     public SimulationMappingProfile()
     {
         CreateMap<Simulation, GetSimulationDto>();
+        
+        CreateMap<CreateSimulationDto, Simulation>();
     }
 }

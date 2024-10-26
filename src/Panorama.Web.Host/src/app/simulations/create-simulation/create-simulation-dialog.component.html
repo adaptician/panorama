@@ -1,7 +1,7 @@
 <form
       class="form-horizontal"
       autocomplete="off"
-      #createSceneForm="ngForm"
+      #createSimulationForm="ngForm"
       (ngSubmit)="save()"
 >
   <abp-modal-header
@@ -58,12 +58,37 @@
             ></abp-validation-summary>
           </div>
         </div>
+        <!-- SCENE -->
+        <!-- TODO:T this is temporary until scenes can be materialized effectively. -->
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="sceneCorrelationId">
+            {{ "SceneCorrelationId" | localize }}
+          </label>
+          <div class="col-md-9">
+            <input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  id="sceneCorrelationId"
+                  required
+                  minlength="2"
+                  maxlength="200"
+                  [(ngModel)]="simulation.sceneCorrelationId"
+                  #sceneCorrelationIdModel="ngModel"
+                  #sceneCorrelationIdEl
+            />
+            <abp-validation-summary
+                  [control]="sceneCorrelationIdModel"
+                  [controlEl]="sceneCorrelationIdEl"
+            ></abp-validation-summary>
+          </div>
+        </div>
       </tab>
     </tabset>
   </div>
   <abp-modal-footer
         [cancelDisabled]="(busy | anyBusy:lastBusy)"
-        [saveDisabled]="!createSceneForm.form.valid || (busy | anyBusy:lastBusy)"
+        [saveDisabled]="!createSimulationForm.form.valid || (busy | anyBusy:lastBusy)"
         (onCancelClick)="bsModalRef.hide()"
   ></abp-modal-footer>
 </form>

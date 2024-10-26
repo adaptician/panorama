@@ -138,6 +138,7 @@
     <text name="SimulationsHeading">Simulations</text>
     <text name="HasRunningSimulations">Has running</text>
     <text name="AreRunningSuffix">running</text>
+    <text name="SceneCorrelationId">Scene correlation identifier</text>
     
     <text name="UserNotFound">User not found.</text>
     
