@@ -75,6 +75,29 @@ public class ExtendedPanoramaAuthorizationProvider : PanoramaAuthorizationProvid
 
         #endregion
 
+        #region Running
+
+        simulations.CreateChildPermission(PermissionNames.Pages_Tenant_Simulations_Running_Start, 
+            L("Permission_Simulations_Running_Start"), 
+            multiTenancySides: MultiTenancySides.Tenant, 
+            featureDependency: new SimpleFeatureDependency(PanoramaFeatures.SimulationRunningFeature));
+        
+        simulations.CreateChildPermission(PermissionNames.Pages_Tenant_Simulations_Running_Stop, 
+            L("Permission_Simulations_Running_Stop"), 
+            multiTenancySides: MultiTenancySides.Tenant, 
+            featureDependency: new SimpleFeatureDependency(PanoramaFeatures.SimulationRunningFeature));
+
+        #region Participation
+
+        simulations.CreateChildPermission(PermissionNames.Pages_Tenant_Simulations_Running_Participate, 
+            L("Permission_Simulations_Running_Participate"), 
+            multiTenancySides: MultiTenancySides.Tenant, 
+            featureDependency: new SimpleFeatureDependency(PanoramaFeatures.SimulationRunningFeature));
+
+        #endregion
+
+        #endregion
+
         #endregion
     }
 }

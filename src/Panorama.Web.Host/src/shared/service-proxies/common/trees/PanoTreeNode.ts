@@ -25,7 +25,7 @@ export class PanoTreeNode<T> implements TreeNode<T> {
     /**
      * An array of treenodes as children.
      */
-    children?: TreeNode<T>[];
+    children?: TreeNode<any>[];
     /**
      * Specifies if the node has children. Used in lazy loading.
      * @defaultValue false

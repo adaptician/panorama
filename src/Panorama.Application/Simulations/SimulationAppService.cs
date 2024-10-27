@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
@@ -8,7 +9,9 @@ using Abp.Linq.Extensions;
 using Abp.UI;
 using Microsoft.EntityFrameworkCore;
 using Panorama.Authorization;
+using Panorama.Core.Shared.Simulations;
 using Panorama.Simulations.Dto;
+using Panorama.Simulations.Interfaces;
 
 namespace Panorama.Simulations;
 
@@ -17,7 +20,8 @@ public class SimulationAppService : PanoramaAppServiceBase, ISimulationAppServic
 {
     private readonly IRepository<Simulation, long> _simulationRepository;
 
-    public SimulationAppService(IRepository<Simulation, long> simulationRepository)
+    public SimulationAppService(IRepository<Simulation, long> simulationRepository
+        )
     {
         _simulationRepository = simulationRepository;
     }

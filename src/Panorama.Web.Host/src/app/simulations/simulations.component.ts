@@ -2,7 +2,8 @@ import {Component, Injector} from '@angular/core';
 import {appModuleAnimation} from "@shared/animations/routerTransition";
 import {PagedListingComponentBase, PagedRequestDto} from "@shared/paged-listing-component-base";
 import {
-    SimulationServiceProxy, ViewSimulationDto, ViewSimulationDtoPagedResultDto,
+    SimulationRunServiceProxy,
+    SimulationServiceProxy, ViewSimulationDto, ViewSimulationDtoPagedResultDto, ViewSimulationRunDto,
 } from "@shared/service-proxies/service-proxies";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {finalize} from "rxjs/operators";
@@ -36,6 +37,7 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
     constructor(
         injector: Injector,
         private _simulationService: SimulationServiceProxy,
+        private _simulationRunService: SimulationRunServiceProxy,
         private _modalService: BsModalService
     ) {
         super(injector);
@@ -115,6 +117,7 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
 
                     this._simulationService
                         .deleteSimulation(simulation.id)
+                        .pipe(finalize(() => this.setBusy('saving', false)))
                         .subscribe(() => {
                             abp.notify.success(this.l('SuccessfullyDeleted'));
                             this.refresh();
@@ -129,6 +132,22 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
         this.hasRunning = undefined;
         this.getDataPage(1);
     }
+
+    nodeExpand(event: SimulationTreeNode) {
+        
+        if (event) {
+            this.setBusy('loading', true);
+
+            // this._simulationRunService
+            //     .getAllSimulationRuns(event.id)
+            //     .pipe(finalize(() => this.setBusy('loading', false)))
+            //     .subscribe(result => {
+            //         // TODO:T FIX MAPPING
+            //         event.children = result.map(_ => new PanoTreeNode<ViewSimulationRunDto>(_));
+            //     });
+        }
+        
+    }
     
     private mapTreeNodes(sims: ViewSimulationDto[]): SimulationTreeNode[] {
         if (!sims) return [];
@@ -141,6 +160,7 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
 
 class SimulationTreeNode extends PanoTreeNode<ViewSimulationDto> {
     id?: number;
+    children?: PanoTreeNode<ViewSimulationRunDto>[];
     
     constructor(data: ViewSimulationDto) {
         super();

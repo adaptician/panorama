@@ -16,6 +16,9 @@
         public const string Pages_Tenant_Simulations_Create = "Pages.Tenant.Simulations.Create";
         public const string Pages_Tenant_Simulations_Update = "Pages.Tenant.Simulations.Update";
         public const string Pages_Tenant_Simulations_Delete = "Pages.Tenant.Simulations.Delete";
+        public const string Pages_Tenant_Simulations_Running_Start = "Pages.Tenant.Simulations.Running.Start";
+        public const string Pages_Tenant_Simulations_Running_Stop = "Pages.Tenant.Simulations.Running.Stop";
+        public const string Pages_Tenant_Simulations_Running_Participate = "Pages.Tenant.Simulations.Running.Participate";
         
         public const string Pages_Tenant_Scenes = "Pages.Tenant.Scenes";
         public const string Pages_Tenant_Scenes_View = "Pages.Tenant.Scenes.View";

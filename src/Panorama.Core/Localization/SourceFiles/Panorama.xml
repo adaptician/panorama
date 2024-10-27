@@ -120,12 +120,17 @@
     
     <text name="SimulationsFeature">Simulations</text>
     <text name="SimulationsFeatureDescription">Interactive simulations</text>
+    <text name="SimulationRunningFeature">Running simulations</text>
+    <text name="SimulationRunningFeatureDescription">Running interactive simulations</text>
 
     <text name="Permission_Simulations">Simulations</text>
     <text name="Permission_Simulations_View">may view simulations</text>
     <text name="Permission_Simulations_Create">may create simulations</text>
     <text name="Permission_Simulations_Update">may update simulations</text>
     <text name="Permission_Simulations_Delete">may delete simulations</text>
+    <text name="Permission_Simulations_Running_Start">may start running a simulation</text>
+    <text name="Permission_Simulations_Running_Stop">may stop running a simulation</text>
+    <text name="Permission_Simulations_Running_Participate">may participate in a running a simulation</text>
 
     <text name="SimulationWithNameExists">Unable to create simulation - a simulation with this name already exists.</text>
     
@@ -141,8 +146,11 @@
     <text name="SceneCorrelationId">Scene correlation identifier</text>
     <text name="SimulationNotFound">Simulation not found.</text>
     <text name="SceneCannotBeUpdatedForSimulationWithRunning">Scene cannot be changed once a simulation has been run.</text>
+    <text name="MaximumConcurrentSimulationsRunningReached">Unable to start running simulation - the maximum number running instances has been reached.</text>
     
     <text name="UserNotFound">User not found.</text>
+    <text name="UnableToDetermineUserFromSession">Unable to determine user.</text>
+    <text name="UserParticipantNotFound">User was not found as a participant of the simulation run.</text>
     
     <text name="IAmListeningForEvents">I am listening for events</text>
     

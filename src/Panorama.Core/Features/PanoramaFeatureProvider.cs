@@ -23,11 +23,20 @@ public class PanoramaFeatureProvider : FeatureProvider
 
         #region Simulations
 
-        context.Create(
+        var simulations = context.Create(
             PanoramaFeatures.SimulationsFeature,
             defaultValue: "true",
             displayName: L("SimulationsFeature"),
             description: L("SimulationsFeatureDescription"),
+            inputType: new CheckboxInputType(),
+            scope: FeatureScopes.Tenant
+        );
+
+        simulations.CreateChildFeature(
+            PanoramaFeatures.SimulationRunningFeature,
+            defaultValue: "true",
+            displayName: L("SimulationRunningFeature"),
+            description: L("SimulationRunningFeatureDescription"),
             inputType: new CheckboxInputType(),
             scope: FeatureScopes.Tenant
         );

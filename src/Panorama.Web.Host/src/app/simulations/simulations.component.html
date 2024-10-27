@@ -142,6 +142,7 @@
                   [value]="simulationNodes"
                   selectionMode="checkbox"
                   class="w-full md:w-30rem"
+                  (onNodeExpand)="nodeExpand($event)"
             >
               <ng-template let-node pTemplate="default">
                 <div class="d-flex justify-content-between align-items-center">

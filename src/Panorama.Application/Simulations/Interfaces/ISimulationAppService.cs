@@ -3,7 +3,7 @@ using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Panorama.Simulations.Dto;
 
-namespace Panorama.Simulations;
+namespace Panorama.Simulations.Interfaces;
 
 public interface ISimulationAppService : IApplicationService
 {

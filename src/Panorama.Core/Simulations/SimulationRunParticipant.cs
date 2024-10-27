@@ -39,4 +39,11 @@ public class SimulationRunParticipant : FullAuditedEntity<long>, IMustHaveTenant
     public DateTime? ExitTime { get; set; }
     
     public int TenantId { get; set; }
+
+    public SimulationRunParticipant(long simulationRunId, long userId)
+    {
+        SimulationRunId = simulationRunId;
+        UserId = userId;
+        EntryTime = DateTime.UtcNow;
+    }
 }

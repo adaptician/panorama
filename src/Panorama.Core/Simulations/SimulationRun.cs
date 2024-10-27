@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
+using Abp.Timing;
 
 namespace Panorama.Simulations;
 
@@ -34,4 +35,10 @@ public class SimulationRun : FullAuditedEntity<long>, IMustHaveTenant
     public int TenantId { get; set; }
     
     public virtual ICollection<SimulationRunParticipant> SimulationRunParticipants { get; set; }
+
+    public SimulationRun(long simulationId)
+    {
+        SimulationId = simulationId;
+        StartTime = DateTime.UtcNow;
+    }
 }

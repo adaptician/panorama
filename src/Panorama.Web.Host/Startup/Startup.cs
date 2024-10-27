@@ -7,6 +7,7 @@ using Abp.AspNetCore.Mvc.Antiforgery;
 using Abp.AspNetCore.SignalR.Hubs;
 using Abp.Castle.Logging.Log4Net;
 using Abp.Extensions;
+using Abp.Timing;
 using Castle.Facilities.Logging;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
@@ -37,6 +38,9 @@ namespace Panorama.Web.Host.Startup
         {
             _hostingEnvironment = env;
             _appConfiguration = env.GetAppConfiguration();
+            
+            // Set system time to UTC.
+            Clock.Provider = ClockProviders.Utc;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -94,7 +98,7 @@ namespace Panorama.Web.Host.Startup
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
-
+            
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
 
 app.Use(async (context, next) =>                {                    await next();                    if (context.Response.StatusCode == 404                        && !Path.HasExtension(context.Request.Path.Value)                        && !context.Request.Path.Value.StartsWith("/api/services", StringComparison.InvariantCultureIgnoreCase))                    {                        context.Request.Path = "/index.html";                        await next();                    }                });
