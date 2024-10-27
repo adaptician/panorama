@@ -7,7 +7,11 @@ namespace Panorama.Simulations;
 
 public interface ISimulationAppService : IApplicationService
 {
-    Task<PagedResultDto<GetSimulationDto>> GetAllSimulations(PagedSimulationResultRequestDto input);
+    Task<PagedResultDto<ViewSimulationDto>> GetAllSimulations(PagedSimulationResultRequestDto input);
 
+    Task<ViewSimulationDto> GetSimulationById(long simulationId);
+    
     Task CreateSimulation(CreateSimulationDto input);
+
+    Task UpdateSimulation(UpdateSimulationDto input);
 }

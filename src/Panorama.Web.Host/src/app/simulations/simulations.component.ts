@@ -2,14 +2,15 @@ import {Component, Injector} from '@angular/core';
 import {appModuleAnimation} from "@shared/animations/routerTransition";
 import {PagedListingComponentBase, PagedRequestDto} from "@shared/paged-listing-component-base";
 import {
-    GetSimulationDto, GetSimulationDtoPagedResultDto,
-    SimulationServiceProxy,
+    SimulationServiceProxy, ViewSimulationDto, ViewSimulationDtoPagedResultDto,
 } from "@shared/service-proxies/service-proxies";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {finalize} from "rxjs/operators";
 import {CreateSimulationDialogComponent} from "@app/simulations/create-simulation/create-simulation-dialog.component";
 import {PanoTreeNode} from "@shared/service-proxies/common/trees/PanoTreeNode";
 import {TreeNode} from "primeng/api/treenode";
+import {ViewSceneDto} from "@shared/service-proxies/scenography/dtos/ViewSceneDto";
+import {EditSimulationDialogComponent} from "@app/simulations/edit-simulation/edit-simulation-dialog.component";
 
 
 class PagedSimulationsRequestDto extends PagedRequestDto {
@@ -23,9 +24,9 @@ class PagedSimulationsRequestDto extends PagedRequestDto {
     styleUrl: './simulations.component.less',
     animations: [appModuleAnimation()]
 })
-export class SimulationsComponent extends PagedListingComponentBase<GetSimulationDto> {
+export class SimulationsComponent extends PagedListingComponentBase<ViewSimulationDto> {
     
-    simulations: GetSimulationDto[] = [];
+    simulations: ViewSimulationDto[] = [];
     simulationNodes: SimulationTreeNode[] = [];
     files!: TreeNode[];
     
@@ -61,7 +62,7 @@ export class SimulationsComponent extends PagedListingComponentBase<GetSimulatio
                     finishedCallback();
                 })
             )
-            .subscribe((result: GetSimulationDtoPagedResultDto) => {
+            .subscribe((result: ViewSimulationDtoPagedResultDto) => {
                 this.simulations = result.items;
                 this.showPaging(result, pageNumber);
                 
@@ -73,6 +74,10 @@ export class SimulationsComponent extends PagedListingComponentBase<GetSimulatio
         this.showCreateOrEditSimulationDialog();
     }
 
+    editSimulation(simulation: ViewSimulationDto): void {
+        this.showCreateOrEditSimulationDialog(simulation.id);
+    }
+    
     showCreateOrEditSimulationDialog(id?: number): void {
         let createOrEditSimulationDialog: BsModalRef;
         if (!id) {
@@ -82,24 +87,24 @@ export class SimulationsComponent extends PagedListingComponentBase<GetSimulatio
                     class: 'modal-lg',
                 }
             );
-        }// else {
-        //     createOrEditTenantDialog = this._modalService.show(
-        //         EditTenantDialogComponent,
-        //         {
-        //             class: 'modal-lg',
-        //             initialState: {
-        //                 id: id,
-        //             },
-        //         }
-        //     );
-        // }
+        } else {
+            createOrEditSimulationDialog = this._modalService.show(
+                EditSimulationDialogComponent,
+                {
+                    class: 'modal-lg',
+                    initialState: {
+                        simulationId: id,
+                    },
+                }
+            );
+        }
 
         createOrEditSimulationDialog.content.onSave.subscribe(() => {
             this.refresh();
         });
     }
 
-    delete(entity: GetSimulationDto): void {
+    delete(entity: ViewSimulationDto): void {
         throw new Error('Method not implemented.');
     }
 
@@ -109,7 +114,7 @@ export class SimulationsComponent extends PagedListingComponentBase<GetSimulatio
         this.getDataPage(1);
     }
     
-    private mapTreeNodes(sims: GetSimulationDto[]): SimulationTreeNode[] {
+    private mapTreeNodes(sims: ViewSimulationDto[]): SimulationTreeNode[] {
         if (!sims) return [];
         
         return sims.map(_ => {
@@ -118,13 +123,14 @@ export class SimulationsComponent extends PagedListingComponentBase<GetSimulatio
     }
 }
 
-class SimulationTreeNode extends PanoTreeNode<GetSimulationDto> {
+class SimulationTreeNode extends PanoTreeNode<ViewSimulationDto> {
+    id?: number;
     description?: string;
     sceneName?: string;
     sceneCorrelationId?: string;
     runningCount?: number;
     
-    constructor(data: GetSimulationDto) {
+    constructor(data: ViewSimulationDto) {
         super();
         
         if (data) {
@@ -133,6 +139,7 @@ class SimulationTreeNode extends PanoTreeNode<GetSimulationDto> {
             this.data = data;
             
             // concrete
+            this.id = data.id;
             this.description = data.description;
             // this.sceneName = data.sceneName; // TODO:T add scene name to UI grid.
             this.sceneCorrelationId = data.sceneCorrelationId;

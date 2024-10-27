@@ -11,9 +11,9 @@ import {finalize} from "rxjs/operators";
 })
 export class CreateSimulationDialogComponent extends AppComponentBase {
 
-  simulation: CreateSimulationDto = new CreateSimulationDto();
-
   @Output() onSave = new EventEmitter<any>();
+
+  simulation: CreateSimulationDto = new CreateSimulationDto();
 
   constructor(
       injector: Injector,

@@ -3,7 +3,7 @@ using Panorama.Backing.Bus.Shared.Common.Dto;
 
 namespace Panorama.Simulations.Dto;
 
-public class GetSimulationDto : EntityDto<long>, IMustHaveTenant
+public class ViewSimulationDto : EntityDto<long>, IMustHaveTenant
 {
     public string Name { get; set; }
     

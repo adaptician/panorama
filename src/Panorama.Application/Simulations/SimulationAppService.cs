@@ -23,7 +23,7 @@ public class SimulationAppService : PanoramaAppServiceBase, ISimulationAppServic
     }
 
     [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_View)]
-    public async Task<PagedResultDto<GetSimulationDto>> GetAllSimulations(PagedSimulationResultRequestDto input)
+    public async Task<PagedResultDto<ViewSimulationDto>> GetAllSimulations(PagedSimulationResultRequestDto input)
     {
         if (input is null)
         {
@@ -43,12 +43,30 @@ public class SimulationAppService : PanoramaAppServiceBase, ISimulationAppServic
         var totalCount = await pagedQuery.CountAsync();
         var result = await pagedQuery.ToListAsync();
 
-        return new PagedResultDto<GetSimulationDto>(
+        return new PagedResultDto<ViewSimulationDto>(
             totalCount,
-            ObjectMapper.Map<List<GetSimulationDto>>(result)
+            ObjectMapper.Map<List<ViewSimulationDto>>(result)
         );
     }
 
+    [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_View)]
+    public async Task<ViewSimulationDto> GetSimulationById(long simulationId)
+    {
+        var existing = await _simulationRepository
+            .GetAll()
+            .Include(i => i.SimulationRuns)
+            .SingleOrDefaultAsync(x => x.Id == simulationId);
+        
+        if (existing is null)
+        {
+            Logger.Error($"An error occurred while trying to retrieve ${nameof(Simulation)} with Id ${simulationId} - " +
+                         $"simulation was not found.");
+            throw new UserFriendlyException(L("SimulationNotFound"));
+        }
+
+        return ObjectMapper.Map<ViewSimulationDto>(existing);
+    }
+    
     [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Create)]
     public async Task CreateSimulation(CreateSimulationDto input)
     {
@@ -99,7 +117,5 @@ public class SimulationAppService : PanoramaAppServiceBase, ISimulationAppServic
         ObjectMapper.Map(input, existing);
 
         await CurrentUnitOfWork.SaveChangesAsync();
-        
-        // TODO:T Add handling to the UI. Hide SceneCorrelationId once running count > 0.
     }
 }

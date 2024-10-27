@@ -1019,7 +1019,7 @@ export class SimulationServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllSimulations(keyword: string | undefined, hasRunning: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<GetSimulationDtoPagedResultDto> {
+    getAllSimulations(keyword: string | undefined, hasRunning: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ViewSimulationDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Simulation/GetAllSimulations?";
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
@@ -1054,14 +1054,14 @@ export class SimulationServiceProxy {
                 try {
                     return this.processGetAllSimulations(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetSimulationDtoPagedResultDto>;
+                    return _observableThrow(e) as any as Observable<ViewSimulationDtoPagedResultDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<GetSimulationDtoPagedResultDto>;
+                return _observableThrow(response_) as any as Observable<ViewSimulationDtoPagedResultDto>;
         }));
     }
 
-    protected processGetAllSimulations(response: HttpResponseBase): Observable<GetSimulationDtoPagedResultDto> {
+    protected processGetAllSimulations(response: HttpResponseBase): Observable<ViewSimulationDtoPagedResultDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1072,7 +1072,63 @@ export class SimulationServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetSimulationDtoPagedResultDto.fromJS(resultData200);
+            result200 = ViewSimulationDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param simulationId (optional) 
+     * @return Success
+     */
+    getSimulationById(simulationId: number | undefined): Observable<ViewSimulationDto> {
+        let url_ = this.baseUrl + "/api/services/app/Simulation/GetSimulationById?";
+        if (simulationId === null)
+            throw new Error("The parameter 'simulationId' cannot be null.");
+        else if (simulationId !== undefined)
+            url_ += "simulationId=" + encodeURIComponent("" + simulationId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSimulationById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSimulationById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ViewSimulationDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ViewSimulationDto>;
+        }));
+    }
+
+    protected processGetSimulationById(response: HttpResponseBase): Observable<ViewSimulationDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ViewSimulationDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1117,6 +1173,58 @@ export class SimulationServiceProxy {
     }
 
     protected processCreateSimulation(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    updateSimulation(body: UpdateSimulationDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Simulation/UpdateSimulation";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateSimulation(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateSimulation(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processUpdateSimulation(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2905,124 +3013,6 @@ export interface IGetRoleForEditOutput {
     grantedPermissionNames: string[] | undefined;
 }
 
-export class GetSimulationDto implements IGetSimulationDto {
-    id: number;
-    name: string | undefined;
-    description: string | undefined;
-    sceneCorrelationId: string | undefined;
-    runningCount: number;
-    tenantId: number;
-
-    constructor(data?: IGetSimulationDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.name = _data["name"];
-            this.description = _data["description"];
-            this.sceneCorrelationId = _data["sceneCorrelationId"];
-            this.runningCount = _data["runningCount"];
-            this.tenantId = _data["tenantId"];
-        }
-    }
-
-    static fromJS(data: any): GetSimulationDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetSimulationDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["name"] = this.name;
-        data["description"] = this.description;
-        data["sceneCorrelationId"] = this.sceneCorrelationId;
-        data["runningCount"] = this.runningCount;
-        data["tenantId"] = this.tenantId;
-        return data;
-    }
-
-    clone(): GetSimulationDto {
-        const json = this.toJSON();
-        let result = new GetSimulationDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IGetSimulationDto {
-    id: number;
-    name: string | undefined;
-    description: string | undefined;
-    sceneCorrelationId: string | undefined;
-    runningCount: number;
-    tenantId: number;
-}
-
-export class GetSimulationDtoPagedResultDto implements IGetSimulationDtoPagedResultDto {
-    items: GetSimulationDto[] | undefined;
-    totalCount: number;
-
-    constructor(data?: IGetSimulationDtoPagedResultDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items.push(GetSimulationDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): GetSimulationDtoPagedResultDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetSimulationDtoPagedResultDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-
-    clone(): GetSimulationDtoPagedResultDto {
-        const json = this.toJSON();
-        let result = new GetSimulationDtoPagedResultDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IGetSimulationDtoPagedResultDto {
-    items: GetSimulationDto[] | undefined;
-    totalCount: number;
-}
-
 export class Int64EntityDto implements IInt64EntityDto {
     id: number;
 
@@ -4038,6 +4028,61 @@ export interface IUpdateSceneDto {
     description: string | undefined;
 }
 
+export class UpdateSimulationDto implements IUpdateSimulationDto {
+    name: string;
+    description: string;
+    sceneCorrelationId: string;
+    id: number;
+
+    constructor(data?: IUpdateSimulationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.sceneCorrelationId = _data["sceneCorrelationId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): UpdateSimulationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateSimulationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["sceneCorrelationId"] = this.sceneCorrelationId;
+        data["id"] = this.id;
+        return data;
+    }
+
+    clone(): UpdateSimulationDto {
+        const json = this.toJSON();
+        let result = new UpdateSimulationDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateSimulationDto {
+    name: string;
+    description: string;
+    sceneCorrelationId: string;
+    id: number;
+}
+
 export class UserDto implements IUserDto {
     id: number;
     userName: string;
@@ -4237,6 +4282,124 @@ export interface IUserLoginInfoDto {
     surname: string | undefined;
     userName: string | undefined;
     emailAddress: string | undefined;
+}
+
+export class ViewSimulationDto implements IViewSimulationDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
+    sceneCorrelationId: string | undefined;
+    runningCount: number;
+    tenantId: number;
+
+    constructor(data?: IViewSimulationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.sceneCorrelationId = _data["sceneCorrelationId"];
+            this.runningCount = _data["runningCount"];
+            this.tenantId = _data["tenantId"];
+        }
+    }
+
+    static fromJS(data: any): ViewSimulationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ViewSimulationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["sceneCorrelationId"] = this.sceneCorrelationId;
+        data["runningCount"] = this.runningCount;
+        data["tenantId"] = this.tenantId;
+        return data;
+    }
+
+    clone(): ViewSimulationDto {
+        const json = this.toJSON();
+        let result = new ViewSimulationDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IViewSimulationDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
+    sceneCorrelationId: string | undefined;
+    runningCount: number;
+    tenantId: number;
+}
+
+export class ViewSimulationDtoPagedResultDto implements IViewSimulationDtoPagedResultDto {
+    items: ViewSimulationDto[] | undefined;
+    totalCount: number;
+
+    constructor(data?: IViewSimulationDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(ViewSimulationDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): ViewSimulationDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ViewSimulationDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+
+    clone(): ViewSimulationDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new ViewSimulationDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IViewSimulationDtoPagedResultDto {
+    items: ViewSimulationDto[] | undefined;
+    totalCount: number;
 }
 
 export class ApiException extends Error {
