@@ -9,7 +9,6 @@ import {finalize} from "rxjs/operators";
 import {CreateSimulationDialogComponent} from "@app/simulations/create-simulation/create-simulation-dialog.component";
 import {PanoTreeNode} from "@shared/service-proxies/common/trees/PanoTreeNode";
 import {TreeNode} from "primeng/api/treenode";
-import {ViewSceneDto} from "@shared/service-proxies/scenography/dtos/ViewSceneDto";
 import {EditSimulationDialogComponent} from "@app/simulations/edit-simulation/edit-simulation-dialog.component";
 
 
@@ -74,7 +73,7 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
         this.showCreateOrEditSimulationDialog();
     }
 
-    editSimulation(simulation: ViewSimulationDto): void {
+    editSimulation(simulation: SimulationTreeNode): void {
         this.showCreateOrEditSimulationDialog(simulation.id);
     }
     
@@ -125,10 +124,6 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
 
 class SimulationTreeNode extends PanoTreeNode<ViewSimulationDto> {
     id?: number;
-    description?: string;
-    sceneName?: string;
-    sceneCorrelationId?: string;
-    runningCount?: number;
     
     constructor(data: ViewSimulationDto) {
         super();
@@ -140,10 +135,6 @@ class SimulationTreeNode extends PanoTreeNode<ViewSimulationDto> {
             
             // concrete
             this.id = data.id;
-            this.description = data.description;
-            // this.sceneName = data.sceneName; // TODO:T add scene name to UI grid.
-            this.sceneCorrelationId = data.sceneCorrelationId;
-            // this.runningCount = data.runningCount; // TODO:T add count of running simulations.
         }
     }
 }

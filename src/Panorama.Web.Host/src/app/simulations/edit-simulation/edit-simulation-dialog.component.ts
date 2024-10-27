@@ -42,7 +42,7 @@ export class EditSimulationDialogComponent extends AppComponentBase {
         .getSimulationById(id)
         .pipe(finalize(() => this.setBusy('loading', false)))
         .subscribe(result => {
-          this.simulation = result;
+          this.simulation.init(result);
         });
   }
 

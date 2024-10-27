@@ -4033,6 +4033,7 @@ export class UpdateSimulationDto implements IUpdateSimulationDto {
     description: string;
     sceneCorrelationId: string;
     id: number;
+    runningCount: number;
 
     constructor(data?: IUpdateSimulationDto) {
         if (data) {
@@ -4049,6 +4050,7 @@ export class UpdateSimulationDto implements IUpdateSimulationDto {
             this.description = _data["description"];
             this.sceneCorrelationId = _data["sceneCorrelationId"];
             this.id = _data["id"];
+            this.runningCount = _data["runningCount"];
         }
     }
 
@@ -4065,6 +4067,7 @@ export class UpdateSimulationDto implements IUpdateSimulationDto {
         data["description"] = this.description;
         data["sceneCorrelationId"] = this.sceneCorrelationId;
         data["id"] = this.id;
+        data["runningCount"] = this.runningCount;
         return data;
     }
 
@@ -4081,6 +4084,7 @@ export interface IUpdateSimulationDto {
     description: string;
     sceneCorrelationId: string;
     id: number;
+    runningCount: number;
 }
 
 export class UserDto implements IUserDto {

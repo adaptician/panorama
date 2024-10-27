@@ -10,5 +10,8 @@ public class SimulationMappingProfile : Profile
         CreateMap<Simulation, ViewSimulationDto>();
         
         CreateMap<CreateSimulationDto, Simulation>();
+        
+        CreateMap<UpdateSimulationDto, Simulation>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
     }
 }

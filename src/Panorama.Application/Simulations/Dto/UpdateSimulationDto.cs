@@ -6,4 +6,6 @@ namespace Panorama.Simulations.Dto;
 public class UpdateSimulationDto : MutateSimulationDto, IEntityDto<long>
 {
     public long Id { get; set; }
+    
+    public int RunningCount { get; set; }
 }
