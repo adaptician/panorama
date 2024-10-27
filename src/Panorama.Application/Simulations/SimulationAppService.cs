@@ -118,4 +118,23 @@ public class SimulationAppService : PanoramaAppServiceBase, ISimulationAppServic
 
         await CurrentUnitOfWork.SaveChangesAsync();
     }
+
+    [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Delete)]
+    public async Task DeleteSimulation(long simulationId)
+    {
+        var existing = await _simulationRepository
+            .GetAll()
+            .SingleOrDefaultAsync(x => x.Id == simulationId);
+        
+        if (existing is null)
+        {
+            Logger.Error($"An error occurred while trying to delete ${nameof(Simulation)} with Id ${simulationId} - " +
+                         $"simulation was not found.");
+            throw new UserFriendlyException(L("SimulationNotFound"));
+        }
+
+        existing.IsDeleted = true;
+        
+        await CurrentUnitOfWork.SaveChangesAsync();
+    }
 }

@@ -103,8 +103,25 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
         });
     }
 
-    delete(entity: ViewSimulationDto): void {
-        throw new Error('Method not implemented.');
+    delete(simulation: ViewSimulationDto): void {
+        if (!simulation) return;
+        
+        abp.message.confirm(
+            this.l('SceneDeleteWarningMessage', simulation.name),
+            undefined,
+            (result: boolean) => {
+                if (result) {
+                    this.setBusy('saving', true);
+
+                    this._simulationService
+                        .deleteSimulation(simulation.id)
+                        .subscribe(() => {
+                            abp.notify.success(this.l('SuccessfullyDeleted'));
+                            this.refresh();
+                        });
+                }
+            }
+        );
     }
 
     clearFilters(): void {

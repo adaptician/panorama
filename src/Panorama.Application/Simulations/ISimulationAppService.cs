@@ -14,4 +14,6 @@ public interface ISimulationAppService : IApplicationService
     Task CreateSimulation(CreateSimulationDto input);
 
     Task UpdateSimulation(UpdateSimulationDto input);
+
+    Task DeleteSimulation(long simulationId);
 }
