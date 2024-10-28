@@ -17,7 +17,8 @@ import { LayoutStoreService } from './layout/layout-store.service';
 
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
-import {AreAnyBusyPipe} from "@shared/pipes/any-busy-pipe";
+import {AreAnyBusyPipe} from "@shared/pipes/any-busy.pipe";
+import {IsBusyPipe} from "@shared/pipes/is-busy.pipe";
 
 @NgModule({
     imports: [
@@ -32,6 +33,7 @@ import {AreAnyBusyPipe} from "@shared/pipes/any-busy-pipe";
         AbpModalFooterComponent,
         LocalizePipe,
         AreAnyBusyPipe,
+        IsBusyPipe,
         BusyDirective,
         EqualValidator
     ],
@@ -42,6 +44,7 @@ import {AreAnyBusyPipe} from "@shared/pipes/any-busy-pipe";
         AbpModalFooterComponent,
         LocalizePipe,
         AreAnyBusyPipe,
+        IsBusyPipe,
         BusyDirective,
         EqualValidator
     ]

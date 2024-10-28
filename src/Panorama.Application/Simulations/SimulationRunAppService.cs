@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
+using Abp.Timing.Timezone;
 using Abp.UI;
 using Microsoft.EntityFrameworkCore;
 using Panorama.Authorization;
@@ -17,17 +18,46 @@ public class SimulationRunAppService : PanoramaAppServiceBase
 {
     private readonly IRepository<Simulation, long> _simulationRepository;
     private readonly IRepository<SimulationRun, long> _simulationRunRepository;
-    
+    private readonly ITimeZoneConverter _timeZoneConverter;
+
+    public SimulationRunAppService(
+        IRepository<Simulation, long> simulationRepository, 
+        IRepository<SimulationRun, long> simulationRunRepository, 
+        ITimeZoneConverter timeZoneConverter)
+    {
+        _simulationRepository = simulationRepository;
+        _simulationRunRepository = simulationRunRepository;
+        _timeZoneConverter = timeZoneConverter;
+    }
+
     public async Task<IEnumerable<ViewSimulationRunDto>> GetAllSimulationRuns(long simulationId)
     {
+        var tenantId = AbpSession.TenantId;
+        var userId = AbpSession.UserId.HasValue
+            ? AbpSession.UserId.Value
+            : throw new Exception("User is required for timezone conversion.");
+        
         var runs = await _simulationRunRepository
             .GetAll()
             .Include(i => i.SimulationRunParticipants)
             .Where(x => x.SimulationId == simulationId)
-            .Select(x => ObjectMapper.Map<ViewSimulationRunDto>(x))
             .ToListAsync();
 
-        return runs;
+        var results = new List<ViewSimulationRunDto>();
+        
+        foreach (var run in runs)
+        {
+            var mapped = ObjectMapper.Map<ViewSimulationRunDto>(run);
+            var startTime = _timeZoneConverter.Convert(run.StartTime, tenantId, userId);
+            mapped.StartTime = startTime ?? throw new Exception("Timezone conversion failed.");
+            
+            var endTime = _timeZoneConverter.Convert(run.EndTime, tenantId, userId);
+            mapped.EndTime = endTime;
+            
+            results.Add(mapped);
+        }
+        
+        return results;
     }
     
     [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Running_Start)]

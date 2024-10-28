@@ -4752,6 +4752,7 @@ export interface IViewSimulationDtoPagedResultDto {
 }
 
 export class ViewSimulationRunDto implements IViewSimulationRunDto {
+    id: number;
     simulationId: number;
     startTime: moment.Moment;
     endTime: moment.Moment | undefined;
@@ -4768,6 +4769,7 @@ export class ViewSimulationRunDto implements IViewSimulationRunDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.simulationId = _data["simulationId"];
             this.startTime = _data["startTime"] ? moment(_data["startTime"].toString()) : <any>undefined;
             this.endTime = _data["endTime"] ? moment(_data["endTime"].toString()) : <any>undefined;
@@ -4784,6 +4786,7 @@ export class ViewSimulationRunDto implements IViewSimulationRunDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["simulationId"] = this.simulationId;
         data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
         data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
@@ -4800,6 +4803,7 @@ export class ViewSimulationRunDto implements IViewSimulationRunDto {
 }
 
 export interface IViewSimulationRunDto {
+    id: number;
     simulationId: number;
     startTime: moment.Moment;
     endTime: moment.Moment | undefined;

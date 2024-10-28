@@ -1,8 +1,9 @@
 ﻿using System;
+using Abp.Application.Services.Dto;
 
 namespace Panorama.Simulations.Dto;
 
-public class ViewSimulationRunDto
+public class ViewSimulationRunDto : EntityDto<long>
 {
     public long SimulationId { get; set; }
     

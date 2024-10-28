@@ -1,16 +1,20 @@
-import {Component, Injector} from '@angular/core';
+import {Component, Injector, OnInit} from '@angular/core';
 import {appModuleAnimation} from "@shared/animations/routerTransition";
 import {PagedListingComponentBase, PagedRequestDto} from "@shared/paged-listing-component-base";
 import {
     SimulationRunServiceProxy,
-    SimulationServiceProxy, ViewSimulationDto, ViewSimulationDtoPagedResultDto, ViewSimulationRunDto,
+    SimulationServiceProxy, ViewSimulationDto, ViewSimulationDtoPagedResultDto,
 } from "@shared/service-proxies/service-proxies";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {finalize} from "rxjs/operators";
 import {CreateSimulationDialogComponent} from "@app/simulations/create-simulation/create-simulation-dialog.component";
-import {PanoTreeNode} from "@shared/service-proxies/common/trees/PanoTreeNode";
-import {TreeNode} from "primeng/api/treenode";
 import {EditSimulationDialogComponent} from "@app/simulations/edit-simulation/edit-simulation-dialog.component";
+import {
+    SimulationRunTreeNode,
+    SimulationTreeNode
+} from "@shared/service-proxies/common/trees/simulation-tree-node";
+import {TreeNodeExpandEvent} from "primeng/tree";
+import {TreeTableLazyLoadEvent} from "@node_modules/primeng/treetable";
 
 
 class PagedSimulationsRequestDto extends PagedRequestDto {
@@ -18,17 +22,18 @@ class PagedSimulationsRequestDto extends PagedRequestDto {
     hasRunning: boolean | null;
 }
 
+
+
 @Component({
     selector: 'sim-simulations',
     templateUrl: './simulations.component.html',
     styleUrl: './simulations.component.less',
     animations: [appModuleAnimation()]
 })
-export class SimulationsComponent extends PagedListingComponentBase<ViewSimulationDto> {
+export class SimulationsComponent extends PagedListingComponentBase<ViewSimulationDto> implements OnInit {
     
     simulations: ViewSimulationDto[] = [];
     simulationNodes: SimulationTreeNode[] = [];
-    files!: TreeNode[];
     
     keyword = '';
     hasRunning: boolean | null;
@@ -43,6 +48,9 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
         super(injector);
     }
 
+    ngOnInit() {
+    }
+    
     list(
         request: PagedSimulationsRequestDto,
         pageNumber: number,
@@ -133,20 +141,28 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
         this.getDataPage(1);
     }
 
-    nodeExpand(event: SimulationTreeNode) {
+    onPageChange($event: TreeTableLazyLoadEvent) {
         
-        if (event) {
-            this.setBusy('loading', true);
+        this.pageNumber = ($event.first + $event.rows) / this.pageSize;
 
-            // this._simulationRunService
-            //     .getAllSimulationRuns(event.id)
-            //     .pipe(finalize(() => this.setBusy('loading', false)))
-            //     .subscribe(result => {
-            //         // TODO:T FIX MAPPING
-            //         event.children = result.map(_ => new PanoTreeNode<ViewSimulationRunDto>(_));
-            //     });
-        }
-        
+        this.getDataPage(this.pageNumber);
+    }
+    
+    onNodeExpand(event: TreeNodeExpandEvent) {
+        if (!event?.node?.data) return;
+
+        this.setBusy('tree', true);
+
+        const node = event.node;
+
+        this._simulationRunService
+            .getAllSimulationRuns(node.data.id)
+            .pipe(finalize(() => this.setBusy('tree', false)))
+            .subscribe(result => {
+                node.children = result.map(_ => new SimulationRunTreeNode(_), []);
+                
+                this.simulationNodes = [...this.simulationNodes];
+            });
     }
     
     private mapTreeNodes(sims: ViewSimulationDto[]): SimulationTreeNode[] {
@@ -156,22 +172,5 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
             return new SimulationTreeNode(_);
         }, []);
     }
-}
 
-class SimulationTreeNode extends PanoTreeNode<ViewSimulationDto> {
-    id?: number;
-    children?: PanoTreeNode<ViewSimulationRunDto>[];
-    
-    constructor(data: ViewSimulationDto) {
-        super();
-        
-        if (data) {
-            // base
-            this.label = data.name;
-            this.data = data;
-            
-            // concrete
-            this.id = data.id;
-        }
-    }
 }

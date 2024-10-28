@@ -13,14 +13,6 @@ export class AreAnyBusyPipe implements PipeTransform {
             return false;
         }
 
-        for (const _key in dictionary) {
-            const isBusy = dictionary[_key];
-            if(isBusy) {
-                // Return on first indicator that is busy.
-                return true;
-            }
-        }
-
-        return false;
+        return Object.values(dictionary).some(isBusy => isBusy);
     }
 }

@@ -44,7 +44,7 @@ public class SimulationAppService : PanoramaAppServiceBase, ISimulationAppServic
         var pagedQuery = query
             .PageBy(input);
         
-        var totalCount = await pagedQuery.CountAsync();
+        var totalCount = await query.CountAsync();
         var result = await pagedQuery.ToListAsync();
 
         return new PagedResultDto<ViewSimulationDto>(
