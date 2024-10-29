@@ -204,6 +204,7 @@
                                 type="button"
                                 tooltip="{{ 'StopSimulationRun' | localize }}"
                                 placement="top"
+                                (click)="stopRun(rowData?.id, rowNode?.node.parent)"
                         >
                           <i class="fa fa-circle-stop"></i>
                         </button>

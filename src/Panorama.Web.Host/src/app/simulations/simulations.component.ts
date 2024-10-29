@@ -153,6 +153,19 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
                 this.getSimulationRuns(node);
             });
     }
+
+    stopRun(simulationId: number, node: TreeNode): void {
+        if (!simulationId || !node?.data) return;
+
+        this.setBusy('loading', true);
+
+        this._simulationRunService
+            .stopRun(simulationId)
+            .pipe(finalize(() => this.setBusy('loading', false)))
+            .subscribe(result => {
+                this.getSimulationRuns(node);
+            });
+    }
     
     clearFilters(): void {
         this.keyword = '';
