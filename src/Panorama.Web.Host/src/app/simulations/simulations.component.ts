@@ -15,6 +15,7 @@ import {
 } from "@shared/service-proxies/common/trees/simulation-tree-node";
 import {TreeNodeExpandEvent} from "primeng/tree";
 import {TreeTableLazyLoadEvent} from "primeng/treetable";
+import {TreeNode} from "primeng/api/treenode";
 
 
 class PagedSimulationsRequestDto extends PagedRequestDto {
@@ -140,6 +141,19 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
         );
     }
 
+    startRun(simulationId: number, node: TreeNode): void {
+        if (!simulationId || !node?.data) return;
+        
+        this.setBusy('loading', true);
+
+        this._simulationRunService
+            .startRun(simulationId)
+            .pipe(finalize(() => this.setBusy('loading', false)))
+            .subscribe(result => {
+                this.getSimulationRuns(node);
+            });
+    }
+    
     clearFilters(): void {
         this.keyword = '';
         this.hasRunning = undefined;
@@ -153,21 +167,8 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
         this.getDataPage(this.pageNumber);
     }
     
-    onNodeExpand(event: TreeNodeExpandEvent) {
-        if (!event?.node?.data) return;
-
-        this.setBusy('tree', true);
-
-        const node = event.node;
-
-        this._simulationRunService
-            .getAllSimulationRuns(node.data.id)
-            .pipe(finalize(() => this.setBusy('tree', false)))
-            .subscribe(result => {
-                node.children = result.map(_ => new SimulationRunTreeNode(_), []);
-                
-                this.simulationNodes = [...this.simulationNodes];
-            });
+    onNodeExpand(node: TreeNode) {
+        this.getSimulationRuns(node);
     }
     
     private mapTreeNodes(sims: ViewSimulationDto[]): SimulationTreeNode[] {
@@ -178,4 +179,19 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
         }, []);
     }
 
+    private getSimulationRuns(node: TreeNode) {
+        if (!node?.data) return;
+
+        this.setBusy('tree', true);
+
+        this._simulationRunService
+            .getAllSimulationRuns(node.data.id)
+            .pipe(finalize(() => this.setBusy('tree', false)))
+            .subscribe(result => {
+                node.expanded = true;
+                node.children = result.map(_ => new SimulationRunTreeNode(_), []);
+
+                this.simulationNodes = [...this.simulationNodes];
+            });
+    }
 }

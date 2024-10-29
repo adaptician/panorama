@@ -145,7 +145,7 @@
                   [totalRecords]="totalItems"
                   [lazy]="true"
                   (onLazyLoad)="onPageChange($event)"
-                  (onNodeExpand)="onNodeExpand($event)"
+                  (onNodeExpand)="onNodeExpand($event.node)"
                   [scrollable]="true"
                   [tableStyle]="{ 'min-width': '50rem' }"
                   [loading]="(busy | isBusy : 'tree' : lastBusy)"
@@ -166,7 +166,7 @@
                     <td><p-treeTableToggler [rowNode]="rowNode" /></td>
                     <td>{{ rowData['name'] }}</td>
                     <td>{{ rowData['description'] }}</td>
-                    <td>{{ rowData['runningCount'] }}</td>
+                    <td>{{ rowNode?.node?.children?.length ?? (rowData['runningCount'] ?? 0) }}</td>
                     <td>
                       <div class="button-group">
                         <button class="btn btn-primary"
@@ -181,6 +181,7 @@
                                 type="button"
                                 tooltip="{{ 'StartNewSimulationRun' | localize }}"
                                 placement="top"
+                                (click)="startRun(rowData?.id, rowNode?.node)"
                         >
                           <i class="fa fa-play-circle"></i>
                         </button>
