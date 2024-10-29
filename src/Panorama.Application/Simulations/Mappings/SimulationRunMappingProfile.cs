@@ -13,6 +13,9 @@ public class SimulationRunMappingProfile : Profile
             {
                 opt.Condition(c => c.SimulationRunParticipants is not null && c.SimulationRunParticipants.Any());
                     opt.MapFrom(src => src.SimulationRunParticipants.Count);
-            });
+            })
+            .ForMember(dest => dest.Participants, opt => opt.MapFrom(src => src.SimulationRunParticipants));
+
+        CreateMap<SimulationRunParticipant, ViewSimulationRunParticipantDto>();
     }
 }

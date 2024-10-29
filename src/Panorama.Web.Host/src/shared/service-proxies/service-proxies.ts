@@ -4757,6 +4757,7 @@ export class ViewSimulationRunDto implements IViewSimulationRunDto {
     startTime: moment.Moment;
     endTime: moment.Moment | undefined;
     participantCount: number;
+    participants: ViewSimulationRunParticipantDto[] | undefined;
 
     constructor(data?: IViewSimulationRunDto) {
         if (data) {
@@ -4774,6 +4775,11 @@ export class ViewSimulationRunDto implements IViewSimulationRunDto {
             this.startTime = _data["startTime"] ? moment(_data["startTime"].toString()) : <any>undefined;
             this.endTime = _data["endTime"] ? moment(_data["endTime"].toString()) : <any>undefined;
             this.participantCount = _data["participantCount"];
+            if (Array.isArray(_data["participants"])) {
+                this.participants = [] as any;
+                for (let item of _data["participants"])
+                    this.participants.push(ViewSimulationRunParticipantDto.fromJS(item));
+            }
         }
     }
 
@@ -4791,6 +4797,11 @@ export class ViewSimulationRunDto implements IViewSimulationRunDto {
         data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
         data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
         data["participantCount"] = this.participantCount;
+        if (Array.isArray(this.participants)) {
+            data["participants"] = [];
+            for (let item of this.participants)
+                data["participants"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -4808,6 +4819,66 @@ export interface IViewSimulationRunDto {
     startTime: moment.Moment;
     endTime: moment.Moment | undefined;
     participantCount: number;
+    participants: ViewSimulationRunParticipantDto[] | undefined;
+}
+
+export class ViewSimulationRunParticipantDto implements IViewSimulationRunParticipantDto {
+    id: number;
+    simulationRunId: number;
+    userId: number;
+    entryTime: moment.Moment;
+    exitTime: moment.Moment | undefined;
+
+    constructor(data?: IViewSimulationRunParticipantDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.simulationRunId = _data["simulationRunId"];
+            this.userId = _data["userId"];
+            this.entryTime = _data["entryTime"] ? moment(_data["entryTime"].toString()) : <any>undefined;
+            this.exitTime = _data["exitTime"] ? moment(_data["exitTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ViewSimulationRunParticipantDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ViewSimulationRunParticipantDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["simulationRunId"] = this.simulationRunId;
+        data["userId"] = this.userId;
+        data["entryTime"] = this.entryTime ? this.entryTime.toISOString() : <any>undefined;
+        data["exitTime"] = this.exitTime ? this.exitTime.toISOString() : <any>undefined;
+        return data;
+    }
+
+    clone(): ViewSimulationRunParticipantDto {
+        const json = this.toJSON();
+        let result = new ViewSimulationRunParticipantDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IViewSimulationRunParticipantDto {
+    id: number;
+    simulationRunId: number;
+    userId: number;
+    entryTime: moment.Moment;
+    exitTime: moment.Moment | undefined;
 }
 
 export class ApiException extends Error {

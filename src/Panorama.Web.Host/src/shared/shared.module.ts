@@ -19,6 +19,7 @@ import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
 import {AreAnyBusyPipe} from "@shared/pipes/any-busy.pipe";
 import {IsBusyPipe} from "@shared/pipes/is-busy.pipe";
+import {ContainsUserPipe} from "@shared/pipes/contains-user.pipe";
 
 @NgModule({
     imports: [
@@ -34,6 +35,7 @@ import {IsBusyPipe} from "@shared/pipes/is-busy.pipe";
         LocalizePipe,
         AreAnyBusyPipe,
         IsBusyPipe,
+        ContainsUserPipe,
         BusyDirective,
         EqualValidator
     ],
@@ -45,6 +47,7 @@ import {IsBusyPipe} from "@shared/pipes/is-busy.pipe";
         LocalizePipe,
         AreAnyBusyPipe,
         IsBusyPipe,
+        ContainsUserPipe,
         BusyDirective,
         EqualValidator
     ]

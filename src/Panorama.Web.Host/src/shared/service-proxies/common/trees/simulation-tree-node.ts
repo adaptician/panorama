@@ -29,7 +29,7 @@ export class SimulationRunTreeNode extends TreeNodeBase<ViewSimulationRunDto> {
 
         if (data) {
             // base
-            this.label = data.startTime.toString(); // TODO:T format date.
+            this.label = data.startTime.toString();
             this.data = data;
             this.leaf = true;
 

@@ -210,15 +210,17 @@
                                 type="button"
                                 tooltip="{{ 'JoinSimulationRun' | localize }}"
                                 placement="top"
+                                *ngIf="!(rowData['participants'] | containsUser : userId)"
                         >
-                          <i class="fa fa-arrow-right-to-bracket"></i>
+                          <i class="fa fa-door-open"></i>
                         </button>
-                        <button class="btn btn-tertiary"
+                        <button class="btn btn-danger"
                                 type="button"
                                 tooltip="{{ 'LeaveSimulationRun' | localize }}"
                                 placement="top"
+                                *ngIf="(rowData['participants'] | containsUser : userId)"
                         >
-                          <i class="fa fa-arrow-right-from-bracket"></i>
+                          <i class="fa fa-right-from-bracket"></i>
                         </button>
                       </div>
                     </td>

@@ -38,6 +38,8 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
     keyword = '';
     hasRunning: boolean | null;
     advancedFiltersVisible = false;
+    
+    userId: number;
 
     constructor(
         injector: Injector,
@@ -49,6 +51,7 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
     }
 
     ngOnInit() {
+        this.userId = this.appSession.userId;
     }
     
     list(
