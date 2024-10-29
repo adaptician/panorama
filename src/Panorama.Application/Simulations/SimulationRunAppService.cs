@@ -19,15 +19,18 @@ public class SimulationRunAppService : PanoramaAppServiceBase, ISimulationRunApp
 {
     private readonly IRepository<Simulation, long> _simulationRepository;
     private readonly IRepository<SimulationRun, long> _simulationRunRepository;
+    private readonly IRepository<SimulationRunParticipant, long> _simulationRunParticipantRepository;
     private readonly ITimeZoneConverter _timeZoneConverter;
 
     public SimulationRunAppService(
         IRepository<Simulation, long> simulationRepository, 
-        IRepository<SimulationRun, long> simulationRunRepository, 
+        IRepository<SimulationRun, long> simulationRunRepository,
+        IRepository<SimulationRunParticipant, long> simulationRunParticipantRepository,
         ITimeZoneConverter timeZoneConverter)
     {
         _simulationRepository = simulationRepository;
         _simulationRunRepository = simulationRunRepository;
+        _simulationRunParticipantRepository = simulationRunParticipantRepository;
         _timeZoneConverter = timeZoneConverter;
     }
 
@@ -94,6 +97,19 @@ public class SimulationRunAppService : PanoramaAppServiceBase, ISimulationRunApp
     [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Running_Participate)]
     public async Task JoinSimulation(long simulationRunId)
     {
+        var userId = AbpSession.UserId;
+        if (userId is null)
+        {
+            throw new UserFriendlyException(L("UnableToDetermineUserFromSession"));
+        }
+
+        var isParticipating = await _simulationRunParticipantRepository.GetAll().AnyAsync(x => x.UserId == userId);
+
+        if (isParticipating)
+        {
+            throw new UserFriendlyException(L("UserCannotParticipateInMoreThanOneSimulationRun"));
+        }
+        
         var existing = await _simulationRunRepository
             .GetAll()
             .Include(i => i.SimulationRunParticipants)
@@ -106,12 +122,6 @@ public class SimulationRunAppService : PanoramaAppServiceBase, ISimulationRunApp
             throw new UserFriendlyException(L("SimulationNotFound"));
         }
 
-        var userId = AbpSession.UserId;
-        if (userId is null)
-        {
-            throw new UserFriendlyException(L("UnableToDetermineUserFromSession"));
-        }
-        
         var participant = new SimulationRunParticipant(simulationRunId, userId.Value);
 
         existing.SimulationRunParticipants ??= new List<SimulationRunParticipant>();

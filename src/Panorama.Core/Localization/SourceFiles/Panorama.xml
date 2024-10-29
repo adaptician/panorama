@@ -151,6 +151,7 @@
     <text name="SimulationNotFound">Simulation not found.</text>
     <text name="SceneCannotBeUpdatedForSimulationWithRunning">Scene cannot be changed once a simulation has been run.</text>
     <text name="MaximumConcurrentSimulationsRunningReached">Unable to start running simulation - the maximum number running instances has been reached.</text>
+    <text name="UserCannotParticipateInMoreThanOneSimulationRun">A user cannot participate in more than one simulation at a time.</text>
     
     <text name="UserNotFound">User not found.</text>
     <text name="UnableToDetermineUserFromSession">Unable to determine user.</text>

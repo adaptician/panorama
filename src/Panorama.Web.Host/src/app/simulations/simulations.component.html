@@ -6,7 +6,9 @@
           <h1>{{ "SimulationsHeading" | localize }}</h1>
         </div>
         <div class="col-6 text-right">
-          <a href="javascript:;" class="btn bg-blue" (click)="createSimulation()">
+          <a href="javascript:;" class="btn bg-blue"
+             *ngIf="('Pages.Tenant.Simulations.Create' | may )" 
+             (click)="createSimulation()">
             <i class="fa fa-plus-square"></i>
             {{ "Create" | localize }}
           </a>
@@ -173,6 +175,7 @@
                                 type="button"
                                 tooltip="{{ 'EditSimulation' | localize }}"
                                 placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Update' | may )"
                                 (click)="editSimulation(rowData)"
                         >
                           <i class="fa fa-pencil"></i>
@@ -181,6 +184,7 @@
                                 type="button"
                                 tooltip="{{ 'StartNewSimulationRun' | localize }}"
                                 placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Running.Start' | may )"
                                 (click)="startRun(rowData?.id, rowNode?.node)"
                         >
                           <i class="fa fa-play-circle"></i>
@@ -204,6 +208,7 @@
                                 type="button"
                                 tooltip="{{ 'StopSimulationRun' | localize }}"
                                 placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Running.Stop' | may )"
                                 (click)="stopRun(rowData?.id, rowNode?.node.parent)"
                         >
                           <i class="fa fa-circle-stop"></i>
@@ -212,7 +217,8 @@
                                 type="button"
                                 tooltip="{{ 'JoinSimulationRun' | localize }}"
                                 placement="top"
-                                *ngIf="!(rowData['participants'] | containsUser : userId)"
+                                *ngIf="('Pages.Tenant.Simulations.Running.Participate' | may )
+                                        && !(rowData['participants'] | containsUser : userId)"
                                 (click)="joinRun(rowData?.id, rowNode?.node.parent)"
                         >
                           <i class="fa fa-door-open"></i>
@@ -221,7 +227,8 @@
                                 type="button"
                                 tooltip="{{ 'LeaveSimulationRun' | localize }}"
                                 placement="top"
-                                *ngIf="(rowData['participants'] | containsUser : userId)"
+                                *ngIf="('Pages.Tenant.Simulations.Running.Participate' | may )
+                                        && (rowData['participants'] | containsUser : userId)"
                                 (click)="leaveRun(rowData?.id, rowNode?.node.parent)"
                         >
                           <i class="fa fa-right-from-bracket"></i>
