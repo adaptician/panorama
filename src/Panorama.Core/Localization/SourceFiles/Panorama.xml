@@ -139,6 +139,10 @@
     <text name="CreateNewSimulation">Create new simulation</text>
     <text name="EditSimulation">Edit simulation</text>
     <text name="SimulationDeleteWarningMessage">Simulation {0} will be deleted.</text>
+    <text name="StartNewSimulationRun">Start new simulation run</text>
+    <text name="StopSimulationRun">Stop simulation run</text>
+    <text name="JoinSimulationRun">Join simulation run</text>
+    <text name="LeaveSimulationRun">Leave simulation run</text>
     
     <text name="SimulationsHeading">Simulations</text>
     <text name="HasRunningSimulations">Has running</text>

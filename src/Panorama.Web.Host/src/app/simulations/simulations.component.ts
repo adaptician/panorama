@@ -14,7 +14,7 @@ import {
     SimulationTreeNode
 } from "@shared/service-proxies/common/trees/simulation-tree-node";
 import {TreeNodeExpandEvent} from "primeng/tree";
-import {TreeTableLazyLoadEvent} from "@node_modules/primeng/treetable";
+import {TreeTableLazyLoadEvent} from "primeng/treetable";
 
 
 class PagedSimulationsRequestDto extends PagedRequestDto {
@@ -83,7 +83,9 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
         this.showCreateOrEditSimulationDialog();
     }
 
-    editSimulation(simulation: SimulationTreeNode): void {
+    editSimulation(simulation: ViewSimulationDto): void {
+        if (!simulation || simulation.id <= 0) return;
+        
         this.showCreateOrEditSimulationDialog(simulation.id);
     }
     

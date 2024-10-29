@@ -11,6 +11,7 @@ import { EditSimulationDialogComponent } from './edit-simulation/edit-simulation
 import {NgxPaginationModule} from "ngx-pagination";
 import {Button} from "primeng/button";
 import {TreeTableModule} from "primeng/treetable";
+import {TooltipModule} from "ngx-bootstrap/tooltip";
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {TreeTableModule} from "primeng/treetable";
         TreeModule,
         TreeTableModule,
         Button,
+        TooltipModule,
     ]
 })
 export class SimulationsModule { }

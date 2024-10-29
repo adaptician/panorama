@@ -168,12 +168,23 @@
                     <td>{{ rowData['description'] }}</td>
                     <td>{{ rowData['runningCount'] }}</td>
                     <td>
-                      <button class="btn btn-primary"
-                        type="button"
-                      >
-                        <i class="fa fa-play-circle"></i>
-                        {{ 'StartNew' | localize }}
-                      </button>
+                      <div class="button-group">
+                        <button class="btn btn-primary"
+                                type="button"
+                                tooltip="{{ 'EditSimulation' | localize }}"
+                                placement="top"
+                                (click)="editSimulation(rowData)"
+                        >
+                          <i class="fa fa-pencil"></i>
+                        </button>
+                        <button class="btn btn-primary"
+                                type="button"
+                                tooltip="{{ 'StartNewSimulationRun' | localize }}"
+                                placement="top"
+                        >
+                          <i class="fa fa-play-circle"></i>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                   
@@ -190,16 +201,22 @@
                       <div class="button-group">
                         <button class="btn btn-secondary"
                                 type="button"
+                                tooltip="{{ 'StopSimulationRun' | localize }}"
+                                placement="top"
                         >
                           <i class="fa fa-circle-stop"></i>
                         </button>
                         <button class="btn btn-tertiary"
                                 type="button"
+                                tooltip="{{ 'JoinSimulationRun' | localize }}"
+                                placement="top"
                         >
                           <i class="fa fa-arrow-right-to-bracket"></i>
                         </button>
                         <button class="btn btn-tertiary"
                                 type="button"
+                                tooltip="{{ 'LeaveSimulationRun' | localize }}"
+                                placement="top"
                         >
                           <i class="fa fa-arrow-right-from-bracket"></i>
                         </button>
