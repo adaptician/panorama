@@ -11,9 +11,9 @@ public interface ISimulationRunAppService : IApplicationService
     
     Task StartRun(long simulationId);
 
-    Task JoinSimulation(long simulationRunId, long? userId = null);
+    Task JoinSimulation(long simulationRunId);
 
-    Task LeaveSimulation(long simulationRunId, long userId);
+    Task LeaveSimulation(long simulationRunId);
 
     Task StopRun(long simulationRunId);
 }

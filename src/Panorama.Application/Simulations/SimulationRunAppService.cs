@@ -10,11 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using Panorama.Authorization;
 using Panorama.Core.Shared.Simulations;
 using Panorama.Simulations.Dto;
+using Panorama.Simulations.Interfaces;
 
 namespace Panorama.Simulations;
 
 [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations)]
-public class SimulationRunAppService : PanoramaAppServiceBase
+public class SimulationRunAppService : PanoramaAppServiceBase, ISimulationRunAppService
 {
     private readonly IRepository<Simulation, long> _simulationRepository;
     private readonly IRepository<SimulationRun, long> _simulationRunRepository;
@@ -91,7 +92,7 @@ public class SimulationRunAppService : PanoramaAppServiceBase
     }
     
     [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Running_Participate)]
-    public async Task JoinSimulation(long simulationRunId, long? userId = null)
+    public async Task JoinSimulation(long simulationRunId)
     {
         var existing = await _simulationRunRepository
             .GetAll()
@@ -105,9 +106,7 @@ public class SimulationRunAppService : PanoramaAppServiceBase
             throw new UserFriendlyException(L("SimulationNotFound"));
         }
 
-        // If the userId is not explicitly specified, try to retrieve it from session.
-        userId ??= AbpSession.UserId;
-
+        var userId = AbpSession.UserId;
         if (userId is null)
         {
             throw new UserFriendlyException(L("UnableToDetermineUserFromSession"));
@@ -122,7 +121,7 @@ public class SimulationRunAppService : PanoramaAppServiceBase
     }
     
     [AbpAuthorize(PermissionNames.Pages_Tenant_Simulations_Running_Participate)]
-    public async Task LeaveSimulation(long simulationRunId, long userId)
+    public async Task LeaveSimulation(long simulationRunId)
     {
         var existing = await _simulationRunRepository
             .GetAll()
@@ -141,6 +140,7 @@ public class SimulationRunAppService : PanoramaAppServiceBase
             throw new UserFriendlyException(L("UserParticipantNotFound"));
         }
 
+        var userId = AbpSession.UserId;
         var participant = existing.SimulationRunParticipants.FirstOrDefault(x => x.UserId == userId);
 
         if (participant is null)

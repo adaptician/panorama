@@ -213,6 +213,7 @@
                                 tooltip="{{ 'JoinSimulationRun' | localize }}"
                                 placement="top"
                                 *ngIf="!(rowData['participants'] | containsUser : userId)"
+                                (click)="joinRun(rowData?.id, rowNode?.node.parent)"
                         >
                           <i class="fa fa-door-open"></i>
                         </button>

@@ -144,11 +144,11 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
     startRun(simulationId: number, node: TreeNode): void {
         if (!simulationId || !node?.data) return;
         
-        this.setBusy('loading', true);
+        node.loading = true;
 
         this._simulationRunService
             .startRun(simulationId)
-            .pipe(finalize(() => this.setBusy('loading', false)))
+            .pipe(finalize(() => node.loading = false))
             .subscribe(result => {
                 this.getSimulationRuns(node);
             });
@@ -157,11 +157,25 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
     stopRun(simulationId: number, node: TreeNode): void {
         if (!simulationId || !node?.data) return;
 
-        this.setBusy('loading', true);
+        node.loading = true;
 
         this._simulationRunService
             .stopRun(simulationId)
-            .pipe(finalize(() => this.setBusy('loading', false)))
+            .pipe(finalize(() => node.loading = false))
+            .subscribe(result => {
+                this.getSimulationRuns(node);
+            });
+    }
+
+    joinRun(simulationRunId: number, node: TreeNode): void {
+        console.log(`SIM RUN ID ${simulationRunId}`);
+        if (!simulationRunId || !node?.data) return;
+
+        node.loading = true;
+
+        this._simulationRunService
+            .joinSimulation(simulationRunId)
+            .pipe(finalize(() => node.loading = false))
             .subscribe(result => {
                 this.getSimulationRuns(node);
             });

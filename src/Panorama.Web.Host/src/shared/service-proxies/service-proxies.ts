@@ -1424,19 +1424,14 @@ export class SimulationRunServiceProxy {
 
     /**
      * @param simulationRunId (optional) 
-     * @param userId (optional) 
      * @return Success
      */
-    joinSimulation(simulationRunId: number | undefined, userId: number | undefined): Observable<void> {
+    joinSimulation(simulationRunId: number | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/SimulationRun/JoinSimulation?";
         if (simulationRunId === null)
             throw new Error("The parameter 'simulationRunId' cannot be null.");
         else if (simulationRunId !== undefined)
             url_ += "simulationRunId=" + encodeURIComponent("" + simulationRunId) + "&";
-        if (userId === null)
-            throw new Error("The parameter 'userId' cannot be null.");
-        else if (userId !== undefined)
-            url_ += "userId=" + encodeURIComponent("" + userId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1481,19 +1476,14 @@ export class SimulationRunServiceProxy {
 
     /**
      * @param simulationRunId (optional) 
-     * @param userId (optional) 
      * @return Success
      */
-    leaveSimulation(simulationRunId: number | undefined, userId: number | undefined): Observable<void> {
+    leaveSimulation(simulationRunId: number | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/SimulationRun/LeaveSimulation?";
         if (simulationRunId === null)
             throw new Error("The parameter 'simulationRunId' cannot be null.");
         else if (simulationRunId !== undefined)
             url_ += "simulationRunId=" + encodeURIComponent("" + simulationRunId) + "&";
-        if (userId === null)
-            throw new Error("The parameter 'userId' cannot be null.");
-        else if (userId !== undefined)
-            url_ += "userId=" + encodeURIComponent("" + userId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
