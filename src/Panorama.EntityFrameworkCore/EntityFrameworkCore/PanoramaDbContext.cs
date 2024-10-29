@@ -56,7 +56,7 @@ namespace Panorama.EntityFrameworkCore
             modelBuilder.Entity<SimulationRunParticipant>(b =>
             {
                 // A user may only participate in a single running simulation at any given time.
-                b.HasIndex(e => new { e.UserId }).IsUnique().HasFilter("[IsDeleted] = 0");
+                b.HasIndex(e => new { e.SimulationRunId, e.UserId }).IsUnique().HasFilter("[IsDeleted] = 0");
             });
 
             #endregion
