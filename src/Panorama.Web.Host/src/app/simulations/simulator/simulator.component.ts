@@ -166,7 +166,7 @@ export class SimulatorComponent extends AppComponentBase implements OnInit {
             this._projectionCamera = this._cameraFactory.createPerspectiveCamera(this.projectionCanvas);
         }
 
-        this._projectionControls = this.createControls(this._projectionCamera, this.projectionCanvas);
+        this._projectionControls = this.createOrbitControls(this._projectionCamera, this.projectionCanvas);
     }
 
     private parseScene(metaJson: string, meshRefs: THREE.Mesh[], camera: THREE.Camera): THREE.Scene {
@@ -251,7 +251,7 @@ export class SimulatorComponent extends AppComponentBase implements OnInit {
 
     //#region Control Handlers
 
-    private createControls(camera: THREE.Camera, canvas: HTMLCanvasElement): OrbitControls {
+    private createOrbitControls(camera: THREE.Camera, canvas: HTMLCanvasElement): OrbitControls {
         let controls = new OrbitControls(camera, canvas);
         controls.enableDamping = true;
 
