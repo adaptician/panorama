@@ -9,6 +9,7 @@ import {finalize} from "rxjs/operators";
 import {CameraFactory} from "@shared/factories/camera.factory";
 import {MeshFactory} from "@shared/factories/mesh.factory";
 import {PrototypeRegistry} from "@shared/registries/prototype.registry";
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 @Component({
     selector: 'sim-simulator',
@@ -47,6 +48,12 @@ export class SimulatorComponent extends AppComponentBase implements OnInit {
     private _projectionScene!: THREE.Scene;
 
     //#endregion
+
+    //#region Controls
+
+    private _projectionControls: OrbitControls;
+
+    //#endregion Controls
         
     //#region Trackers
 
@@ -158,6 +165,8 @@ export class SimulatorComponent extends AppComponentBase implements OnInit {
             // No camera was parsed into the scene; create one.
             this._projectionCamera = this._cameraFactory.createPerspectiveCamera(this.projectionCanvas);
         }
+
+        this._projectionControls = this.createControls(this._projectionCamera, this.projectionCanvas);
     }
 
     private parseScene(metaJson: string, meshRefs: THREE.Mesh[], camera: THREE.Camera): THREE.Scene {
@@ -239,6 +248,17 @@ export class SimulatorComponent extends AppComponentBase implements OnInit {
     }
 
     //#endregion
+
+    //#region Control Handlers
+
+    private createControls(camera: THREE.Camera, canvas: HTMLCanvasElement): OrbitControls {
+        let controls = new OrbitControls(camera, canvas);
+        controls.enableDamping = true;
+
+        return controls;
+    }
+
+    //#endregion Control Handlers
     
     //#region Rendering Loop
 
