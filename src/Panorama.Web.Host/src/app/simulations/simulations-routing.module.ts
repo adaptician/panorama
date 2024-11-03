@@ -10,6 +10,11 @@ const routes: Routes = [
         pathMatch: 'full',
         data: { permission: 'Pages.Tenant.Simulations.View' },
         canActivate: [AppRouteGuard]
+    },
+    {
+        path: 'simulator',
+        loadChildren: () => import('./simulator/simulator.module').then(m => m.SimulatorModule), // Lazy load simulations module
+        data: { preload: false }
     }
 ];
 
