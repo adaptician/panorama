@@ -13,22 +13,22 @@ export class PrototypeRegistry {
 
     // #region Materials
 
-    private _concreteMaterial1 = new THREE.MeshStandardMaterial({
-        color: THREEConstants.Colors.concrete_light,
+    private _concreteMaterial_0 = new THREE.MeshStandardMaterial({
+        color: THREEConstants.Colors.concrete_0,
         metalness: 0.3,
         roughness: 0.4,
         // envMap: this._concreteCubeMapTexture,
         // envMapIntensity: 0.5
     });
-    private _concreteMaterial2 = new THREE.MeshStandardMaterial({
-        color: THREEConstants.Colors.concrete,
+    private _concreteMaterial_50 = new THREE.MeshStandardMaterial({
+        color: THREEConstants.Colors.concrete_50,
         metalness: 0.3,
         roughness: 0.4,
         // envMap: this._concreteCubeMapTexture,
         // envMapIntensity: 0.5
     });
-    private _concreteMaterial3 = new THREE.MeshStandardMaterial({
-        color: THREEConstants.Colors.concrete_dark,
+    private _concreteMaterial_100 = new THREE.MeshStandardMaterial({
+        color: THREEConstants.Colors.concrete_100,
         metalness: 0.3,
         roughness: 0.4,
         // envMap: this._concreteCubeMapTexture,
@@ -39,14 +39,46 @@ export class PrototypeRegistry {
         const choice = huePercent ? huePercent :  Math.random();
         
         if (choice > 0.3 && choice < 0.6) {
-            return this._concreteMaterial2.clone();
+            return this._concreteMaterial_0.clone();
         } else if (choice > 0.6) {
-            return this._concreteMaterial3.clone();
+            return this._concreteMaterial_50.clone();
         } else {
-            return this._concreteMaterial1.clone();
+            return this._concreteMaterial_100.clone();
         }
 
     }
+    
+    // TODO:T READY TO TEST color lookup.
+    public cloneMaterial(colorName: string, huePercent?: number) {
+
+        // e.g. 0, 0.1, 0.3, 0.5, 0.8, 1
+        const choice = huePercent ? huePercent :  Math.random();
+        
+        const dividend = 100;
+        const divisor = 3;
+        const quotient = Math.floor(dividend / divisor);
+        
+        // e.g. 1, 2, 3
+        let increment = 0; 
+        
+        while (increment < divisor) {
+            if (choice < (quotient / 100))
+                return this._materials[`${colorName}_${huePercent*100}`];
+            
+            increment += 1;
+        }
+        
+        // Return default;
+        return this._materials[`default_50`];
+    }
+    
+    private _materials: { [key: string]: THREE.MeshStandardMaterial } = {
+        "default_50": this._concreteMaterial_50.clone(),
+        // CONCRETE
+        "concrete_0": this._concreteMaterial_0.clone(),
+        "concrete_50": this._concreteMaterial_50.clone(), // TODO:T update
+        "concrete_100": this._concreteMaterial_100.clone(),
+    };
 
     // #endregion Materials
 
