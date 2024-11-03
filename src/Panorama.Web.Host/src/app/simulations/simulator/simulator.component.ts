@@ -10,6 +10,7 @@ import {CameraFactory} from "@shared/factories/camera.factory";
 import {MeshFactory} from "@shared/factories/mesh.factory";
 import {PrototypeRegistry} from "@shared/registries/prototype.registry";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import {THREEConstants} from "@shared/THREE.constants";
 
 @Component({
     selector: 'sim-simulator',
@@ -158,8 +159,7 @@ export class SimulatorComponent extends AppComponentBase implements OnInit {
         
         this._projectionScene = this.parseScene(metaJson, this._projectionMeshTrackers, this._projectionCamera);
 
-        // TODO:T move this color to a variable somewhere.
-        this._projectionScene.background = new THREE.Color( 0x25274d );
+        this._projectionScene.background = new THREE.Color( THREEConstants.Scene.colors.background );
 
         if (!this._projectionCamera) {
             // No camera was parsed into the scene; create one.
@@ -219,7 +219,7 @@ export class SimulatorComponent extends AppComponentBase implements OnInit {
 
     private setupFloor() {
         const geometry = this._prototypeRegistry.planeGeometry;
-        const material = this._prototypeRegistry.darkConcreteMaterial;
+        const material = this._prototypeRegistry.cloneConcreteMaterial(0.9);
         material.visible = true;
         
         let floor: THREE.Mesh = new THREE.Mesh(geometry, material);
