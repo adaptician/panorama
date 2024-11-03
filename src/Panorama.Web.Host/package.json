@@ -37,6 +37,7 @@
     "push.js": "1.0.12",
     "rxjs": "^7.8.1",
     "sweetalert2": "^11.10.1",
+    "three": "^0.169.0",
     "ts-helpers": "^1.1.2",
     "tslib": "^2.6.2",
     "zone.js": "~0.14.2"
@@ -50,6 +51,7 @@
     "@types/lodash-es": "^4.17.11",
     "@types/moment-timezone": "^0.5.30",
     "@types/node": "^20.9.3",
+    "@types/three": "^0.169.0",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~5.1.1",
     "jasmine-spec-reporter": "~7.0.0",

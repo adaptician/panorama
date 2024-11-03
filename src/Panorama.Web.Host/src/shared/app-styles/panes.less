@@ -1,0 +1,28 @@
+@import './colors.less';
+
+.panes-container {
+  display: flex;
+  background-color: @tertiary-10;
+  
+  .pane-orientation {
+    display: flex;
+    justify-content: space-between;
+    
+    &--column {
+      flex-flow: column;
+    }
+  }
+  
+  .pane {
+    display: none;
+    width: 100%;
+    background-color: @meta-30;
+    border: 3px solid @meta-30;
+    padding: 0.5rem;
+    margin: 1rem;
+
+    &.open {
+      display: flex;
+    }
+  }
+}

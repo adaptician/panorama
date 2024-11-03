@@ -55,6 +55,9 @@
     <None Remove="external_libs\**" />
     <None Remove="node_modules\**" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\assets\textures\" />
+  </ItemGroup>
   <PropertyGroup>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>

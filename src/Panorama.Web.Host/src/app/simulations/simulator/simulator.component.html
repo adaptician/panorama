@@ -1,1 +1,18 @@
-<p>simulator works!</p>
+<div class="panes-container">
+  <div class="pane-orientation pane-orientation--column">
+    <div class="pane open">
+      <div>
+        <canvas #projectionCanvas></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <button
+        class="btn btn-primary"
+        type="button"
+        (click)="onGetScene()"
+  >
+    GET SCENE
+  </button>
+</div>
