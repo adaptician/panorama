@@ -3,29 +3,39 @@ import {CommonModule} from '@angular/common';
 import {SimulationsComponent} from './simulations.component';
 import {SimulationsRoutingModule} from "@app/simulations/simulations-routing.module";
 import {FormsModule} from "@angular/forms";
-import {NgxPaginationModule} from "@node_modules/ngx-pagination";
 import {SharedModule} from "@shared/shared.module";
 import {TabsModule} from "ngx-bootstrap/tabs";
-import {ScenesComponent} from './scenes/scenes.component';
-import {CreateSceneDialogComponent} from "@app/simulations/scenes/create-scene/create-scene-dialog.component";
-import {EditSceneDialogComponent} from "@app/simulations/scenes/edit-simulation/edit-scene-dialog.component";
+import { CreateSimulationDialogComponent } from './create-simulation/create-simulation-dialog.component';
+import {TreeModule} from "primeng/tree";
+import { EditSimulationDialogComponent } from './edit-simulation/edit-simulation-dialog.component';
+import {NgxPaginationModule} from "ngx-pagination";
+import {Button} from "primeng/button";
+import {TreeTableModule} from "primeng/treetable";
+import {TooltipModule} from "ngx-bootstrap/tooltip";
+import {FactoriesModule} from "@shared/factories/factories.module";
+import {RegistriesModule} from "@shared/registries/registries.module";
 
 
 @NgModule({
   declarations: [
     SimulationsComponent,
-    CreateSceneDialogComponent,
-    EditSceneDialogComponent,
-    ScenesComponent
+    CreateSimulationDialogComponent,
+    EditSimulationDialogComponent
   ],
-  imports: [
-    CommonModule,
-    SimulationsRoutingModule,
-    FormsModule,
-    NgxPaginationModule,
-    TabsModule,
-    SharedModule,
-    TabsModule,
-  ]
+    imports: [
+        CommonModule,
+        SimulationsRoutingModule,
+        FactoriesModule,
+        FormsModule,
+        NgxPaginationModule,
+        TabsModule,
+        RegistriesModule,
+        SharedModule,
+        TabsModule,
+        TreeModule,
+        TreeTableModule,
+        Button,
+        TooltipModule,
+    ]
 })
 export class SimulationsModule { }

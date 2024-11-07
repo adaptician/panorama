@@ -16,11 +16,5 @@ namespace Panorama
         /// </summary>
         public static readonly string DefaultPassPhrase =
             DebugHelper.IsDebug ? "gsKxGZ012HLL3MI5" : "9c060073dfdc4e9ab5621c49ae4adbd0";
-
-        #region Custom Constants
-
-        public const int MaxCorrelationIdLength = 64;
-
-        #endregion
     }
 }

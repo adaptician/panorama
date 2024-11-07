@@ -17,8 +17,8 @@ spec:
       restartPolicy: Always
       containers:
         - name: teatro-api
-          image: docker.io/teatro.api
-          imagePullPolicy: Never
+          image: adaptician/teatro.api:latest
+          imagePullPolicy: Always
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Staging
@@ -48,6 +48,8 @@ spec:
               containerPort: 80 # pod port
             - name: https
               containerPort: 443
+      imagePullSecrets:
+        - name : adaptician-key
       volumes:
         - name: https-cert
           secret:

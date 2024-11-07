@@ -1,1 +1,268 @@
+<div [@routerTransition]>
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6">
+          <h1>{{ "SimulationsHeading" | localize }}</h1>
+        </div>
+        <div class="col-6 text-right">
+          <a href="javascript:;" class="btn bg-blue"
+             *ngIf="('Pages.Tenant.Simulations.Create' | may )" 
+             (click)="createSimulation()">
+            <i class="fa fa-plus-square"></i>
+            {{ "Create" | localize }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content px-2">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-6">&emsp;</div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <button
+                        type="button"
+                        class="btn bg-blue"
+                        (click)="getDataPage(1)"
+                  >
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+                <input
+                      type="text"
+                      class="form-control"
+                      name="keyword"
+                      [placeholder]="'SearchWithThreeDot' | localize"
+                      [(ngModel)]="keyword"
+                      (keyup.enter)="getDataPage(1)"
+                />
+                <div class="input-group-append">
+                  <button
+                        type="button"
+                        class="btn btn-default"
+                        (click)="advancedFiltersVisible = !advancedFiltersVisible"
+                  >
+                    <i
+                          class="fas"
+                          [class.fa-angle-up]="advancedFiltersVisible"
+                          [class.fa-angle-down]="!advancedFiltersVisible"
+                    ></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="advancedFiltersVisible" class="card mb-0 mt-1">
+            <div class="card-body">
+              <form class="form-horizontal">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row mb-0">
+                      <label class="col-md-3 col-form-label">
+                        {{ "HasRunningSimulations" | localize }}
+                      </label>
+                      <div class="col-md-9 pt-2">
+                        <div class="custom-control custom-radio d-inline">
+                          <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="hasRunningAll"
+                                name="hasRunning"
+                                [(ngModel)]="hasRunning"
+                                [value]="undefined"
+                                checked
+                          />
+                          <label class="custom-control-label" for="hasRunningAll">
+                            {{ "All" | localize }}
+                          </label>
+                        </div>
+                        <div class="custom-control custom-radio d-inline mx-3">
+                          <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="hasRunningRunning"
+                                name="hasRunning"
+                                [(ngModel)]="hasRunning"
+                                [value]="true"
+                          />
+                          <label
+                                class="custom-control-label"
+                                for="hasRunningRunning"
+                          >
+                            {{ "Yes" | localize }}
+                          </label>
+                        </div>
+                        <div class="custom-control custom-radio d-inline">
+                          <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="isRunningEnded"
+                                name="hasRunning"
+                                [(ngModel)]="hasRunning"
+                                [value]="false"
+                          />
+                          <label
+                                class="custom-control-label"
+                                for="isRunningEnded"
+                          >
+                            {{ "No" | localize }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="card-footer">
+              <button
+                    type="button"
+                    class="btn bg-blue"
+                    (click)="getDataPage(1)"
+              >
+                {{ "Search" | localize }}
+              </button>
+              <button
+                    type="button"
+                    class="btn btn-default float-right"
+                    (click)="clearFilters()"
+              >
+                {{ "Clear" | localize }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          
+          <div class="tree-container">
+            <p-treeTable 
+                  [value]="simulationNodes" 
+                  [paginator]="true"
+                  [rows]="pageSize"
+                  [totalRecords]="totalItems"
+                  [lazy]="true"
+                  (onLazyLoad)="onPageChange($event)"
+                  (onNodeExpand)="onNodeExpand($event.node)"
+                  [scrollable]="true"
+                  [tableStyle]="{ 'min-width': '50rem' }"
+                  [loading]="(busy | isBusy : 'tree' : lastBusy)"
+            >
+              <ng-template pTemplate="header">
+                <tr>
+                  <th></th>
+                  <th>{{ 'Name' | localize }}</th>
+                  <th>{{ 'Description' | localize }}</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                <ng-container [ngSwitch]="rowNode.level">
+                  
+                  <tr [ttRow]="rowNode" *ngSwitchCase="0">
+                    <td><p-treeTableToggler [rowNode]="rowNode" /></td>
+                    <td>{{ rowData['name'] }}</td>
+                    <td>{{ rowData['description'] }}</td>
+                    <td>{{ rowNode?.node?.children?.length ?? (rowData['runningCount'] ?? 0) }}</td>
+                    <td>
+                      <div class="button-group">
+                        <button class="btn btn-primary"
+                                type="button"
+                                tooltip="{{ 'EditSimulation' | localize }}"
+                                placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Update' | may )"
+                                (click)="editSimulation(rowData)"
+                        >
+                          <i class="fa fa-pencil"></i>
+                        </button>
+                        <button class="btn btn-primary"
+                                type="button"
+                                tooltip="{{ 'StartNewSimulationRun' | localize }}"
+                                placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Running.Start' | may )"
+                                (click)="startRun(rowData?.id, rowNode?.node)"
+                        >
+                          <i class="fa fa-play-circle"></i>
+                        </button>
+                        <button class="btn btn-danger"
+                                type="button"
+                                tooltip="{{ 'DeleteSimulation' | localize }}"
+                                placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Delete' | may )"
+                                (click)="delete(rowData)"
+                        >
+                          <i class="fa fa-trash-alt"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                  <tr [ttRow]="rowNode" *ngSwitchCase="1"
+                    class="secondary"
+                  >
+                    <td class="text-right">
+                      <i class="fa fa-camera-rotate"></i>
+                    </td>
+                    <td>{{ rowData['startTime'] | date : 'short' }}</td>
+                    <td></td>
+                    <td>{{ rowData['participantCount'] }}</td>
+                    <td>
+                      <div class="button-group">
+                        <button class="btn btn-secondary"
+                                type="button"
+                                tooltip="{{ 'StopSimulationRun' | localize }}"
+                                placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Running.Stop' | may )"
+                                (click)="stopRun(rowData?.id, rowNode?.node.parent)"
+                        >
+                          <i class="fa fa-circle-stop"></i>
+                        </button>
+                        <button class="btn btn-tertiary"
+                                type="button"
+                                tooltip="{{ 'JoinSimulationRun' | localize }}"
+                                placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Running.Participate' | may )
+                                        && !(rowData['participants'] | containsUser : userId)"
+                                (click)="joinRun(rowData?.id, rowNode?.node.parent)"
+                        >
+                          <i class="fa fa-door-open"></i>
+                        </button>
+                        <button class="btn btn-tertiary"
+                                type="button"
+                                tooltip="{{ 'EnterSimulation' | localize }}"
+                                placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Running.Participate' | may )"
+                                (click)="enterSimulator(rowNode?.node.parent)"
+                        >
+                          <i class="fa fa-arrow-down"></i>
+                        </button>
+                        <button class="btn btn-danger"
+                                type="button"
+                                tooltip="{{ 'LeaveSimulationRun' | localize }}"
+                                placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Running.Participate' | may )
+                                        && (rowData['participants'] | containsUser : userId)"
+                                (click)="leaveRun(rowData?.id, rowNode?.node.parent)"
+                        >
+                          <i class="fa fa-right-from-bracket"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                </ng-container>
+              </ng-template>
 
+            </p-treeTable>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

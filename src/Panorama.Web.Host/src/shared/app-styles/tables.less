@@ -1,0 +1,27 @@
+﻿@import './colors.less';
+
+.ux-tabular {
+  & > * {
+    border: 1px solid @border;
+  }
+}
+
+.tree-container {
+    
+  .sub-heading {
+    td {
+      background-color: @primary-10;
+      color: @white;
+      font-weight: 700;
+    }
+    
+    &--tight td {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+  
+  tr.secondary {
+    background-color: @slate-10; 
+  }
+}

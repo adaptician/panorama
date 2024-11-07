@@ -2,21 +2,19 @@ import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
 import {SimulationsComponent} from "./simulations.component";
 import {AppRouteGuard} from "@shared/auth/auth-route-guard";
-import {ScenesComponent} from "@app/simulations/scenes/scenes.component";
 
 const routes: Routes = [
     {
         path: '',
         component: SimulationsComponent,
         pathMatch: 'full',
-        data: { permission: 'Pages.Tenant.Simulations' },
+        data: { permission: 'Pages.Tenant.Simulations.View' },
         canActivate: [AppRouteGuard]
     },
-    { 
-        path: 'scenes', 
-        component: ScenesComponent, 
-        data: { permission: 'Pages.Tenant.Simulations.Scenes' }, 
-        canActivate: [AppRouteGuard] 
+    {
+        path: 'simulator/:sceneCorrelationId',
+        loadChildren: () => import('./simulator/simulator.module').then(m => m.SimulatorModule), // Lazy load simulations module
+        data: { preload: false }
     }
 ];
 

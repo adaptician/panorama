@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "samples"
+		},
+		{
+			"path": "src/Panorama.Web.Host/App_Data/Logs"
 		}
 	]
 }

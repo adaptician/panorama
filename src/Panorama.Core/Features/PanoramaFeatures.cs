@@ -3,6 +3,7 @@
 public static class PanoramaFeatures
 {
     public const string SimulationsFeature = "Panorama.Simulations";
+    public const string SimulationRunningFeature = "Panorama.Simulations.Running";
     
-    public const string SimulationsScenesFeature = "Panorama.Simulations.Scenes";
+    public const string ScenesFeature = "Panorama.Scenes";
 }

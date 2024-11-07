@@ -681,8 +681,8 @@ export class SceneServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    commandGetAll(body: PagedSceneResultRequestDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Scene/CommandGetAll";
+    commandGetAllScenes(body: PagedSceneResultRequestDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Scene/CommandGetAllScenes";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -697,11 +697,11 @@ export class SceneServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCommandGetAll(response_);
+            return this.processCommandGetAllScenes(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCommandGetAll(response_ as any);
+                    return this.processCommandGetAllScenes(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -710,7 +710,7 @@ export class SceneServiceProxy {
         }));
     }
 
-    protected processCommandGetAll(response: HttpResponseBase): Observable<void> {
+    protected processCommandGetAllScenes(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -733,8 +733,8 @@ export class SceneServiceProxy {
      * @param correlationId (optional) 
      * @return Success
      */
-    commandGetById(correlationId: string | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Scene/CommandGetById?";
+    commandGetSceneById(correlationId: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Scene/CommandGetSceneById?";
         if (correlationId === null)
             throw new Error("The parameter 'correlationId' cannot be null.");
         else if (correlationId !== undefined)
@@ -749,11 +749,11 @@ export class SceneServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCommandGetById(response_);
+            return this.processCommandGetSceneById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCommandGetById(response_ as any);
+                    return this.processCommandGetSceneById(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -762,7 +762,7 @@ export class SceneServiceProxy {
         }));
     }
 
-    protected processCommandGetById(response: HttpResponseBase): Observable<void> {
+    protected processCommandGetSceneById(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -785,8 +785,8 @@ export class SceneServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    commandCreate(body: CreateSceneDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Scene/CommandCreate";
+    commandCreateScene(body: CreateSceneDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Scene/CommandCreateScene";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -801,11 +801,11 @@ export class SceneServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCommandCreate(response_);
+            return this.processCommandCreateScene(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCommandCreate(response_ as any);
+                    return this.processCommandCreateScene(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -814,7 +814,7 @@ export class SceneServiceProxy {
         }));
     }
 
-    protected processCommandCreate(response: HttpResponseBase): Observable<void> {
+    protected processCommandCreateScene(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -837,8 +837,8 @@ export class SceneServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    commandUpdate(body: UpdateSceneDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Scene/CommandUpdate";
+    commandUpdateScene(body: UpdateSceneDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Scene/CommandUpdateScene";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -853,11 +853,11 @@ export class SceneServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCommandUpdate(response_);
+            return this.processCommandUpdateScene(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCommandUpdate(response_ as any);
+                    return this.processCommandUpdateScene(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -866,7 +866,7 @@ export class SceneServiceProxy {
         }));
     }
 
-    protected processCommandUpdate(response: HttpResponseBase): Observable<void> {
+    protected processCommandUpdateScene(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -889,8 +889,8 @@ export class SceneServiceProxy {
      * @param correlationId (optional) 
      * @return Success
      */
-    commandDelete(correlationId: string | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Scene/CommandDelete?";
+    commandDeleteScene(correlationId: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Scene/CommandDeleteScene?";
         if (correlationId === null)
             throw new Error("The parameter 'correlationId' cannot be null.");
         else if (correlationId !== undefined)
@@ -905,11 +905,11 @@ export class SceneServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCommandDelete(response_);
+            return this.processCommandDeleteScene(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCommandDelete(response_ as any);
+                    return this.processCommandDeleteScene(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -918,7 +918,7 @@ export class SceneServiceProxy {
         }));
     }
 
-    protected processCommandDelete(response: HttpResponseBase): Observable<void> {
+    protected processCommandDeleteScene(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -991,6 +991,584 @@ export class SessionServiceProxy {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = GetCurrentLoginInformationsOutput.fromJS(resultData200);
             return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class SimulationServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param keyword (optional) 
+     * @param hasRunning (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllSimulations(keyword: string | undefined, hasRunning: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ViewSimulationDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Simulation/GetAllSimulations?";
+        if (keyword === null)
+            throw new Error("The parameter 'keyword' cannot be null.");
+        else if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (hasRunning === null)
+            throw new Error("The parameter 'hasRunning' cannot be null.");
+        else if (hasRunning !== undefined)
+            url_ += "HasRunning=" + encodeURIComponent("" + hasRunning) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllSimulations(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllSimulations(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ViewSimulationDtoPagedResultDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ViewSimulationDtoPagedResultDto>;
+        }));
+    }
+
+    protected processGetAllSimulations(response: HttpResponseBase): Observable<ViewSimulationDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ViewSimulationDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param simulationId (optional) 
+     * @return Success
+     */
+    getSimulationById(simulationId: number | undefined): Observable<ViewSimulationDto> {
+        let url_ = this.baseUrl + "/api/services/app/Simulation/GetSimulationById?";
+        if (simulationId === null)
+            throw new Error("The parameter 'simulationId' cannot be null.");
+        else if (simulationId !== undefined)
+            url_ += "simulationId=" + encodeURIComponent("" + simulationId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSimulationById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSimulationById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ViewSimulationDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ViewSimulationDto>;
+        }));
+    }
+
+    protected processGetSimulationById(response: HttpResponseBase): Observable<ViewSimulationDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ViewSimulationDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createSimulation(body: CreateSimulationDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Simulation/CreateSimulation";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateSimulation(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateSimulation(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateSimulation(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    updateSimulation(body: UpdateSimulationDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Simulation/UpdateSimulation";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateSimulation(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateSimulation(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processUpdateSimulation(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param simulationId (optional) 
+     * @return Success
+     */
+    deleteSimulation(simulationId: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Simulation/DeleteSimulation?";
+        if (simulationId === null)
+            throw new Error("The parameter 'simulationId' cannot be null.");
+        else if (simulationId !== undefined)
+            url_ += "simulationId=" + encodeURIComponent("" + simulationId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteSimulation(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteSimulation(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDeleteSimulation(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class SimulationRunServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param simulationId (optional) 
+     * @return Success
+     */
+    getAllSimulationRuns(simulationId: number | undefined): Observable<ViewSimulationRunDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/SimulationRun/GetAllSimulationRuns?";
+        if (simulationId === null)
+            throw new Error("The parameter 'simulationId' cannot be null.");
+        else if (simulationId !== undefined)
+            url_ += "simulationId=" + encodeURIComponent("" + simulationId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllSimulationRuns(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllSimulationRuns(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ViewSimulationRunDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ViewSimulationRunDto[]>;
+        }));
+    }
+
+    protected processGetAllSimulationRuns(response: HttpResponseBase): Observable<ViewSimulationRunDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ViewSimulationRunDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param simulationId (optional) 
+     * @return Success
+     */
+    startRun(simulationId: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/SimulationRun/StartRun?";
+        if (simulationId === null)
+            throw new Error("The parameter 'simulationId' cannot be null.");
+        else if (simulationId !== undefined)
+            url_ += "simulationId=" + encodeURIComponent("" + simulationId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processStartRun(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processStartRun(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processStartRun(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param simulationRunId (optional) 
+     * @return Success
+     */
+    joinSimulation(simulationRunId: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/SimulationRun/JoinSimulation?";
+        if (simulationRunId === null)
+            throw new Error("The parameter 'simulationRunId' cannot be null.");
+        else if (simulationRunId !== undefined)
+            url_ += "simulationRunId=" + encodeURIComponent("" + simulationRunId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processJoinSimulation(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processJoinSimulation(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processJoinSimulation(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param simulationRunId (optional) 
+     * @return Success
+     */
+    leaveSimulation(simulationRunId: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/SimulationRun/LeaveSimulation?";
+        if (simulationRunId === null)
+            throw new Error("The parameter 'simulationRunId' cannot be null.");
+        else if (simulationRunId !== undefined)
+            url_ += "simulationRunId=" + encodeURIComponent("" + simulationRunId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processLeaveSimulation(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processLeaveSimulation(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processLeaveSimulation(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param simulationRunId (optional) 
+     * @return Success
+     */
+    stopRun(simulationRunId: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/SimulationRun/StopRun?";
+        if (simulationRunId === null)
+            throw new Error("The parameter 'simulationRunId' cannot be null.");
+        else if (simulationRunId !== undefined)
+            url_ += "simulationRunId=" + encodeURIComponent("" + simulationRunId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processStopRun(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processStopRun(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processStopRun(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -2416,6 +2994,57 @@ export interface ICreateSceneDto {
     sceneData: string | undefined;
 }
 
+export class CreateSimulationDto implements ICreateSimulationDto {
+    name: string;
+    description: string;
+    sceneCorrelationId: string;
+
+    constructor(data?: ICreateSimulationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.sceneCorrelationId = _data["sceneCorrelationId"];
+        }
+    }
+
+    static fromJS(data: any): CreateSimulationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateSimulationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["sceneCorrelationId"] = this.sceneCorrelationId;
+        return data;
+    }
+
+    clone(): CreateSimulationDto {
+        const json = this.toJSON();
+        let result = new CreateSimulationDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateSimulationDto {
+    name: string;
+    description: string;
+    sceneCorrelationId: string;
+}
+
 export class CreateTenantDto implements ICreateTenantDto {
     tenancyName: string;
     name: string;
@@ -3734,6 +4363,65 @@ export interface IUpdateSceneDto {
     description: string | undefined;
 }
 
+export class UpdateSimulationDto implements IUpdateSimulationDto {
+    name: string;
+    description: string;
+    sceneCorrelationId: string;
+    id: number;
+    runningCount: number;
+
+    constructor(data?: IUpdateSimulationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.sceneCorrelationId = _data["sceneCorrelationId"];
+            this.id = _data["id"];
+            this.runningCount = _data["runningCount"];
+        }
+    }
+
+    static fromJS(data: any): UpdateSimulationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateSimulationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["sceneCorrelationId"] = this.sceneCorrelationId;
+        data["id"] = this.id;
+        data["runningCount"] = this.runningCount;
+        return data;
+    }
+
+    clone(): UpdateSimulationDto {
+        const json = this.toJSON();
+        let result = new UpdateSimulationDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateSimulationDto {
+    name: string;
+    description: string;
+    sceneCorrelationId: string;
+    id: number;
+    runningCount: number;
+}
+
 export class UserDto implements IUserDto {
     id: number;
     userName: string;
@@ -3933,6 +4621,254 @@ export interface IUserLoginInfoDto {
     surname: string | undefined;
     userName: string | undefined;
     emailAddress: string | undefined;
+}
+
+export class ViewSimulationDto implements IViewSimulationDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
+    sceneCorrelationId: string | undefined;
+    runningCount: number;
+    tenantId: number;
+
+    constructor(data?: IViewSimulationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.sceneCorrelationId = _data["sceneCorrelationId"];
+            this.runningCount = _data["runningCount"];
+            this.tenantId = _data["tenantId"];
+        }
+    }
+
+    static fromJS(data: any): ViewSimulationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ViewSimulationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["sceneCorrelationId"] = this.sceneCorrelationId;
+        data["runningCount"] = this.runningCount;
+        data["tenantId"] = this.tenantId;
+        return data;
+    }
+
+    clone(): ViewSimulationDto {
+        const json = this.toJSON();
+        let result = new ViewSimulationDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IViewSimulationDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
+    sceneCorrelationId: string | undefined;
+    runningCount: number;
+    tenantId: number;
+}
+
+export class ViewSimulationDtoPagedResultDto implements IViewSimulationDtoPagedResultDto {
+    items: ViewSimulationDto[] | undefined;
+    totalCount: number;
+
+    constructor(data?: IViewSimulationDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(ViewSimulationDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): ViewSimulationDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ViewSimulationDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+
+    clone(): ViewSimulationDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new ViewSimulationDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IViewSimulationDtoPagedResultDto {
+    items: ViewSimulationDto[] | undefined;
+    totalCount: number;
+}
+
+export class ViewSimulationRunDto implements IViewSimulationRunDto {
+    id: number;
+    simulationId: number;
+    startTime: moment.Moment;
+    endTime: moment.Moment | undefined;
+    participantCount: number;
+    participants: ViewSimulationRunParticipantDto[] | undefined;
+
+    constructor(data?: IViewSimulationRunDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.simulationId = _data["simulationId"];
+            this.startTime = _data["startTime"] ? moment(_data["startTime"].toString()) : <any>undefined;
+            this.endTime = _data["endTime"] ? moment(_data["endTime"].toString()) : <any>undefined;
+            this.participantCount = _data["participantCount"];
+            if (Array.isArray(_data["participants"])) {
+                this.participants = [] as any;
+                for (let item of _data["participants"])
+                    this.participants.push(ViewSimulationRunParticipantDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ViewSimulationRunDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ViewSimulationRunDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["simulationId"] = this.simulationId;
+        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
+        data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
+        data["participantCount"] = this.participantCount;
+        if (Array.isArray(this.participants)) {
+            data["participants"] = [];
+            for (let item of this.participants)
+                data["participants"].push(item.toJSON());
+        }
+        return data;
+    }
+
+    clone(): ViewSimulationRunDto {
+        const json = this.toJSON();
+        let result = new ViewSimulationRunDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IViewSimulationRunDto {
+    id: number;
+    simulationId: number;
+    startTime: moment.Moment;
+    endTime: moment.Moment | undefined;
+    participantCount: number;
+    participants: ViewSimulationRunParticipantDto[] | undefined;
+}
+
+export class ViewSimulationRunParticipantDto implements IViewSimulationRunParticipantDto {
+    id: number;
+    simulationRunId: number;
+    userId: number;
+    entryTime: moment.Moment;
+    exitTime: moment.Moment | undefined;
+
+    constructor(data?: IViewSimulationRunParticipantDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.simulationRunId = _data["simulationRunId"];
+            this.userId = _data["userId"];
+            this.entryTime = _data["entryTime"] ? moment(_data["entryTime"].toString()) : <any>undefined;
+            this.exitTime = _data["exitTime"] ? moment(_data["exitTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ViewSimulationRunParticipantDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ViewSimulationRunParticipantDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["simulationRunId"] = this.simulationRunId;
+        data["userId"] = this.userId;
+        data["entryTime"] = this.entryTime ? this.entryTime.toISOString() : <any>undefined;
+        data["exitTime"] = this.exitTime ? this.exitTime.toISOString() : <any>undefined;
+        return data;
+    }
+
+    clone(): ViewSimulationRunParticipantDto {
+        const json = this.toJSON();
+        let result = new ViewSimulationRunParticipantDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IViewSimulationRunParticipantDto {
+    id: number;
+    simulationRunId: number;
+    userId: number;
+    entryTime: moment.Moment;
+    exitTime: moment.Moment | undefined;
 }
 
 export class ApiException extends Error {

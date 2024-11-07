@@ -120,14 +120,42 @@
     
     <text name="SimulationsFeature">Simulations</text>
     <text name="SimulationsFeatureDescription">Interactive simulations</text>
+    <text name="SimulationRunningFeature">Running simulations</text>
+    <text name="SimulationRunningFeatureDescription">Running interactive simulations</text>
+
     <text name="Permission_Simulations">Simulations</text>
+    <text name="Permission_Simulations_View">may view simulations</text>
+    <text name="Permission_Simulations_Create">may create simulations</text>
+    <text name="Permission_Simulations_Update">may update simulations</text>
+    <text name="Permission_Simulations_Delete">may delete simulations</text>
+    <text name="Permission_Simulations_Running_Start">may start running a simulation</text>
+    <text name="Permission_Simulations_Running_Stop">may stop running a simulation</text>
+    <text name="Permission_Simulations_Running_Participate">may participate in a running a simulation</text>
+
+    <text name="SimulationWithNameExists">Unable to create simulation - a simulation with this name already exists.</text>
+    
     <text name="MenuItem_Simulations">Simulations</text>
     <text name="Simulations">Simulations</text>
     <text name="CreateNewSimulation">Create new simulation</text>
     <text name="EditSimulation">Edit simulation</text>
     <text name="SimulationDeleteWarningMessage">Simulation {0} will be deleted.</text>
+    <text name="StartNewSimulationRun">Start new simulation run</text>
+    <text name="StopSimulationRun">Stop simulation run</text>
+    <text name="JoinSimulationRun">Join simulation run</text>
+    <text name="LeaveSimulationRun">Leave simulation run</text>
+    
+    <text name="SimulationsHeading">Simulations</text>
+    <text name="HasRunningSimulations">Has running</text>
+    <text name="AreRunningSuffix">running</text>
+    <text name="SceneCorrelationId">Scene correlation identifier</text>
+    <text name="SimulationNotFound">Simulation not found.</text>
+    <text name="SceneCannotBeUpdatedForSimulationWithRunning">Scene cannot be changed once a simulation has been run.</text>
+    <text name="MaximumConcurrentSimulationsRunningReached">Unable to start running simulation - the maximum number running instances has been reached.</text>
+    <text name="UserCannotParticipateInMoreThanOneSimulationRun">A user cannot participate in more than one simulation at a time.</text>
     
     <text name="UserNotFound">User not found.</text>
+    <text name="UnableToDetermineUserFromSession">Unable to determine user.</text>
+    <text name="UserParticipantNotFound">User was not found as a participant of the simulation run.</text>
     
     <text name="IAmListeningForEvents">I am listening for events</text>
     
@@ -135,18 +163,20 @@
     <text name="MessageConsumptionFailed">Message consumption failed </text>
     
     <text name="MenuItem_Scenes">Scenes</text>
-    <text name="SimulationsScenesFeature">Scenes</text>
-    <text name="SimulationsScenesFeatureDescription">Scenography used as the starting state for simulations</text>
+    <text name="ScenesFeature">Scenes</text>
+    <text name="ScenesFeatureDescription">Scenography used as the starting state for simulations</text>
     
-    <text name="Permission_Simulations_Scenes">Scenes</text>
-    <text name="Permission_Simulations_Scenes_View">may view scenes</text>
-    <text name="Permission_Simulations_Scenes_Create">may create scenes</text>
-    <text name="Permission_Simulations_Scenes_Update">may update scenes</text>
-    <text name="Permission_Simulations_Scenes_Delete">may delete scenes</text>
+    <text name="Permission_Scenes">Scenes</text>
+    <text name="Permission_Scenes_View">may view scenes</text>
+    <text name="Permission_Scenes_Create">may create scenes</text>
+    <text name="Permission_Scenes_Update">may update scenes</text>
+    <text name="Permission_Scenes_Delete">may delete scenes</text>
     
     <text name="Scenes">Scenes</text>
     <text name="CreateNewScene">Create new scene</text>
     <text name="EditScene">Edit scene</text>
     <text name="SceneDeleteWarningMessage">Scene {0} will be deleted.</text>
+    
+    <text name="BadRequest">Unable to perform action requested - request input is invalid.</text>
   </texts>
 </localizationDictionary>

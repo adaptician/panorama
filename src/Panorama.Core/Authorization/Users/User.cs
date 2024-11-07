@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Abp.Authorization.Users;
 using Abp.Extensions;
+using Panorama.Core.Shared.Users;
 
 namespace Panorama.Authorization.Users
 {

@@ -21,5 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Panorama.Backing.Bus.Shared\Panorama.Backing.Bus.Shared.csproj" />
+    <ProjectReference Include="..\Panorama.Core.Shared\Panorama.Core.Shared.csproj" />
   </ItemGroup>
 </Project>

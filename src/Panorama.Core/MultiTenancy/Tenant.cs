@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Abp.MultiTenancy;
 using Panorama.Authorization.Users;
+using Panorama.Core.Shared.Tenants;
 
 namespace Panorama.MultiTenancy
 {

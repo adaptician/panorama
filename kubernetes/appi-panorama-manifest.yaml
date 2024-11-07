@@ -61,9 +61,9 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - name: panorama-api
-          image: docker.io/panorama.appi
-          imagePullPolicy: Never
+        - name: panorama-appi
+          image: adaptician/panorama.appi:0.3.0
+          imagePullPolicy: Always
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Staging
@@ -95,6 +95,8 @@ spec:
               containerPort: 80 # pod port
             - name: https
               containerPort: 443 # pod port
+      imagePullSecrets:
+        - name : adaptician-key
       volumes:
         - name: https-cert
           secret:
