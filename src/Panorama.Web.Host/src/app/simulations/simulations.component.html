@@ -189,6 +189,15 @@
                         >
                           <i class="fa fa-play-circle"></i>
                         </button>
+                        <button class="btn btn-danger"
+                                type="button"
+                                tooltip="{{ 'DeleteSimulation' | localize }}"
+                                placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Delete' | may )"
+                                (click)="delete(rowData)"
+                        >
+                          <i class="fa fa-trash-alt"></i>
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -222,6 +231,15 @@
                                 (click)="joinRun(rowData?.id, rowNode?.node.parent)"
                         >
                           <i class="fa fa-door-open"></i>
+                        </button>
+                        <button class="btn btn-tertiary"
+                                type="button"
+                                tooltip="{{ 'EnterSimulation' | localize }}"
+                                placement="top"
+                                *ngIf="('Pages.Tenant.Simulations.Running.Participate' | may )"
+                                (click)="enterSimulator(rowNode?.node.parent)"
+                        >
+                          <i class="fa fa-arrow-down"></i>
                         </button>
                         <button class="btn btn-danger"
                                 type="button"

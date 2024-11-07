@@ -12,6 +12,8 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {Button} from "primeng/button";
 import {TreeTableModule} from "primeng/treetable";
 import {TooltipModule} from "ngx-bootstrap/tooltip";
+import {FactoriesModule} from "@shared/factories/factories.module";
+import {RegistriesModule} from "@shared/registries/registries.module";
 
 
 @NgModule({
@@ -23,9 +25,11 @@ import {TooltipModule} from "ngx-bootstrap/tooltip";
     imports: [
         CommonModule,
         SimulationsRoutingModule,
+        FactoriesModule,
         FormsModule,
         NgxPaginationModule,
         TabsModule,
+        RegistriesModule,
         SharedModule,
         TabsModule,
         TreeModule,

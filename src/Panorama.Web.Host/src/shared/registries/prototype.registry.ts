@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {THREEConstants} from "@shared/THREE.constants";
+import {Injectable} from "@angular/core";
 
-// TODO: T review and refactor.
-
+@Injectable()
 export class PrototypeRegistry {
 
     //#region Textures
@@ -13,42 +13,28 @@ export class PrototypeRegistry {
 
     // #region Materials
 
-    private _concreteMaterial_0 = new THREE.MeshStandardMaterial({
+    private _concrete_StandardMaterial_0 = new THREE.MeshStandardMaterial({
         color: THREEConstants.Colors.concrete_0,
         metalness: 0.3,
         roughness: 0.4,
         // envMap: this._concreteCubeMapTexture,
         // envMapIntensity: 0.5
     });
-    private _concreteMaterial_50 = new THREE.MeshStandardMaterial({
+    private _concrete_StandardMaterial_50 = new THREE.MeshStandardMaterial({
         color: THREEConstants.Colors.concrete_50,
         metalness: 0.3,
         roughness: 0.4,
         // envMap: this._concreteCubeMapTexture,
         // envMapIntensity: 0.5
     });
-    private _concreteMaterial_100 = new THREE.MeshStandardMaterial({
+    private _concrete_StandardMaterial_100 = new THREE.MeshStandardMaterial({
         color: THREEConstants.Colors.concrete_100,
         metalness: 0.3,
         roughness: 0.4,
         // envMap: this._concreteCubeMapTexture,
         // envMapIntensity: 0.5
     });
-    // TODO:T turn this into a lookup by color name as key. You can pull a whole palette out of a dictionary.
-    public cloneConcreteMaterial(huePercent?: number) {
-        const choice = huePercent ? huePercent :  Math.random();
-        
-        if (choice > 0.3 && choice < 0.6) {
-            return this._concreteMaterial_0.clone();
-        } else if (choice > 0.6) {
-            return this._concreteMaterial_50.clone();
-        } else {
-            return this._concreteMaterial_100.clone();
-        }
-
-    }
     
-    // TODO:T READY TO TEST color lookup.
     public cloneMaterial(colorName: string, huePercent?: number) {
 
         // e.g. 0, 0.1, 0.3, 0.5, 0.8, 1
@@ -63,21 +49,21 @@ export class PrototypeRegistry {
         
         while (increment < divisor) {
             if (choice < (quotient / 100))
-                return this._materials[`${colorName}_${huePercent*100}`];
+                return this._standardMaterials[`${colorName}_${huePercent*100}`];
             
             increment += 1;
         }
         
         // Return default;
-        return this._materials[`default_50`];
+        return this._standardMaterials[`default_50`];
     }
     
-    private _materials: { [key: string]: THREE.MeshStandardMaterial } = {
-        "default_50": this._concreteMaterial_50.clone(),
+    private _standardMaterials: { [key: string]: THREE.MeshStandardMaterial } = {
+        "default_50": this._concrete_StandardMaterial_50.clone(),
         // CONCRETE
-        "concrete_0": this._concreteMaterial_0.clone(),
-        "concrete_50": this._concreteMaterial_50.clone(), // TODO:T update
-        "concrete_100": this._concreteMaterial_100.clone(),
+        "concrete_0": this._concrete_StandardMaterial_0.clone(),
+        "concrete_50": this._concrete_StandardMaterial_50.clone(),
+        "concrete_100": this._concrete_StandardMaterial_100.clone(),
     };
 
     // #endregion Materials

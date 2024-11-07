@@ -2,6 +2,7 @@
 
 export class TreeNodeBase<T> implements TreeNode<T> {
     // INTERFACE PROPERTIES
+    checked?: boolean;
     label?: string;
     data?: any;
     icon?: string;
@@ -17,9 +18,8 @@ export class TreeNodeBase<T> implements TreeNode<T> {
     draggable?: boolean;
     droppable?: boolean;
     selectable?: boolean;
-
-    // CUSTOMIZED PROPERTIES
-    key: string;
+    key?: string;
+    loading?: boolean;
 
     constructor(data: Partial<TreeNodeBase<T>> = {}) {
         if (data) {

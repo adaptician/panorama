@@ -11,6 +11,7 @@ import {MeshFactory} from "@shared/factories/mesh.factory";
 import {PrototypeRegistry} from "@shared/registries/prototype.registry";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {THREEConstants} from "@shared/THREE.constants";
+import {ActivatedRoute, Params} from "@angular/router";
 
 @Component({
     selector: 'sim-simulator',
@@ -20,6 +21,8 @@ import {THREEConstants} from "@shared/THREE.constants";
 })
 export class SimulatorComponent extends AppComponentBase implements OnInit {
 
+    private _sceneCorrelationId: string;
+    
     //#region Element References
 
     @ViewChild('projectionCanvas')
@@ -66,32 +69,29 @@ export class SimulatorComponent extends AppComponentBase implements OnInit {
     //#endregion
 
     private _isRenderingActive: boolean = false;
-
-    private _cameraFactory: CameraFactory;
-    private _meshFactory: MeshFactory;
-    private _prototypeRegistry: PrototypeRegistry;
     
     constructor(
         injector: Injector,
+        private _cameraFactory: CameraFactory,
+        private _meshFactory: MeshFactory,
+        private _prototypeRegistry: PrototypeRegistry,
+        private _activatedRoute: ActivatedRoute,
         private _sceneService: SceneServiceProxy,
         private _zone: NgZone
     ) {
         super(injector);
-
-        // TODO:T make this injectable rather;
-        this._cameraFactory = new CameraFactory();
-        this._meshFactory = new MeshFactory();
-        this._prototypeRegistry = new PrototypeRegistry();
     }
 
     ngOnInit() {
-        // TODO:T retrieve this from query parameter.
-        this.onGetScene(); // TODO:T this doesn't work - think it's a timing thing on signalr not being ready.
         this.subscribeToEvents();
-    }
 
-    onGetScene() {
-        this.getScene('8d30eac7-a55b-49b6-a582-70d61923db8e');
+        this._activatedRoute.params.subscribe((params: Params) => {
+            this._sceneCorrelationId = params['sceneCorrelationId'];
+
+            if (this._sceneCorrelationId) {
+                this.getScene(this._sceneCorrelationId);
+            }
+        });
     }
     
     private subscribeToEvents(): void {
@@ -141,7 +141,6 @@ export class SimulatorComponent extends AppComponentBase implements OnInit {
     }
 
     private createRendering(metaJson: string): void {
-        console.log(`RENDER ${metaJson}`);
         this.initScene(metaJson);
 
         this.setupFloor();
@@ -219,7 +218,8 @@ export class SimulatorComponent extends AppComponentBase implements OnInit {
 
     private setupFloor() {
         const geometry = this._prototypeRegistry.planeGeometry;
-        const material = this._prototypeRegistry.cloneConcreteMaterial(0.9);
+        const material = this._prototypeRegistry
+            .cloneMaterial(THREEConstants.ColorNames.concrete, 0.9);
         material.visible = true;
         
         let floor: THREE.Mesh = new THREE.Mesh(geometry, material);

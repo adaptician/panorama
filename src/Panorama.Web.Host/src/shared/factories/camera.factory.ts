@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-// TODO: T review and refactor.
+import {Injectable} from "@angular/core";
+
 const TYPE = "Camera";
 
 const FIELD_OF_VIEW = 1;
@@ -10,6 +11,7 @@ const POSITION_Z = 400;
 
 const PERSPECTIVE_CAMERA = 'PerspectiveCamera';
 
+@Injectable()
 export class CameraFactory {
 
     constructor() {

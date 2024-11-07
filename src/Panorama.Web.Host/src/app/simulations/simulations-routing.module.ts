@@ -12,7 +12,7 @@ const routes: Routes = [
         canActivate: [AppRouteGuard]
     },
     {
-        path: 'simulator',
+        path: 'simulator/:sceneCorrelationId',
         loadChildren: () => import('./simulator/simulator.module').then(m => m.SimulatorModule), // Lazy load simulations module
         data: { preload: false }
     }

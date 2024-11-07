@@ -16,6 +16,7 @@ import {
 import {TreeNodeExpandEvent} from "primeng/tree";
 import {TreeTableLazyLoadEvent} from "primeng/treetable";
 import {TreeNode} from "primeng/api/treenode";
+import {Router} from "@angular/router";
 
 
 class PagedSimulationsRequestDto extends PagedRequestDto {
@@ -44,6 +45,7 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
 
     constructor(
         injector: Injector,
+        private _router: Router,
         private _simulationService: SimulationServiceProxy,
         private _simulationRunService: SimulationRunServiceProxy,
         private _modalService: BsModalService
@@ -167,7 +169,7 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
             });
     }
 
-    joinRun(simulationRunId: number, node: TreeNode): void {
+    joinRun(simulationRunId: number, node: SimulationTreeNode): void {
         if (!simulationRunId || !node?.data) return;
 
         node.loading = true;
@@ -177,7 +179,19 @@ export class SimulationsComponent extends PagedListingComponentBase<ViewSimulati
             .pipe(finalize(() => node.loading = false))
             .subscribe(result => {
                 this.getSimulationRuns(node);
+                
+                this.enterSimulator(node.data.sceneCorrelationId);
             });
+    }
+    
+    enterSimulator(node: SimulationTreeNode): void {
+        if (!node || !node.data) return;
+        
+        const sceneCorrelationId = node.data?.sceneCorrelationId;
+        
+        if (!sceneCorrelationId) return;
+        
+        this._router.navigate(['/app/simulations/simulator/' + sceneCorrelationId]);
     }
 
     leaveRun(simulationRunId: number, node: TreeNode): void {

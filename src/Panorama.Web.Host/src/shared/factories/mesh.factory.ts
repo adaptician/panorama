@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {Injectable} from "@angular/core";
 
 const TYPE = "Mesh";
 
@@ -11,6 +12,7 @@ const TYPE = "Mesh";
 //     return new c();
 // }
 
+@Injectable()
 export class MeshFactory {
 
     constructor() {
