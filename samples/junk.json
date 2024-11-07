@@ -1,0 +1,18 @@
+{
+    "node": {
+        "label": "Testing 1.1",
+        "data": {
+            "id": 2,
+            "name": "Testing 1.1",
+            "description": "Testing the C in CRUD",
+            "sceneCorrelationId": "22d4d10e-33fd-4a5b-8511-f9a2dbdb588d",
+            "runningCount": 0,
+            "tenantId": 1
+        },
+        "leaf": false,
+        "id": 2
+    },
+    "parent": null,
+    "level": 0,
+    "visible": true
+}

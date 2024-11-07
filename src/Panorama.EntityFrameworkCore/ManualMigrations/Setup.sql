@@ -11,7 +11,31 @@ VALUES
     '2024-09-25 11:00:00.0000000',
     1,
     'TenantFeatureSetting',
-    'Panorama.Simulations',
+    'Panorama.Scenes',
     'True',
     1
 )
+
+INSERT INTO AbpFeatures
+(CreationTime, CreatorUserId, Discriminator, Name, Value, TenantId)
+VALUES
+    (
+    '2024-09-25 11:00:00.0000000',
+    1,
+    'TenantFeatureSetting',
+    'Panorama.Simulations',
+    'True',
+    1
+    )
+
+INSERT INTO AbpFeatures
+(CreationTime, CreatorUserId, Discriminator, Name, Value, TenantId)
+VALUES
+    (
+    '2024-09-25 11:00:00.0000000',
+    1,
+    'TenantFeatureSetting',
+    'Panorama.Simulations.Running',
+    'True',
+    1
+    )

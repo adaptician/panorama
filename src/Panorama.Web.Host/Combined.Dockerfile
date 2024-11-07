@@ -40,6 +40,7 @@ COPY ["panorama/src/Panorama.Backing.Bus.Shared/Panorama.Backing.Bus.Shared.cspr
 COPY ["panorama/src/Panorama.Common/Panorama.Common.csproj", "src/Panorama.Common/"]
 
 COPY ["panorama/src/Panorama.Core/Panorama.Core.csproj", "src/Panorama.Core/"]
+COPY ["panorama/src/Panorama.Core.Shared/Panorama.Core.Shared.csproj", "src/Panorama.Core.Shared/"]
 COPY ["panorama/src/Panorama.EntityFrameworkCore/Panorama.EntityFrameworkCore.csproj", "src/Panorama.EntityFrameworkCore/"]
 
 COPY ["panorama/src/Panorama.Web.Core/Panorama.Web.Core.csproj", "src/Panorama.Web.Core/"]
@@ -62,6 +63,7 @@ COPY ["panorama/src/Panorama.Backing.Bus.Shared", "src/Panorama.Backing.Bus.Shar
 COPY ["panorama/src/Panorama.Common", "src/Panorama.Common"]
 
 COPY ["panorama/src/Panorama.Core", "src/Panorama.Core"]
+COPY ["panorama/src/Panorama.Core.Shared", "src/Panorama.Core.Shared"]
 COPY ["panorama/src/Panorama.EntityFrameworkCore", "src/Panorama.EntityFrameworkCore"]
 
 COPY ["panorama/src/Panorama.Web.Core", "src/Panorama.Web.Core"]

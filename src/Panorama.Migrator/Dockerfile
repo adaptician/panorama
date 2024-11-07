@@ -6,11 +6,12 @@ ARG BUILD_CONFIGURATION=Release
 
 # Copy application files over to container.
 WORKDIR /deployed
-COPY ["panorama/src/Scenography/teatro.shared/Teatro.Contracts/Teatro.Contracts.csproj", "src/Scenography/teatro.shared/Teatro.Contracts/"]
+COPY ["panorama/src/Scenography/Teatro.Contracts/Teatro.Contracts/Teatro.Contracts.csproj", "src/Scenography/Teatro.Contracts/Teatro.Contracts/"]
 
 COPY ["panorama/src/Panorama.Backing.Bus.Shared/Panorama.Backing.Bus.Shared.csproj", "src/Panorama.Backing.Bus.Shared/"]
 
 COPY ["panorama/src/Panorama.Core/Panorama.Core.csproj", "src/Panorama.Core/"]
+COPY ["panorama/src/Panorama.Core.Shared/Panorama.Core.Shared.csproj", "src/Panorama.Core.Shared/"]
 
 COPY ["panorama/src/Panorama.EntityFrameworkCore/Panorama.EntityFrameworkCore.csproj", "src/Panorama.EntityFrameworkCore/"]
 
@@ -22,11 +23,12 @@ RUN dotnet restore
 
 # Copy restored files.
 WORKDIR /deployed
-COPY ["panorama/src/Scenography/teatro.shared/Teatro.Contracts", "src/Scenography/teatro.shared/Teatro.Contracts"]
+COPY ["panorama/src/Scenography/Teatro.Contracts/Teatro.Contracts", "src/Scenography/Teatro.Contracts/Teatro.Contracts"]
 
 COPY ["panorama/src/Panorama.Backing.Bus.Shared", "src/Panorama.Backing.Bus.Shared"]
 
 COPY ["panorama/src/Panorama.Core", "src/Panorama.Core"]
+COPY ["panorama/src/Panorama.Core.Shared", "src/Panorama.Core.Shared"]
 
 COPY ["panorama/src/Panorama.EntityFrameworkCore", "src/Panorama.EntityFrameworkCore"]
 

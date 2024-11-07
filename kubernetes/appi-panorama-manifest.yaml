@@ -62,7 +62,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: panorama-appi
-          image: adaptician/panorama.appi:latest
+          image: adaptician/panorama.appi:0.3.0
           imagePullPolicy: Always
           env:
             - name: ASPNETCORE_ENVIRONMENT
