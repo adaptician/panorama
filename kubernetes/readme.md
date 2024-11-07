@@ -285,7 +285,11 @@ function ConvertTo-Base64 {
 
 `kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>`
 
+## Make SURE all versions are updated
 
+- `src/Panorama.Web.Host/nswag/service.config.nswag`
+- Docker script tags
+- manifest files
 
 # Quickfire section
 
@@ -313,9 +317,9 @@ NB: connection string must look at 127.0.0.1 - localhost will not work!
 MIGRATOR
 docker build -t panorama.migrator -f .\panorama\src\Panorama.Migrator\Dockerfile .
 
-docker image tag panorama.migrator adaptician/panorama.migrator:0.3.0
+docker image tag panorama.migrator adaptician/panorama.migrator:0.4.0
 
-docker push adaptician/panorama.migrator:0.3.0
+docker push adaptician/panorama.migrator:0.4.0
 
 kubectl apply -f .\panorama\kubernetes\migrator-manifest.yaml
 
@@ -344,9 +348,9 @@ COMBINED PANORAMA ---
 APPI
 docker build -t panorama.appi -f .\panorama\src\Panorama.Web.Host\Combined.Dockerfile .
 
-docker image tag panorama.appi adaptician/panorama.appi:0.3.0
+docker image tag panorama.appi adaptician/panorama.appi:0.4.0
 
-docker push adaptician/panorama.appi:0.3.0
+docker push adaptician/panorama.appi:0.4.0
 
 kubectl apply -f .\panorama\kubernetes\appi-panorama-manifest.yaml
 
@@ -367,9 +371,9 @@ kubectl port-forward postgresdb-0 5432:5432
 API
 docker build -t teatro.api -f .\teatro\Teatro\Teatro.Application\Dockerfile .
 
-docker image tag teatro.api adaptician/teatro.api:0.3.0
+docker image tag teatro.api adaptician/teatro.api:0.4.0
 
-docker push adaptician/teatro.api:0.3.0
+docker push adaptician/teatro.api:0.4.0
 
 kubectl apply -f .\panorama\kubernetes\teatro-manifest.yaml
 
@@ -394,12 +398,12 @@ kubectl apply -f .\panorama\kubernetes\staging-ingress-manifest.yaml
 
 
 DOMINO (http://localhost:7474)
-docker build -t causation.api:0.3.0 -f .\src\Panorama.Delta\Dockerfile .
+docker build -t causation.api:0.4.0 -f .\src\Panorama.Delta\Dockerfile .
 kubectl apply -f .\kubernetes\causation-manifest.yaml
 
-docker image tag causation.api adaptician/causation.api:0.3.0
+docker image tag causation.api adaptician/causation.api:0.4.0
 
-docker push adaptician/causation.api:0.3.0
+docker push adaptician/causation.api:0.4.0
 
 kubectl apply -f .\kubernetes\mongodb-manifest.yaml
 
@@ -411,7 +415,7 @@ kubectl apply -f .\kubernetes\mongodb-manifest.yaml
  dotnet ef database update --project Panorama.EntityFrameworkCore --startup-project Panorama.Web.Host
 
 
-QUICK START LOCAL BACKING:
+# QUICK START LOCAL BACKING:
 
 kubectl --namespace default port-forward kubeview-8659bcf-kjgr8 8000:8000
 
