@@ -438,3 +438,20 @@ kubectl apply -f .\panorama\kubernetes\rabbitmq-manifest.yaml
 kubectl port-forward rabbitmq-0 5672:5672
 kubectl port-forward rabbitmq-0 15672:15672
 
+HEADLESS
+
+-- LEGACY SERVER POLL-ABLE USED FOR COMPARISON
+docker build -t headless-basic-poll.api -f .\Dockerfile .
+docker image tag headless-basic-poll.api adaptician/headless-basic-poll.api:1.0
+docker push adaptician/headless-basic-poll.api:1.0
+
+docker run -p 3000:3000 headless-basic-poll.api
+
+-- LEGACY MOCOCLE POLL-ING USED FOR COMPARISON
+docker build -t brass-monocle-basic-poll.app -f .\Dockerfile .
+docker image tag brass-monocle-basic-poll.app adaptician/brass-monocle-basic-poll.app:1.0
+docker push adaptician/brass-monocle-basic-poll.app:1.0
+
+docker run -p 4301:80 brass-monocle-basic-poll.app
+
+
