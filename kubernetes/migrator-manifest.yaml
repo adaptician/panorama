@@ -17,7 +17,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: panorama-migrator
-        image: adaptician/panorama.migrator:0.3.0
+        image: your-repo/panorama.migrator:0.3.0
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_Docker_Enabled
@@ -25,6 +25,6 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: Staging
         - name: ConnectionStrings__Default
-          value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true
+          value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=p@ssw0rD;TrustServerCertificate=true
       imagePullSecrets:
-        - name : adaptician-key
+        - name : your-key

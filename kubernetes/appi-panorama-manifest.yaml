@@ -62,13 +62,13 @@ spec:
       restartPolicy: Always
       containers:
         - name: panorama-appi
-          image: adaptician/panorama.appi:0.3.0
+          image: your-repo/panorama.appi:0.3.0
           imagePullPolicy: Always
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Staging
             - name: ConnectionStrings__Default
-              value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=RcjNvaGQwMQm44eJiaBbDyiMKaT4jndm;TrustServerCertificate=true           
+              value: Server=mssqlDb;Database=PanoramaDb;User=sa;Password=p@ssw0rD;TrustServerCertificate=true           
             - name: Kestrel__Endpoints__Http__Url
               value: "http://+:80"
             - name: Kestrel__HttpsInlineCertAndKeyFile__Url
@@ -96,7 +96,7 @@ spec:
             - name: https
               containerPort: 443 # pod port
       imagePullSecrets:
-        - name : adaptician-key
+        - name : your-key
       volumes:
         - name: https-cert
           secret:

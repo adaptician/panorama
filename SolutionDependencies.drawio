@@ -1,6 +1,6 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.8 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.8">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/25.0.1 Chrome/128.0.6613.186 Electron/32.2.6 Safari/537.36" version="25.0.1">
   <diagram name="Page-1" id="P96NprGeWkTExEDmWorL">
-    <mxGraphModel dx="2520" dy="2340" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="6140" dy="4423" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -237,7 +237,7 @@
         <mxCell id="_yPecB4wTw0sVIpXlPJB-75" value="Panorama.Application" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;fontSize=16;fontStyle=1;strokeWidth=5;" parent="1" vertex="1">
           <mxGeometry x="4293.51" y="110" width="220" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="IuFW69ipWAzXODNmSyTI-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="_yPecB4wTw0sVIpXlPJB-78" target="_yPecB4wTw0sVIpXlPJB-79">
+        <mxCell id="IuFW69ipWAzXODNmSyTI-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" parent="1" source="_yPecB4wTw0sVIpXlPJB-78" target="_yPecB4wTw0sVIpXlPJB-79" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="_yPecB4wTw0sVIpXlPJB-78" value="Panorama.Backing" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;fontSize=16;fontStyle=1" parent="1" vertex="1">
@@ -275,7 +275,7 @@
         <mxCell id="_yPecB4wTw0sVIpXlPJB-95" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#666666;" parent="1" source="_yPecB4wTw0sVIpXlPJB-97" target="_yPecB4wTw0sVIpXlPJB-85" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="IuFW69ipWAzXODNmSyTI-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#666666;" edge="1" parent="1" source="_yPecB4wTw0sVIpXlPJB-97" target="_yPecB4wTw0sVIpXlPJB-78">
+        <mxCell id="IuFW69ipWAzXODNmSyTI-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#666666;" parent="1" source="_yPecB4wTw0sVIpXlPJB-97" target="_yPecB4wTw0sVIpXlPJB-78" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="_yPecB4wTw0sVIpXlPJB-97" value="Panorama.Web.Core" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;fontSize=16;fontStyle=1;strokeWidth=5;" parent="1" vertex="1">
@@ -373,7 +373,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="IuFW69ipWAzXODNmSyTI-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="_yPecB4wTw0sVIpXlPJB-129" target="_yPecB4wTw0sVIpXlPJB-130">
+        <mxCell id="IuFW69ipWAzXODNmSyTI-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" parent="1" source="_yPecB4wTw0sVIpXlPJB-129" target="_yPecB4wTw0sVIpXlPJB-130" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="_yPecB4wTw0sVIpXlPJB-129" value="Teatro.Backing" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;fontSize=16;fontStyle=1" parent="1" vertex="1">
@@ -470,7 +470,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="IuFW69ipWAzXODNmSyTI-6" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=8;" vertex="1" parent="1">
+        <mxCell id="IuFW69ipWAzXODNmSyTI-6" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=8;" parent="1" vertex="1">
           <mxGeometry x="3370" y="1140" width="270" height="100" as="geometry" />
         </mxCell>
         <mxCell id="_yPecB4wTw0sVIpXlPJB-108" value="Teatro.Shared" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;fontSize=16;fontStyle=1;" parent="1" vertex="1">

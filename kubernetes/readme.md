@@ -12,6 +12,9 @@ This assumes that you are using Docker Desktop with Kubernetes enabled.
 
 All commands will now apply to the `panorama` namespace.
 
+### Delete all resource in a namespace
+`kubectl delete -n <namespace> --all all`
+
 ### Apply network policy
 This will create the network inside K8's through which your resources can communicate.
 
@@ -317,9 +320,9 @@ NB: connection string must look at 127.0.0.1 - localhost will not work!
 MIGRATOR
 docker build -t panorama.migrator -f .\panorama\src\Panorama.Migrator\Dockerfile .
 
-docker image tag panorama.migrator adaptician/panorama.migrator:0.4.0
+docker image tag panorama.migrator your-repo/panorama.migrator:0.4.0
 
-docker push adaptician/panorama.migrator:0.4.0
+docker push your-repo/panorama.migrator:0.4.0
 
 kubectl apply -f .\panorama\kubernetes\migrator-manifest.yaml
 
@@ -348,9 +351,9 @@ COMBINED PANORAMA ---
 APPI
 docker build -t panorama.appi -f .\panorama\src\Panorama.Web.Host\Combined.Dockerfile .
 
-docker image tag panorama.appi adaptician/panorama.appi:0.4.0
+docker image tag panorama.appi your-repo/panorama.appi:0.4.0
 
-docker push adaptician/panorama.appi:0.4.0
+docker push your-repo/panorama.appi:0.4.0
 
 kubectl apply -f .\panorama\kubernetes\appi-panorama-manifest.yaml
 
@@ -371,9 +374,9 @@ kubectl port-forward postgresdb-0 5432:5432
 API
 docker build -t teatro.api -f .\teatro\Teatro\Teatro.Application\Dockerfile .
 
-docker image tag teatro.api adaptician/teatro.api:0.4.0
+docker image tag teatro.api your-repo/teatro.api:0.4.0
 
-docker push adaptician/teatro.api:0.4.0
+docker push your-repo/teatro.api:0.4.0
 
 kubectl apply -f .\panorama\kubernetes\teatro-manifest.yaml
 
@@ -401,9 +404,9 @@ DOMINO (http://localhost:7474)
 docker build -t causation.api:0.4.0 -f .\src\Panorama.Delta\Dockerfile .
 kubectl apply -f .\kubernetes\causation-manifest.yaml
 
-docker image tag causation.api adaptician/causation.api:0.4.0
+docker image tag causation.api your-repo/causation.api:0.4.0
 
-docker push adaptician/causation.api:0.4.0
+docker push your-repo/causation.api:0.4.0
 
 kubectl apply -f .\kubernetes\mongodb-manifest.yaml
 
@@ -442,16 +445,17 @@ HEADLESS
 
 -- LEGACY SERVER POLL-ABLE USED FOR COMPARISON
 docker build -t headless-basic-poll.api -f .\Dockerfile .
-docker image tag headless-basic-poll.api adaptician/headless-basic-poll.api:1.0
-docker push adaptician/headless-basic-poll.api:1.0
+docker image tag headless-basic-poll.api your-repo/headless-basic-poll.api:1.0
+docker push your-repo/headless-basic-poll.api:1.0
 
 docker run -p 3000:3000 headless-basic-poll.api
 
 -- LEGACY MOCOCLE POLL-ING USED FOR COMPARISON
 docker build -t brass-monocle-basic-poll.app -f .\Dockerfile .
-docker image tag brass-monocle-basic-poll.app adaptician/brass-monocle-basic-poll.app:1.0
-docker push adaptician/brass-monocle-basic-poll.app:1.0
+docker image tag brass-monocle-basic-poll.app your-repo/brass-monocle-basic-poll.app:1.0
+docker push your-repo/brass-monocle-basic-poll.app:1.0
 
 docker run -p 4301:80 brass-monocle-basic-poll.app
+
 
 
